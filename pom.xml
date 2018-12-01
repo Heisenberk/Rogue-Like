@@ -26,7 +26,7 @@
           <manifest>
             <addClasspath>true</addClasspath>
             <classpathPrefix>lib/</classpathPrefix>
-            <mainClass>fr.uvsq.inf103.rogue_like.App</mainClass>
+            <mainClass>fr.uvsq.inf103.rogue_like.ApplicationMain</mainClass>
           </manifest>
         </archive>
       </configuration>
@@ -41,7 +41,7 @@
         </descriptorRefs>
         <archive>
            <manifest>
-             <mainClass>fr.uvsq.inf103.rogue_like.App</mainClass>
+             <mainClass>fr.uvsq.inf103.rogue_like.ApplicationMain</mainClass>
            </manifest>
         </archive>
       </configuration>
