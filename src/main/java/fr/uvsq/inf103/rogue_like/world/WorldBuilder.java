@@ -10,17 +10,47 @@ public class WorldBuilder {
         this.height = height;
         this.tiles = new Element[width][height];
     }
+
+    private WorldBuilder construitMur(int x, int y) {
+        int i=0;
+        if(Math.random()<0.5){
+            while((i<3)&&(x<width)){
+                tiles[x][y]=Element.WALL;
+                i++;
+                x++;
+            }
+        }
+        else {
+            while((i<3)&&(y<height)){
+                tiles[x][y]=Element.WALL;
+                i++;
+                y++;
+            }
+
+        }
+
+        return this;
+    }
+
     
     private WorldBuilder randomizeTiles() {
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                tiles[x][y] = Math.random() < 0.5 ? Element.FLOOR : Element.WALL;
+                    tiles[x][y]=Element.FLOOR;
             }
         }
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                if(Math.random()>=0.99){
+                    this.construitMur(x,y);
+                }
+            }
+        }
+        tiles[1][0]=Element.WALL;
         return this;
     }
     
-    private WorldBuilder smooth(int times) {
+    /*private WorldBuilder smooth(int times) {
         Element[][] tiles2 = new Element[width][height];
         for (int time = 0; time < times; time++) {
 
@@ -47,11 +77,11 @@ public class WorldBuilder {
          tiles = tiles2;
         }
         return this;
-    }
+    }*/
     
     public WorldBuilder makeCaves() {
-    return randomizeTiles().smooth(8);
-}
+    return randomizeTiles();
+    }
 
     public World build() {
         return new World(tiles);
