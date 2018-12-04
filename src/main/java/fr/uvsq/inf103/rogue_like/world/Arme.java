@@ -8,7 +8,8 @@ public enum Arme{
 	AUCUNE_ARME("Aucune arme"),
 	COUTEAU("Couteau"), 
 	EPEE("Epee"), 
-	BATTE_BASEBALL("Batte");
+	BATTE_BASEBALL("Batte"),
+	NB_ARMES("null");
 
 	/**
 	 * Attribut Nom permettant de l'écrire dans le jeu

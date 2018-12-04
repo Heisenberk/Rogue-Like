@@ -28,7 +28,7 @@ public class ChoiceScreen implements Screen {
     public void displayOutput(AsciiPanel terminal) {
         terminal.writeCenter("Choix de la partie Rogue Like", 1);
         terminal.writeCenter("Choix selectionnes : ", 2);
-        terminal.writeCenter(difficulte.getNom() + " - " +arme.getNom() + " - "+ sort.getNom(), 3);
+        terminal.writeCenter(difficulte.getNom() + " - " +arme.getNom() + " - "+ sort.getNom(), 3, AsciiPanel.brightRed);
         terminal.writeCenter("-- Difficulte de la partie --", 10);
         terminal.writeCenter("-- [A] FACILE - [B] INTERMEDIAIRE - [C] DIFFICILE - [D] HARDCORE --", 11);
         terminal.writeCenter("-- Choix de l'arme --", 13);
@@ -57,7 +57,7 @@ public class ChoiceScreen implements Screen {
             case KeyEvent.VK_I: this.sort=Sort.AUCUN_SORT; break;
             case KeyEvent.VK_J: this.sort=Sort.INVISIBILITE; break;
             case KeyEvent.VK_K: this.sort=Sort.FORCE; break;
-            case KeyEvent.VK_ENTER: return new PlayScreen();
+            case KeyEvent.VK_ENTER: return new PlayScreen(arme, sort);
         }
         return this;
     }

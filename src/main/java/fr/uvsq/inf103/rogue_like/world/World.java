@@ -10,10 +10,10 @@ public class World {
     private int height;
     public int height() { return height; }
 
-    public World(Element[][] tiles){
-        this.element = tiles;
-        this.width = tiles.length;
-        this.height = tiles[0].length;
+    public World(Element[][] elements){
+        this.element = elements;
+        this.width = elements.length;
+        this.height = elements[0].length;
     }
     
     public Element tile(int x, int y){
@@ -47,10 +47,7 @@ public class World {
         creature.y = y;
     }
 
-    public void dig(int x, int y) {
-        if (tile(x,y).isDiggable())
-            element[x][y] = Element.FLOOR;
-    }
+
 
 }
 
