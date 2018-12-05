@@ -15,6 +15,8 @@ public class Creature {
 	/**
 	 * Coordonnees en abscisse de la creature.
 	 */
+	public World getWorld() {return world;}
+	
 	public int x;
 
 	/**
