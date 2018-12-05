@@ -30,7 +30,7 @@ public class World {
 
 
 	public Color color(int x, int y){
-        return tile(x, y).color();
+        return tile(x, y).getColor();
     }
 
     public void addAtEmptyLocation(Creature creature){

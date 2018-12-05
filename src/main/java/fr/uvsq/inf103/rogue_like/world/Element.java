@@ -8,13 +8,11 @@ import asciiPanel.AsciiPanel;
  */
 public enum Element {
     /**
-     * Element representant le sol.
+     * Elements representant le sol, les murs, les limites de jeu,
+     * les cles, les portes, les armes (couteau, epee, batte), les fioles
+     * de vie, l'argent.
      */
     FLOOR((char)32, AsciiPanel.yellow),
-
-    /**
-     * Element representant les murs.
-     */
     WALL((char)177, AsciiPanel.yellow),
     BOUNDS('x', AsciiPanel.brightGreen),
     KEY((char)213, AsciiPanel.brightYellow),
@@ -41,13 +39,11 @@ public enum Element {
      */
     private Color color;
 
-
-
     /**
      * Accesseur de la couleur de l'element.
      * @return couleur de l'element.
      */
-    public Color color() { return color; }
+    public Color getColor() { return color; }
 
     /**
      * Constructeur de l'element
@@ -59,10 +55,10 @@ public enum Element {
         this.color = color;
     }
 
-    /*public boolean isDiggable() {
-        return this == Element.WALL;
-    }*/
-
+    /**
+     * Methode qui teste si on peut marcher sur ce bloc.
+     * @return TRUE si on peut marcher sur ce bloc et FALSE sinon.
+     */
     public boolean isGround() {
         return this!=DOOR && this != WALL && this != BOUNDS;
     }
