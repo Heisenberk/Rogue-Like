@@ -5,10 +5,10 @@ import java.awt.Color;
 public class World {
     private Element[][] element;
     private int width;
-    public int width() { return width; }
+    public int getWidth() { return width; }
 
     private int height;
-    public int height() { return height; }
+    public int getHeight() { return height; }
 
     public World(Element[][] elements){
         this.element = elements;
@@ -47,7 +47,18 @@ public class World {
         creature.y = y;
     }
 
-
+    public Element getPosition(int x,int y)
+    {
+    	return element[x][y];
+    }
+    public Element[][] getElement()
+    {
+    	return element;
+    }
+    public void affectationElement(int x,int y,Element e)
+    {
+    	element[x][y]=e;
+    }
 
 }
 
