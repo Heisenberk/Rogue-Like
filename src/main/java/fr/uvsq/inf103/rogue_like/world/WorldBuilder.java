@@ -34,11 +34,13 @@ public class WorldBuilder {
 
     
     private WorldBuilder randomizeTiles() {
+        //on met du sol partout
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                     tiles[x][y]=Element.FLOOR;
             }
         }
+        // on met des murs a des endroits aleatoires
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 if(Math.random()>=0.99){
@@ -46,39 +48,73 @@ public class WorldBuilder {
                 }
             }
         }
-        tiles[1][0]=Element.WALL;
+
+        // on met 10 dollars sur la map
+        int x_random, y_random;
+        for(int money=0 ; money<10 ; money++) {
+            x_random=(int)(Math.random() * width);
+            y_random=(int)(Math.random() * height);
+            while(tiles[x_random][y_random]!=Element.FLOOR){
+                x_random=(int)(Math.random() * width);
+                y_random=(int)(Math.random() * height);
+            }
+            tiles[x_random][y_random]=Element.MONEY;
+
+        }
+
+        // on met une clé (a enlever car ce sera une creature PNJ qui lui donnera
+        // contre de l'argent
+        x_random=(int)(Math.random() * width);
+        y_random=(int)(Math.random() * height);
+        while(tiles[x_random][y_random]!=Element.FLOOR){
+            x_random=(int)(Math.random() * width);
+            y_random=(int)(Math.random() * height);
+        }
+        tiles[x_random][y_random]=Element.KEY;
+
+        // on met une porte
+        x_random=(int)(Math.random() * width);
+        y_random=(int)(Math.random() * height);
+        while(tiles[x_random][y_random]!=Element.FLOOR){
+            x_random=(int)(Math.random() * width);
+            y_random=(int)(Math.random() * height);
+        }
+        tiles[x_random][y_random]=Element.DOOR;
+
+        // on met une arme
+        x_random=(int)(Math.random() * width);
+        y_random=(int)(Math.random() * height);
+        int type_arme;
+        while(tiles[x_random][y_random]!=Element.FLOOR){
+            x_random=(int)(Math.random() * width);
+            y_random=(int)(Math.random() * height);
+        }
+        Arme nb_armes=Arme.NB_ARMES;
+        Arme arme_choisi;
+        do{
+            type_arme=(int)(Math.random() * nb_armes.ordinal()+1); // ordinal recupere le nombre d'enum
+            arme_choisi=Arme.values()[type_arme];
+        }while((arme_choisi==Arme.AUCUNE_ARME)||(arme_choisi==Arme.NB_ARMES));
+        if(arme_choisi==Arme.BATTE_BASEBALL) tiles[x_random][y_random]=Element.BATTE_BASEBALL;
+        else if(arme_choisi==Arme.COUTEAU) tiles[x_random][y_random]=Element.COUTEAU;
+        else if(arme_choisi==Arme.EPEE) tiles[x_random][y_random]=Element.EPEE;
+
+        // on met 2 vies sur la map
+        for(int vie=0 ; vie<2 ; vie++) {
+            x_random=(int)(Math.random() * width);
+            y_random=(int)(Math.random() * height);
+            while(tiles[x_random][y_random]!=Element.FLOOR){
+                x_random=(int)(Math.random() * width);
+                y_random=(int)(Math.random() * height);
+            }
+            tiles[x_random][y_random]=Element.LIFE;
+
+        }
+
+
         return this;
     }
-    
-    /*private WorldBuilder smooth(int times) {
-        Element[][] tiles2 = new Element[width][height];
-        for (int time = 0; time < times; time++) {
 
-         for (int x = 0; x < width; x++) {
-             for (int y = 0; y < height; y++) {
-              int floors = 0;
-              int rocks = 0;
-
-              for (int ox = -1; ox < 2; ox++) {
-                  for (int oy = -1; oy < 2; oy++) {
-                   if (x + ox < 0 || x + ox >= width || y + oy < 0
-                        || y + oy >= height)
-                       continue;
-
-                   if (tiles[x + ox][y + oy] == Element.FLOOR)
-                       floors++;
-                   else
-                       rocks++;
-                  }
-              }
-              tiles2[x][y] = floors >= rocks ? Element.FLOOR : Element.WALL;
-             }
-         }
-         tiles = tiles2;
-        }
-        return this;
-    }*/
-    
     public WorldBuilder makeCaves() {
     return randomizeTiles();
     }

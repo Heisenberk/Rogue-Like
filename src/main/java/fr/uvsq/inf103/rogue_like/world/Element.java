@@ -16,7 +16,14 @@ public enum Element {
      * Element representant les murs.
      */
     WALL((char)177, AsciiPanel.yellow),
-    BOUNDS('x', AsciiPanel.brightBlack);
+    BOUNDS('x', AsciiPanel.brightGreen),
+    KEY((char)213, AsciiPanel.brightYellow),
+    DOOR((char)219, AsciiPanel.brightCyan),
+    COUTEAU((char)196, AsciiPanel.brightWhite),
+    EPEE((char)244, AsciiPanel.brightWhite),
+    BATTE_BASEBALL((char)124, AsciiPanel.brightWhite),
+    LIFE((char)3, AsciiPanel.brightRed),
+    MONEY ('$', AsciiPanel.brightGreen);
 
     /**
      * Representation ASCII de cet element.
@@ -34,6 +41,8 @@ public enum Element {
      */
     private Color color;
 
+
+
     /**
      * Accesseur de la couleur de l'element.
      * @return couleur de l'element.
@@ -50,11 +59,11 @@ public enum Element {
         this.color = color;
     }
 
-    public boolean isDiggable() {
+    /*public boolean isDiggable() {
         return this == Element.WALL;
-    }
+    }*/
 
     public boolean isGround() {
-        return this != WALL && this != BOUNDS;
+        return this!=DOOR && this != WALL && this != BOUNDS;
     }
 }

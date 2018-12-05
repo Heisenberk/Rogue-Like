@@ -4,27 +4,34 @@ import java.awt.event.KeyEvent;
 import asciiPanel.AsciiPanel;
 import fr.uvsq.inf103.rogue_like.world.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
+
 /**
  * Classe PlayScreen qui s'affichera quand l'utilisateur sera en train de jouer.
  */
 public class PlayScreen implements Screen {
-	
-	/**
-	 * Monde dans lequel le joueur joue a Rogue Like. 
-	 */
 	private World world;
-	private Creature player;
+	private Difficulte difficulte;
+	private Player joueur;
+	private ArrayList <PNJ> listePNJ;
+	private int niveau;
 	private int screenWidth;
 	private int screenHeight;
 	
-	public PlayScreen(){
+	public PlayScreen(Arme arme, Sort sort, Difficulte difficulte){
 		screenWidth = 80;
 		screenHeight = 21;
+		niveau=1;
+
 		createWorld();
-		
-		CreatureFactory creatureFactory = new CreatureFactory(world);
-		player = creatureFactory.newPlayer();
+		joueur=new Player(world,arme, sort);
+		//CREATION DES MONSTRES (ATTENTION DE NE PAS LES METTRE LES UNS SUR LES AUTRES) (modifier addAtEmptyLocation)
+
 	}
+
+
 	
 	private void createWorld(){
 		world = new WorldBuilder(90, 32)
@@ -32,9 +39,9 @@ public class PlayScreen implements Screen {
 					.build();
 	}
 	
-	public int getScrollX() { return Math.max(0, Math.min(player.x - screenWidth / 2, world.width() - screenWidth)); }
+	public int getScrollX() { return Math.max(0, Math.min(joueur.x - screenWidth / 2, world.width() - screenWidth)); }
 	
-	public int getScrollY() { return Math.max(0, Math.min(player.y - screenHeight / 2, world.height() - screenHeight)); }
+	public int getScrollY() { return Math.max(0, Math.min(joueur.y - screenHeight / 2, world.height() - screenHeight)); }
 	
 	/**
      * Methode qui affiche les interactions possibles avec l'utilisateur.
@@ -48,9 +55,14 @@ public class PlayScreen implements Screen {
 		
 		displayTiles(terminal, left, top);
 		
-		terminal.write(player.glyph(), player.x - left, player.y - top, player.color());
-		
-		terminal.writeCenter("-- press [escape] to lose or [enter] to win --", 22);
+		terminal.write(joueur.glyph(), joueur.x - left, joueur.y - top, joueur.color());
+
+		terminal.write((char)3, 1, 0, AsciiPanel.brightRed);
+		terminal.write(""+joueur.getVie()+"/10", 3, 0);
+		terminal.write(joueur.getArme().getNom()+ " - " + joueur.getSort().getNom(), 0, 22);
+		terminal.write("$" , 0, 23, AsciiPanel.brightGreen);
+		terminal.write(""+this.joueur.getArgent() , 2, 23);
+		terminal.writeCenter("Level "+this.niveau, 0, AsciiPanel.blue);
 	}
 
 	private void displayTiles(AsciiPanel terminal, int left, int top) {
@@ -75,17 +87,17 @@ public class PlayScreen implements Screen {
 		case KeyEvent.VK_ESCAPE: return new LoseScreen();
 		case KeyEvent.VK_ENTER: return new WinScreen();
 		case KeyEvent.VK_LEFT:
-		case KeyEvent.VK_H: player.moveBy(-1, 0); break;
+		case KeyEvent.VK_Q: joueur.moveBy(-1, 0); break;
 		case KeyEvent.VK_RIGHT:
-		case KeyEvent.VK_L: player.moveBy( 1, 0); break;
+		case KeyEvent.VK_D: joueur.moveBy( 1, 0); break;
 		case KeyEvent.VK_UP:
-		case KeyEvent.VK_K: player.moveBy( 0,-1); break;
+		case KeyEvent.VK_Z: joueur.moveBy( 0,-1); break;
 		case KeyEvent.VK_DOWN:
-		case KeyEvent.VK_J: player.moveBy( 0, 1); break;
-		case KeyEvent.VK_Y: player.moveBy(-1,-1); break;
-		case KeyEvent.VK_U: player.moveBy( 1,-1); break;
-		case KeyEvent.VK_B: player.moveBy(-1, 1); break;
-		case KeyEvent.VK_N: player.moveBy( 1, 1); break;
+		case KeyEvent.VK_S: joueur.moveBy( 0, 1); break;
+		case KeyEvent.VK_Y: joueur.moveBy(-1,-1); break;
+		case KeyEvent.VK_U: joueur.moveBy( 1,-1); break;
+		case KeyEvent.VK_B: joueur.moveBy(-1, 1); break;
+		case KeyEvent.VK_N: joueur.moveBy( 1, 1); break;
 		}
 		
 		return this;
