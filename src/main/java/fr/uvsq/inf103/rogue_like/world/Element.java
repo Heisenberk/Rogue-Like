@@ -12,7 +12,7 @@ public enum Element {
      * les cles, les portes, les armes (couteau, epee, batte), les fioles
      * de vie, l'argent.
      */
-    FLOOR((char)32, AsciiPanel.yellow),
+    FLOOR((char)250, AsciiPanel.white),
     WALL((char)177, AsciiPanel.yellow),
     BOUNDS('x', AsciiPanel.brightGreen),
     KEY((char)213, AsciiPanel.brightYellow),

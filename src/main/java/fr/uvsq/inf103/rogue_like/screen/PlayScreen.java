@@ -62,6 +62,33 @@ public class PlayScreen implements Screen {
 		createWorld();
 		joueur=new Player(world,arme, sort);
 		//CREATION DES MONSTRES (ATTENTION DE NE PAS LES METTRE LES UNS SUR LES AUTRES) (modifier addAtEmptyLocation)
+		this.listePNJ=new ArrayList<PNJ>();
+		createPNJ(world, difficulte); //les pnj sont crees mais x et y ne sont pas positionnes et pnj n'apparait pas
+
+	}
+
+	private void createPNJ(World world, Difficulte difficulte){
+		int nb_pnj_agressifs;
+		if(difficulte==Difficulte.FACILE) nb_pnj_agressifs=5;
+		else if(difficulte==Difficulte.INTERMEDIAIRE) nb_pnj_agressifs=7;
+		else if(difficulte==Difficulte.DIFFICILE) nb_pnj_agressifs=10;
+		else if(difficulte==Difficulte.HARDCORE) nb_pnj_agressifs=20;
+		else {
+			nb_pnj_agressifs=0;
+			System.out.println("EXCEPTION A LANCER");
+		}
+
+		// ajout des PNJ agressifs
+		Enum_PNJ pnj_cree; int type_pnj; PNJ pnj;
+		for(int i=0;i<nb_pnj_agressifs;i++){
+			type_pnj=(int)(Math.random() * Enum_PNJ.NB_ENUM_PNJ.ordinal()); // ordinal recupere le nombre d'enum
+			if(type_pnj==0) type_pnj=1;
+			pnj_cree=Enum_PNJ.values()[type_pnj];
+			//pnj=new PNJ(world, pnj_cree);
+			this.listePNJ.add(new PNJ(world, pnj_cree));
+		}
+
+		this.listePNJ.add(new PNJ(world,Enum_PNJ.VILLAGEOIS));
 
 	}
 
