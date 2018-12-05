@@ -2,12 +2,36 @@ package fr.uvsq.inf103.rogue_like.world;
 
 import java.awt.Color;
 
+/**
+ * Classe World representant la map sur laquelle joue l'utilisateur.
+ */
 public class World {
+
+    /**
+     * Matrice representant la map du jeu.
+     */
     private Element[][] element;
+
+    /**
+     * Longueur de la map.
+     */
     private int width;
+
+    /**
+     * Accesseur de la longueur de la map.
+     * @return longueur de la map.
+     */
     public int getWidth() { return width; }
 
+    /**
+     * Largeur de la map.
+     */
     private int height;
+
+    /**
+     * Accesseur
+     * @return
+     */
     public int getHeight() { return height; }
 
     public World(Element[][] elements){
