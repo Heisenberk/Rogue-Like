@@ -1,6 +1,5 @@
 package fr.uvsq.inf103.rogue_like;
 
-
 import javax.swing.JFrame;
 import asciiPanel.AsciiPanel;
 import java.awt.event.KeyEvent;

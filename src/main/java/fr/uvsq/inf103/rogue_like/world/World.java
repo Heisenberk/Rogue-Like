@@ -51,6 +51,18 @@ public class World {
         if (tile(x,y).isDiggable())
             element[x][y] = Element.FLOOR;
     }
-
+    
+    public Element GetPosition(int x,int y)
+    {
+    	return element[x][y];
+    }
+    public Element[][] GetElement()
+    {
+    	return element;
+    }
+    public void SetPosition(int x,int y,Element e)
+    {
+    	element[x][y]=e;
+    }
 }
 

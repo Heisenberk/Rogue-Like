@@ -8,6 +8,10 @@ import fr.uvsq.inf103.rogue_like.world.*;
  * Classe PlayScreen qui s'affichera quand l'utilisateur sera en train de jouer.
  */
 public class PlayScreen implements Screen {
+	
+	/**
+	 * Monde dans lequel le joueur joue a Rogue Like. 
+	 */
 	private World world;
 	private Creature player;
 	private int screenWidth;

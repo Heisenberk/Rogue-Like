@@ -11,10 +11,28 @@ import fr.uvsq.inf103.rogue_like.world.Arme;
  */
 public class ChoiceScreen implements Screen {
 	
+	/**
+	 * Difficulte que l'utilisateur choisira.
+	 */
 	private Difficulte difficulte;
+	
+	/**
+	 * Arme que l'utilisateur choisira.
+	 */
 	private Arme arme;
+	
+	/**
+	 * Sort que l'utilisateur choisira.
+	 */
 	private Sort sort;
 	
+	/**
+	 * Constructeur de ChoiceScreen qui permet a chaque interaction de l'utilisateur 
+	 * de modifier les parametres globaux du jeu. 
+	 * @param difficulte du jeu.
+	 * @param arme du joueur.
+	 * @param sort du joueur.
+	 */
 	public ChoiceScreen (Difficulte difficulte, Arme arme, Sort sort){
 		this.difficulte=difficulte;
 		this.arme=arme;
