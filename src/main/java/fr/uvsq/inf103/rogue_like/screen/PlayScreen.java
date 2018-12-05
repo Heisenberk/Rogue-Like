@@ -99,7 +99,7 @@ public class PlayScreen implements Screen {
 		
 		displayTiles(terminal, left, top);
 		
-		terminal.write(joueur.glyph(), joueur.x - left, joueur.y - top, joueur.color());
+		terminal.write(joueur.getGlyph(), joueur.x - left, joueur.y - top, joueur.getColor());
 
 		terminal.write((char)3, 1, 0, AsciiPanel.brightRed);
 		terminal.write(""+joueur.getVie()+"/10", 3, 0);
