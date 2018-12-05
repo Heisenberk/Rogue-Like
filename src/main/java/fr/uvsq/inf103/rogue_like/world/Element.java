@@ -22,6 +22,7 @@ public enum Element {
     COUTEAU((char)196, AsciiPanel.brightWhite),
     EPEE((char)244, AsciiPanel.brightWhite),
     BATTE_BASEBALL((char)124, AsciiPanel.brightWhite),
+    LIFE((char)3, AsciiPanel.brightRed),
     MONEY ('$', AsciiPanel.brightGreen);
 
     /**

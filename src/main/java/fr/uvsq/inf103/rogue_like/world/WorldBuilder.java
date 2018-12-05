@@ -88,8 +88,6 @@ public class WorldBuilder {
         while(tiles[x_random][y_random]!=Element.FLOOR){
             x_random=(int)(Math.random() * width);
             y_random=(int)(Math.random() * height);
-
-            //type_arme=(int)(Math.random() * (int)Arme.NB_ARMES);
         }
         Arme nb_armes=Arme.NB_ARMES;
         Arme arme_choisi;
@@ -101,6 +99,17 @@ public class WorldBuilder {
         else if(arme_choisi==Arme.COUTEAU) tiles[x_random][y_random]=Element.COUTEAU;
         else if(arme_choisi==Arme.EPEE) tiles[x_random][y_random]=Element.EPEE;
 
+        // on met 2 vies sur la map
+        for(int vie=0 ; vie<2 ; vie++) {
+            x_random=(int)(Math.random() * width);
+            y_random=(int)(Math.random() * height);
+            while(tiles[x_random][y_random]!=Element.FLOOR){
+                x_random=(int)(Math.random() * width);
+                y_random=(int)(Math.random() * height);
+            }
+            tiles[x_random][y_random]=Element.LIFE;
+
+        }
 
 
         return this;

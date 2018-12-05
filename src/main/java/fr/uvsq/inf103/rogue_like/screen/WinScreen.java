@@ -3,6 +3,7 @@ package fr.uvsq.inf103.rogue_like.screen;
 import java.awt.event.KeyEvent;
 import asciiPanel.AsciiPanel;
 import fr.uvsq.inf103.rogue_like.world.Arme;
+import fr.uvsq.inf103.rogue_like.world.Difficulte;
 import fr.uvsq.inf103.rogue_like.world.Sort;
 
 /**
@@ -25,6 +26,6 @@ public class WinScreen implements Screen {
      * @return nouvel ecran a afficher apres l'interaction avec l'utilisateur.
      */
     public Screen respondToUserInput(KeyEvent key) {
-        return key.getKeyCode() == KeyEvent.VK_ENTER ? new PlayScreen(Arme.BATTE_BASEBALL, Sort.INVISIBILITE) : this;
+        return key.getKeyCode() == KeyEvent.VK_ENTER ? new PlayScreen(Arme.BATTE_BASEBALL, Sort.INVISIBILITE, Difficulte.FACILE) : this;
     }
 }

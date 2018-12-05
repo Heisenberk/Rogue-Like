@@ -57,7 +57,7 @@ public class ChoiceScreen implements Screen {
             case KeyEvent.VK_I: this.sort=Sort.AUCUN_SORT; break;
             case KeyEvent.VK_J: this.sort=Sort.INVISIBILITE; break;
             case KeyEvent.VK_K: this.sort=Sort.FORCE; break;
-            case KeyEvent.VK_ENTER: return new PlayScreen(arme, sort);
+            case KeyEvent.VK_ENTER: return new PlayScreen(arme, sort, difficulte);
         }
         return this;
     }

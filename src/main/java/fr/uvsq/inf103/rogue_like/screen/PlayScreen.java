@@ -4,24 +4,34 @@ import java.awt.event.KeyEvent;
 import asciiPanel.AsciiPanel;
 import fr.uvsq.inf103.rogue_like.world.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
+
 /**
  * Classe PlayScreen qui s'affichera quand l'utilisateur sera en train de jouer.
  */
 public class PlayScreen implements Screen {
 	private World world;
+	private Difficulte difficulte;
 	private Player joueur;
+	private ArrayList <PNJ> listePNJ;
 	private int niveau;
 	private int screenWidth;
 	private int screenHeight;
 	
-	public PlayScreen(Arme arme, Sort sort){
+	public PlayScreen(Arme arme, Sort sort, Difficulte difficulte){
 		screenWidth = 80;
 		screenHeight = 21;
 		niveau=1;
-		createWorld();
 
+		createWorld();
 		joueur=new Player(world,arme, sort);
+		//CREATION DES MONSTRES (ATTENTION DE NE PAS LES METTRE LES UNS SUR LES AUTRES) (modifier addAtEmptyLocation)
+
 	}
+
+
 	
 	private void createWorld(){
 		world = new WorldBuilder(90, 32)
@@ -48,7 +58,7 @@ public class PlayScreen implements Screen {
 		terminal.write(joueur.glyph(), joueur.x - left, joueur.y - top, joueur.color());
 
 		terminal.write((char)3, 1, 0, AsciiPanel.brightRed);
-		terminal.write(""+joueur.getVie(), 3, 0);
+		terminal.write(""+joueur.getVie()+"/10", 3, 0);
 		terminal.write(joueur.getArme().getNom()+ " - " + joueur.getSort().getNom(), 0, 22);
 		terminal.write("$" , 0, 23, AsciiPanel.brightGreen);
 		terminal.write(""+this.joueur.getArgent() , 2, 23);
