@@ -79,13 +79,13 @@ public class PlayScreen implements Screen {
 	 * Methode de point de vue de la camera sur l'axe de la longueur.
 	 * @return position de la camera en longueur.
 	 */
-	public int getScrollX() { return Math.max(0, Math.min(joueur.x - screenWidth / 2, world.width() - screenWidth)); }
+	public int getScrollX() { return Math.max(0, Math.min(joueur.x - screenWidth / 2, world.getWidth() - screenWidth)); }
 	
 	/**
 	 * Methode de point de vue de la camera sur l'axe de la largeur.
 	 * @return position de la camera en largeur.
 	 */
-	public int getScrollY() { return Math.max(0, Math.min(joueur.y - screenHeight / 2, world.height() - screenHeight)); }
+	public int getScrollY() { return Math.max(0, Math.min(joueur.y - screenHeight / 2, world.getHeight() - screenHeight)); }
 	
 	/**
      * Methode qui affiche les interactions possibles avec l'utilisateur.
