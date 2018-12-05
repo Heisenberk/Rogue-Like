@@ -3,4 +3,5 @@
 .classpath
 .project
 /.idea/
+/bin/
 rogue_like.iml
