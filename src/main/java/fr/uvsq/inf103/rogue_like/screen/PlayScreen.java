@@ -12,14 +12,48 @@ import java.util.ListIterator;
  * Classe PlayScreen qui s'affichera quand l'utilisateur sera en train de jouer.
  */
 public class PlayScreen implements Screen {
+	
+	/**
+	 * Map du monde Rogue Like.
+	 */
 	private World world;
+	
+	/**
+	 * Difficulte du jeu choisie par le joueur.
+	 */
 	private Difficulte difficulte;
+	
+	/**
+	 * PJ representant le joueur en train de jouer.
+	 */
 	private Player joueur;
+	
+	/**
+	 * Liste de PNJ (pacifiques ou non).
+	 */
 	private ArrayList <PNJ> listePNJ;
+	
+	/**
+	 * Level de la partie.
+	 */
 	private int niveau;
+	
+	/**
+	 * Longueur de la fenetre de jeu.
+	 */
 	private int screenWidth;
+	
+	/**
+	 * Largeur de la fenetre de jeu.
+	 */
 	private int screenHeight;
 	
+	/**
+	 * Constructeur de PlayScreen qui permet de generer la map, le joueur et les PNJ.
+	 * @param arme du joueur.
+	 * @param sort du joueur.
+	 * @param difficulte du joueur. 
+	 */
 	public PlayScreen(Arme arme, Sort sort, Difficulte difficulte){
 		screenWidth = 80;
 		screenHeight = 21;
@@ -32,22 +66,32 @@ public class PlayScreen implements Screen {
 	}
 
 
-	
+	/**
+	 * Methode privee permettant de generer le monde.
+	 */
 	private void createWorld(){
 		world = new WorldBuilder(90, 32)
 					.makeCaves()
 					.build();
 	}
 	
+	/**
+	 * Methode de point de vue de la camera sur l'axe de la longueur.
+	 * @return position de la camera en longueur.
+	 */
 	public int getScrollX() { return Math.max(0, Math.min(joueur.x - screenWidth / 2, world.width() - screenWidth)); }
 	
+	/**
+	 * Methode de point de vue de la camera sur l'axe de la largeur.
+	 * @return position de la camera en largeur.
+	 */
 	public int getScrollY() { return Math.max(0, Math.min(joueur.y - screenHeight / 2, world.height() - screenHeight)); }
 	
 	/**
      * Methode qui affiche les interactions possibles avec l'utilisateur.
      * @param terminal represente l'ecran du jeu.
      */
-	@Override
+	//@Override
 	public void displayOutput(AsciiPanel terminal) {
 		
 		int left = getScrollX();
@@ -65,6 +109,12 @@ public class PlayScreen implements Screen {
 		terminal.writeCenter("Level "+this.niveau, 0, AsciiPanel.blue);
 	}
 
+	/**
+	 * Affichage des élements. 
+	 * @param terminal ou les elements sont affiches;
+	 * @param left longueur de la fenetre.
+	 * @param top hauteur de la fenetre.
+	 */
 	private void displayTiles(AsciiPanel terminal, int left, int top) {
 		for (int x = 0; x < screenWidth; x++){
 			for (int y = 0; y < screenHeight; y++){
@@ -81,7 +131,7 @@ public class PlayScreen implements Screen {
      * @param key touche que l'utilisateur tape sur le clavier.
      * @return nouvel ecran a afficher apres l'interaction avec l'utilisateur.
      */
-	@Override
+	//@Override
 	public Screen respondToUserInput(KeyEvent key) {
 		switch (key.getKeyCode()){
 		case KeyEvent.VK_ESCAPE: return new LoseScreen();
