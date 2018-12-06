@@ -60,6 +60,7 @@ public class PlayScreen implements Screen {
 		niveau=1;
 
 		createWorld();
+		System.out.println(world.getWidth()+" "+ world.getHeight());
 		joueur=new Player(world,arme, sort);
 		//CREATION DES MONSTRES (ATTENTION DE NE PAS LES METTRE LES UNS SUR LES AUTRES) (modifier addAtEmptyLocation)
 
@@ -173,10 +174,16 @@ public class PlayScreen implements Screen {
 		}
 		PNJ pnj;
 		for(int ii=0;ii<this.listePNJ.size();ii++){
-			System.out.println("S");
 			pnj=this.listePNJ.get(ii);
+			int xx=pnj.x;
+			int yy=pnj.y;
+			//System.out.println("("+pnj.x+","+pnj.y+")"+" "+pnj.getColor());
+			if((xx>=0)&&(xx<screenWidth)&&(yy>=0)&&(yy<screenHeight)){
+				// x-left, y-top
+				//PROBLEME LORS DU DEPLACEMENT!!!!!!!!!!
+				terminal.write(pnj.getClasse().getCaractere(), xx-left, yy-top, pnj.getClasse().getColor()); //PROBLEME DE COORDONNEES
+			}
 
-			terminal.write('D', 12-left , 12-top, AsciiPanel.blue); //PROBLEME DE COORDONNEES
 		}
 	}
 	

@@ -12,6 +12,10 @@ public class PNJ extends Creature{
      */
     private Enum_PNJ classe;
 
+    public Enum_PNJ getClasse(){
+        return this.classe;
+    }
+
     /**
      * Nombre de vie de la creature.
      */
