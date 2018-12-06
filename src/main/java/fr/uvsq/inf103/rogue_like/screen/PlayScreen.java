@@ -67,7 +67,22 @@ public class PlayScreen implements Screen {
 
 	}
 
-	//private void spawnPNJ
+	private void spawnPNJ(){
+		ListIterator i1=this.listePNJ.listIterator();
+		for(int i=0; i<this.listePNJ.size(); i++){
+			int x;
+			int y;
+
+			do {
+				x = (int)(Math.random() * world.getWidth());
+				y = (int)(Math.random() * world.getHeight());
+			}
+			while (!world.tile(x,y).isGround());
+
+			this.listePNJ.get(i).x = x;
+			this.listePNJ.get(i).y = y;
+		}
+	}
 
 	private void createPNJ(World world, Difficulte difficulte){
 		this.listePNJ=new ArrayList<PNJ>();
@@ -90,6 +105,7 @@ public class PlayScreen implements Screen {
 			this.listePNJ.add(new PNJ(world, pnj_cree));
 		}
 		this.listePNJ.add(new PNJ(world,Enum_PNJ.VILLAGEOIS));
+		spawnPNJ();
 
 	}
 
@@ -125,7 +141,7 @@ public class PlayScreen implements Screen {
 		int left = getScrollX();
 		int top = getScrollY(); 
 		
-		displayTiles(terminal, left, top);
+		displayTilesCreatures(terminal, left, top);
 		
 		terminal.write(joueur.getGlyph(), joueur.x - left, joueur.y - top, joueur.getColor());
 
@@ -144,14 +160,23 @@ public class PlayScreen implements Screen {
 	 * @param left longueur de la fenetre.
 	 * @param top hauteur de la fenetre.
 	 */
-	private void displayTiles(AsciiPanel terminal, int left, int top) {
+	private void displayTilesCreatures(AsciiPanel terminal, int left, int top) {
+		ListIterator i=this.listePNJ.listIterator();
 		for (int x = 0; x < screenWidth; x++){
 			for (int y = 0; y < screenHeight; y++){
 				int wx = x + left;
 				int wy = y + top;
 
 				terminal.write(world.glyph(wx, wy), x, y, world.color(wx, wy));
+
 			}
+		}
+		PNJ pnj;
+		for(int ii=0;ii<this.listePNJ.size();ii++){
+			System.out.println("S");
+			pnj=this.listePNJ.get(ii);
+
+			terminal.write('D', 12-left , 12-top, AsciiPanel.blue); //PROBLEME DE COORDONNEES
 		}
 	}
 	
