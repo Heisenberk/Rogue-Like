@@ -67,6 +67,8 @@ public class PlayScreen implements Screen {
 
 	}
 
+	//private void spawnPNJ
+
 	private void createPNJ(World world, Difficulte difficulte){
 		this.listePNJ=new ArrayList<PNJ>();
 		int nb_pnj_agressifs;
@@ -85,10 +87,8 @@ public class PlayScreen implements Screen {
 			type_pnj=(int)(Math.random() * Enum_PNJ.NB_ENUM_PNJ.ordinal()); // ordinal recupere le nombre d'enum
 			if(type_pnj==0) type_pnj=1;
 			pnj_cree=Enum_PNJ.values()[type_pnj];
-			//pnj=new PNJ(world, pnj_cree);
 			this.listePNJ.add(new PNJ(world, pnj_cree));
 		}
-
 		this.listePNJ.add(new PNJ(world,Enum_PNJ.VILLAGEOIS));
 
 	}
