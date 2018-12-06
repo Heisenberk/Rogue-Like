@@ -131,10 +131,11 @@ public class PlayScreen implements Screen {
 
 		terminal.write((char)3, 1, 0, AsciiPanel.brightRed);
 		terminal.write(""+joueur.getVie()+"/10", 3, 0);
-		terminal.write(joueur.getArme().getNom()+ " - " + joueur.getSort().getNom(), 0, 22);
-		terminal.write("$" , 0, 23, AsciiPanel.brightGreen);
-		terminal.write(""+this.joueur.getArgent() , 2, 23);
-		terminal.writeCenter("Level "+this.niveau, 0, AsciiPanel.blue);
+		terminal.write(joueur.getArme().getNom()+ " - " + joueur.getSort().getNom(), 0, 21);
+		terminal.write("$" , 0, 22, AsciiPanel.brightGreen);
+		terminal.write(""+this.joueur.getArgent() , 2, 22);
+		if(joueur.getClef()==true) terminal.write((char)213, 0, 23, AsciiPanel.brightYellow);
+		terminal.writeCenter("Level "+this.niveau, 21, AsciiPanel.blue);
 	}
 
 	/**
@@ -162,20 +163,13 @@ public class PlayScreen implements Screen {
 	//@Override
 	public Screen respondToUserInput(KeyEvent key) {
 		switch (key.getKeyCode()){
-		case KeyEvent.VK_ESCAPE: return new LoseScreen();
-		case KeyEvent.VK_ENTER: return new WinScreen();
-		case KeyEvent.VK_LEFT:
-		case KeyEvent.VK_Q: joueur.moveBy(-1, 0); break;
-		case KeyEvent.VK_RIGHT:
-		case KeyEvent.VK_D: joueur.moveBy( 1, 0); break;
-		case KeyEvent.VK_UP:
-		case KeyEvent.VK_Z: joueur.moveBy( 0,-1); break;
-		case KeyEvent.VK_DOWN:
-		case KeyEvent.VK_S: joueur.moveBy( 0, 1); break;
-		case KeyEvent.VK_Y: joueur.moveBy(-1,-1); break;
-		case KeyEvent.VK_U: joueur.moveBy( 1,-1); break;
-		case KeyEvent.VK_B: joueur.moveBy(-1, 1); break;
-		case KeyEvent.VK_N: joueur.moveBy( 1, 1); break;
+			case KeyEvent.VK_ESCAPE: return new LoseScreen();
+			case KeyEvent.VK_ENTER: return new WinScreen();
+			case KeyEvent.VK_LEFT: joueur.moveBy(-1, 0); break;
+			case KeyEvent.VK_RIGHT: joueur.moveBy( 1, 0); break;
+			case KeyEvent.VK_UP: joueur.moveBy( 0,-1); break;
+			case KeyEvent.VK_DOWN: joueur.moveBy( 0, 1); break;
+			case KeyEvent.VK_R: joueur.ramasserObjet(world); break;
 		}
 		
 		return this;

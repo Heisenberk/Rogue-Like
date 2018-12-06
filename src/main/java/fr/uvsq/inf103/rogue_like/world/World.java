@@ -2,6 +2,10 @@ package fr.uvsq.inf103.rogue_like.world;
 
 import java.awt.Color;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
+
 /**
  * Classe World representant la map sur laquelle joue l'utilisateur.
  */
@@ -95,6 +99,10 @@ public class World {
         creature.x = x;
         creature.y = y;
     }
+
+    /*public void addAtEmptyLocation(Creature creature, Player player, ArrayList <PNJ> listePNJ){
+
+    }*/
 
     public Element getPosition(int x,int y)
     {
