@@ -62,12 +62,13 @@ public class PlayScreen implements Screen {
 		createWorld();
 		joueur=new Player(world,arme, sort);
 		//CREATION DES MONSTRES (ATTENTION DE NE PAS LES METTRE LES UNS SUR LES AUTRES) (modifier addAtEmptyLocation)
-		this.listePNJ=new ArrayList<PNJ>();
+
 		createPNJ(world, difficulte); //les pnj sont crees mais x et y ne sont pas positionnes et pnj n'apparait pas
 
 	}
 
 	private void createPNJ(World world, Difficulte difficulte){
+		this.listePNJ=new ArrayList<PNJ>();
 		int nb_pnj_agressifs;
 		if(difficulte==Difficulte.FACILE) nb_pnj_agressifs=5;
 		else if(difficulte==Difficulte.INTERMEDIAIRE) nb_pnj_agressifs=7;
