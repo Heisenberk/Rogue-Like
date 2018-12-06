@@ -4,6 +4,9 @@ public class WorldBuilder {
     private int width;
     private int height;
     private Element[][] tiles;
+    public Element[][] getElement() {
+    	return tiles;
+    }
 
     public WorldBuilder(int width, int height) {
         this.width = width;
@@ -118,8 +121,15 @@ public class WorldBuilder {
     public WorldBuilder makeCaves() {
     return randomizeTiles();
     }
+    
+    public WorldBuilder WorldMakeMur(int x,int y) {
+    	return construitMur(x,y);
+    }
 
     public World build() {
         return new World(tiles);
     }
+public Element getPosition(int x,int y) {
+	return tiles[x][y];
+}
 }
