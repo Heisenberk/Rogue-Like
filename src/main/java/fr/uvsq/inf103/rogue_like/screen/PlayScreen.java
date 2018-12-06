@@ -60,7 +60,6 @@ public class PlayScreen implements Screen {
 		niveau=1;
 
 		createWorld();
-		System.out.println(world.getWidth()+" "+ world.getHeight());
 		joueur=new Player(world,arme, sort);
 		//CREATION DES MONSTRES (ATTENTION DE NE PAS LES METTRE LES UNS SUR LES AUTRES) (modifier addAtEmptyLocation)
 
@@ -163,28 +162,25 @@ public class PlayScreen implements Screen {
 	 */
 	private void displayTilesCreatures(AsciiPanel terminal, int left, int top) {
 		ListIterator i=this.listePNJ.listIterator();
+		PNJ pnj; int xx; int yy;
 		for (int x = 0; x < screenWidth; x++){
 			for (int y = 0; y < screenHeight; y++){
 				int wx = x + left;
 				int wy = y + top;
 
 				terminal.write(world.glyph(wx, wy), x, y, world.color(wx, wy));
+				for(int ii=0;ii<this.listePNJ.size();ii++){
+					pnj=this.listePNJ.get(ii);
+					if(((x+left)==pnj.x)&&((y+top)==pnj.y)){ //mettre x+left et y+top
+						terminal.write(pnj.getClasse().getCaractere(), x, y, pnj.getClasse().getColor());
+					}
+
+				}
 
 			}
 		}
-		PNJ pnj;
-		for(int ii=0;ii<this.listePNJ.size();ii++){
-			pnj=this.listePNJ.get(ii);
-			int xx=pnj.x;
-			int yy=pnj.y;
-			//System.out.println("("+pnj.x+","+pnj.y+")"+" "+pnj.getColor());
-			if((xx>=0)&&(xx<screenWidth)&&(yy>=0)&&(yy<screenHeight)){
-				// x-left, y-top
-				//PROBLEME LORS DU DEPLACEMENT!!!!!!!!!!
-				terminal.write(pnj.getClasse().getCaractere(), xx-left, yy-top, pnj.getClasse().getColor()); //PROBLEME DE COORDONNEES
-			}
 
-		}
+
 	}
 	
 	/**
