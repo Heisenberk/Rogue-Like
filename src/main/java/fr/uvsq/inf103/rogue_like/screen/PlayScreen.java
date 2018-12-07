@@ -47,6 +47,8 @@ public class PlayScreen implements Screen {
 	 * Largeur de la fenetre de jeu.
 	 */
 	private int screenHeight;
+
+	private String messageTemporaire;
 	
 	/**
 	 * Constructeur de PlayScreen qui permet de generer la map, le joueur et les PNJ.
@@ -58,12 +60,12 @@ public class PlayScreen implements Screen {
 		screenWidth = 80;
 		screenHeight = 21;
 		niveau=level;
+		this.difficulte=difficulte;
 
 		createWorld();
 		joueur=new Player(world,arme, sort, vie, argent);
-		//CREATION DES MONSTRES (ATTENTION DE NE PAS LES METTRE LES UNS SUR LES AUTRES) (modifier addAtEmptyLocation)
 
-		createPNJ(world, difficulte); //les pnj sont crees mais x et y ne sont pas positionnes et pnj n'apparait pas
+		createPNJ(world, difficulte);
 
 	}
 
@@ -96,6 +98,7 @@ public class PlayScreen implements Screen {
 		}
 	}
 
+	// enlever difficulte
 	private void createPNJ(World world, Difficulte difficulte){
 		this.listePNJ=new ArrayList<PNJ>();
 		int nb_pnj_agressifs;
@@ -103,9 +106,9 @@ public class PlayScreen implements Screen {
 		else if(difficulte==Difficulte.INTERMEDIAIRE) nb_pnj_agressifs=7;
 		else if(difficulte==Difficulte.DIFFICILE) nb_pnj_agressifs=10;
 		else if(difficulte==Difficulte.HARDCORE) nb_pnj_agressifs=20;
-		else {
+		else { //DIFFICULTE PROBLEME
 			nb_pnj_agressifs=0;
-			System.out.println("EXCEPTION A LANCER");
+			System.out.println(difficulte.getNom()+"EXCEPTION A LANCER");
 		}
 
 		// ajout des PNJ agressifs
@@ -164,6 +167,8 @@ public class PlayScreen implements Screen {
 		terminal.write(""+this.joueur.getArgent() , 2, 22);
 		if(joueur.getClef()==true) terminal.write((char)213, 0, 23, AsciiPanel.brightYellow);
 		terminal.writeCenter("Level "+this.niveau, 21, AsciiPanel.blue);
+		if(this.messageTemporaire!=null) terminal.writeCenter(this.messageTemporaire, 22, AsciiPanel.white);
+		this.messageTemporaire=null;
 	}
 
 	/**
@@ -197,7 +202,6 @@ public class PlayScreen implements Screen {
 
 	private boolean testChangerNiveau(){
 		if(joueur.getClef()){
-			//ATTENTION AUX BORDS DE LA MAP
 			boolean test=false;
 			if(world.tile(joueur.x+1,joueur.y)==Element.DOOR){
 				test=true;
@@ -238,6 +242,8 @@ public class PlayScreen implements Screen {
 			case KeyEvent.VK_R: joueur.ramasserObjet(world); break;
 			case KeyEvent.VK_O:
 				if(testChangerNiveau()) return new PlayScreen(niveau+1, joueur.getArme(), joueur.getSort(), this.difficulte, joueur.getVie(), joueur.getArgent());
+			case KeyEvent.VK_P:
+				messageTemporaire=joueur.faireEchangeVillageois(this.listePNJ); break;
 		}
 		
 		return this;

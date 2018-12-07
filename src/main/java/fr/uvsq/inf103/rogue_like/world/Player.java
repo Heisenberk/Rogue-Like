@@ -1,6 +1,9 @@
 package fr.uvsq.inf103.rogue_like.world;
 
 import asciiPanel.AsciiPanel;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
 
 /**
  * Classe Joueur de Rogue Like.
@@ -81,6 +84,56 @@ public class Player extends Creature{
 	}
 
 	public void laisserClef(){ this.clef=false;}
+
+	//renvoie le PNJ villageois et null sinon
+	private PNJ demanderEchangeAlentour(ArrayList <PNJ> listePNJ) {
+		PNJ pnj;
+		boolean echangePossible = false;
+		ListIterator i1 = listePNJ.listIterator();
+		for (int i = 0; i < listePNJ.size(); i++) {
+			pnj = listePNJ.get(i);
+			if ((pnj.getClasse() == Enum_PNJ.VILLAGEOIS) && (pnj.x == x + 1) && (pnj.y == y)) return pnj;
+			else if ((pnj.getClasse() == Enum_PNJ.VILLAGEOIS) && (pnj.x == x - 1) && (pnj.y == y))
+				return pnj;
+			else if ((pnj.getClasse() == Enum_PNJ.VILLAGEOIS) && (pnj.x == x) && (pnj.y == y + 1))
+				return pnj;
+			else if ((pnj.getClasse() == Enum_PNJ.VILLAGEOIS) && (pnj.x == x) && (pnj.y == y - 1))
+				return pnj;
+		}
+		return null;
+	}
+
+	public String faireEchangeVillageois(ArrayList <PNJ> listePNJ){
+		PNJ pnj=demanderEchangeAlentour(listePNJ);
+		if(pnj==null) return null;
+
+		if(pnj.getClasse()!=Enum_PNJ.VILLAGEOIS){ //si c'est un PNJ agressif
+			// affichage qu'on ne peut pas parler avec un PNJ agressif
+			return null;
+		}
+		else { //si c'est un villageois
+			int volonteArgent=pnj.getVolonteArgent();
+			if(pnj.testPossedeClef()){ //si le villageois possede la clef
+				if(volonteArgent<=this.getArgent()){ // si le joueur a assez d'argent
+					//affichage echange effectue
+					this.argent-=volonteArgent;
+					this.clef=true;
+					pnj.setPossedeClef(false);
+					return ("Echange effectue : "+volonteArgent+" $ contre la clef.");
+				}
+				else { //si le joueur n'a pas assez d'argent
+					//affichage joueur n'a pas assez d'argent
+					return ("Il faut "+volonteArgent+" $ pour avoir la clef.");
+				}
+			}
+			else{ //si le villageois ne possede plus la clef
+				//affichage villageois ne possede pas la clef
+				return ("Le villageois n'a plus de clef.");
+			}
+
+		}
+
+	}
 
 	public void ramasserObjet(World world){
 		Element element=world.tile(this.x, this.y);
