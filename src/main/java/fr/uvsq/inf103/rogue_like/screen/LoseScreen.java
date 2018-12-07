@@ -26,6 +26,6 @@ public class LoseScreen implements Screen {
      * @return nouvel ecran a afficher apres l'interaction avec l'utilisateur.
      */
     public Screen respondToUserInput(KeyEvent key) {
-        return key.getKeyCode() == KeyEvent.VK_ENTER ? new PlayScreen(Arme.BATTE_BASEBALL, Sort.INVISIBILITE, Difficulte.FACILE) : this;
+        return key.getKeyCode() == KeyEvent.VK_ENTER ? new PlayScreen(1,Arme.BATTE_BASEBALL, Sort.INVISIBILITE, Difficulte.FACILE, 10,0) : this;
     }
 }

@@ -35,12 +35,12 @@ public class Player extends Creature{
 	 * @param arme du joueur.
 	 * @param sort du joueur.
 	 */
-	public Player(World world, Arme arme, Sort sort){
+	public Player(World world, Arme arme, Sort sort, int vie, int argent){
 		super(world, '@', AsciiPanel.brightWhite);
 		this.arme=arme;
 		this.sort=sort;
-		this.vie=10;
-		this.argent=0;
+		this.vie=vie;
+		this.argent=argent;
 		this.clef=false;
 	}
 
@@ -79,6 +79,8 @@ public class Player extends Creature{
 	public boolean getClef(){
 		return this.clef;
 	}
+
+	public void laisserClef(){ this.clef=false;}
 
 	public void ramasserObjet(World world){
 		Element element=world.tile(this.x, this.y);

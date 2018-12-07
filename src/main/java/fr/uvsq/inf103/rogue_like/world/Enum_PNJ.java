@@ -11,7 +11,7 @@ public enum Enum_PNJ{
     /**
      * Un PNJ peut etre agressif (zombie ou sorcier) ou pacifique (villageois)
      */
-    VILLAGEOIS('V', AsciiPanel.brightGreen, 4),
+    VILLAGEOIS('V', AsciiPanel.green, 4),
     ZOMBIE('Z', AsciiPanel.brightRed, 5),
     SORCIER('S', AsciiPanel.brightRed, 7),
     NB_ENUM_PNJ('X', AsciiPanel.white, 0);

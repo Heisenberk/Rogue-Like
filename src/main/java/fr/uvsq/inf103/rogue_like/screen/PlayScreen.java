@@ -54,19 +54,31 @@ public class PlayScreen implements Screen {
 	 * @param sort du joueur.
 	 * @param difficulte du joueur. 
 	 */
-	public PlayScreen(Arme arme, Sort sort, Difficulte difficulte){
+	public PlayScreen(int level, Arme arme, Sort sort, Difficulte difficulte, int vie, int argent){
 		screenWidth = 80;
 		screenHeight = 21;
-		niveau=1;
+		niveau=level;
 
 		createWorld();
-		joueur=new Player(world,arme, sort);
+		joueur=new Player(world,arme, sort, vie, argent);
 		//CREATION DES MONSTRES (ATTENTION DE NE PAS LES METTRE LES UNS SUR LES AUTRES) (modifier addAtEmptyLocation)
 
 		createPNJ(world, difficulte); //les pnj sont crees mais x et y ne sont pas positionnes et pnj n'apparait pas
 
 	}
 
+	private boolean testSpawnPossible(int x, int y, int rang){
+		if((this.joueur.x==x)&&(this.joueur.y==y)) return false;
+		else{
+			ListIterator i1=this.listePNJ.listIterator();
+			for(int i=0; i<rang; i++){
+				if((this.listePNJ.get(i).x==x)&&(this.listePNJ.get(i).y==y)) return false;
+			}
+		}
+		return true;
+	}
+
+	//modifier cette fonction car il est possible de generer des PNJ sur d'autres
 	private void spawnPNJ(){
 		ListIterator i1=this.listePNJ.listIterator();
 		for(int i=0; i<this.listePNJ.size(); i++){
@@ -77,7 +89,7 @@ public class PlayScreen implements Screen {
 				x = (int)(Math.random() * world.getWidth());
 				y = (int)(Math.random() * world.getHeight());
 			}
-			while (!world.tile(x,y).isGround());
+			while ((!world.tile(x,y).isGround())||(!testSpawnPossible(x,y,i)));
 
 			this.listePNJ.get(i).x = x;
 			this.listePNJ.get(i).y = y;
@@ -182,6 +194,32 @@ public class PlayScreen implements Screen {
 
 
 	}
+
+	private boolean testChangerNiveau(){
+		if(joueur.getClef()){
+			//ATTENTION AUX BORDS DE LA MAP
+			boolean test=false;
+			if(world.tile(joueur.x+1,joueur.y)==Element.DOOR){
+				test=true;
+			}
+			else if(world.tile(joueur.x,joueur.y+1)==Element.DOOR){
+				test=true;
+			}
+			else if(world.tile(joueur.x,joueur.y-1)==Element.DOOR){
+				test=true;
+			}
+			else if(world.tile(joueur.x-1,joueur.y)==Element.DOOR){
+				test=true;
+			}
+			if(test==true){
+				joueur.laisserClef();
+				return true;
+			}
+
+		}
+		return false;
+	}
+
 	
 	/**
      * Methode qui permet a l'utilisateur d'interagir avec l'utilisateur.
@@ -191,13 +229,15 @@ public class PlayScreen implements Screen {
 	//@Override
 	public Screen respondToUserInput(KeyEvent key) {
 		switch (key.getKeyCode()){
-			case KeyEvent.VK_ESCAPE: return new LoseScreen();
-			case KeyEvent.VK_ENTER: return new WinScreen();
+			case KeyEvent.VK_ESCAPE: return new LoseScreen(); // a enlever
+			case KeyEvent.VK_ENTER: return new WinScreen(); //a enlever
 			case KeyEvent.VK_LEFT: joueur.moveBy(-1, 0); break;
 			case KeyEvent.VK_RIGHT: joueur.moveBy( 1, 0); break;
 			case KeyEvent.VK_UP: joueur.moveBy( 0,-1); break;
 			case KeyEvent.VK_DOWN: joueur.moveBy( 0, 1); break;
 			case KeyEvent.VK_R: joueur.ramasserObjet(world); break;
+			case KeyEvent.VK_O:
+				if(testChangerNiveau()) return new PlayScreen(niveau+1, joueur.getArme(), joueur.getSort(), this.difficulte, joueur.getVie(), joueur.getArgent());
 		}
 		
 		return this;
