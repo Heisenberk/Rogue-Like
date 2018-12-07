@@ -1,6 +1,8 @@
 package fr.uvsq.inf103.rogue_like.world;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.ListIterator;
 
 /**
  * Classe Creature representant le joueur et le PNJ.
@@ -72,6 +74,17 @@ public class Creature {
 		} /*else if (tile.isDiggable()) {
 			creature.dig(x, y);
 		}*/
+	}
+
+	public void playerMoveBy(int mx, int my, ArrayList<PNJ> listePNJ){
+		ListIterator i1=listePNJ.listIterator();
+		boolean test=true;
+		for(int i=0; i<listePNJ.size(); i++){
+			if((listePNJ.get(i).x==x+mx)&&(listePNJ.get(i).y==y+my)){
+				test=false;
+			}
+		}
+		if(test==true) onEnter(x+mx, y+my, world.tile(x+mx, y+my));
 	}
 
 	/**

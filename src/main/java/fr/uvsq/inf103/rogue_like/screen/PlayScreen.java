@@ -235,10 +235,10 @@ public class PlayScreen implements Screen {
 		switch (key.getKeyCode()){
 			case KeyEvent.VK_ESCAPE: return new LoseScreen(); // a enlever
 			case KeyEvent.VK_ENTER: return new WinScreen(); //a enlever
-			case KeyEvent.VK_LEFT: joueur.moveBy(-1, 0); break;
-			case KeyEvent.VK_RIGHT: joueur.moveBy( 1, 0); break;
-			case KeyEvent.VK_UP: joueur.moveBy( 0,-1); break;
-			case KeyEvent.VK_DOWN: joueur.moveBy( 0, 1); break;
+			case KeyEvent.VK_LEFT: joueur.playerMoveBy(-1, 0, listePNJ); break;
+			case KeyEvent.VK_RIGHT: joueur.playerMoveBy( 1, 0, listePNJ); break;
+			case KeyEvent.VK_UP: joueur.playerMoveBy( 0,-1, listePNJ); break;
+			case KeyEvent.VK_DOWN: joueur.playerMoveBy( 0, 1, listePNJ); break;
 			case KeyEvent.VK_R: joueur.ramasserObjet(world); break;
 			case KeyEvent.VK_O:
 				if(testChangerNiveau()) return new PlayScreen(niveau+1, joueur.getArme(), joueur.getSort(), this.difficulte, joueur.getVie(), joueur.getArgent());
