@@ -8,20 +8,22 @@ public enum Arme{
 	/**
 	 * Differents types d'armes.
 	 */
-	AUCUNE_ARME("Aucune arme"),
-	COUTEAU("Couteau"),
-	EPEE("Epee"), 
-	BATTE_BASEBALL("Batte"),
+	AUCUNE_ARME("Aucune arme",1),
+	COUTEAU("Couteau",3),
+	EPEE("Epee",4),
+	BATTE_BASEBALL("Batte",5),
 
 	/**
 	 * Enumeration supplementaire pour connaitre le nombre d'armes au total.
 	 */
-	NB_ARMES("null");
+	NB_ARMES("null",0);
 
 	/**
 	 * Attribut Nom permettant de l'écrire dans le jeu.
 	 */
 	private String nom;
+
+	private int degats;
 
 	/**
 	 * Accesseur de nom.
@@ -31,11 +33,14 @@ public enum Arme{
 		return nom;
 	}
 
+	public int getDegats(){ return degats;}
+
 	/**
 	 * Constructeur de Arme.
 	 * @param nom de l'arme.
 	 */
-	private Arme(String nom){
+	private Arme(String nom, int degats){
 		this.nom=nom;
+		this.degats=degats;
 	}
 }

@@ -135,6 +135,35 @@ public class Player extends Creature{
 
 	}
 
+	public String attaquerPNJ(ArrayList <PNJ> listePNJ){
+		PNJ pnj;
+		boolean estAttaque=false;
+		ListIterator i1 = listePNJ.listIterator();
+		for (int i = 0; i < listePNJ.size(); i++) {
+			pnj = listePNJ.get(i);
+			if((pnj.x==this.x+1)&&(pnj.y==this.y)){
+				estAttaque=true;
+			}
+			else if((pnj.x==this.x)&&(pnj.y==this.y+1)){
+				estAttaque=true;
+			}
+			else if((pnj.x==this.x-1)&&(pnj.y==this.y)){
+				estAttaque=true;
+			}
+			else if((pnj.x==this.x)&&(pnj.y==this.y-1)){
+				estAttaque=true;
+			}
+			if(estAttaque==true){
+				if(pnj.EtreAttaque(this)==false){
+					listePNJ.remove(pnj);
+					return "PNJ mort.";
+				}
+			}
+			estAttaque=false;
+		}
+		return null;
+	}
+
 	public void ramasserObjet(World world){
 		Element element=world.tile(this.x, this.y);
 		if(element==Element.MONEY){

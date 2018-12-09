@@ -239,11 +239,14 @@ public class PlayScreen implements Screen {
 			case KeyEvent.VK_RIGHT: joueur.playerMoveBy( 1, 0, listePNJ); break;
 			case KeyEvent.VK_UP: joueur.playerMoveBy( 0,-1, listePNJ); break;
 			case KeyEvent.VK_DOWN: joueur.playerMoveBy( 0, 1, listePNJ); break;
-			case KeyEvent.VK_R: joueur.ramasserObjet(world); break;
+			case KeyEvent.VK_R: joueur.ramasserObjet(world); break; //mettre dans la classe Player
 			case KeyEvent.VK_O:
 				if(testChangerNiveau()) return new PlayScreen(niveau+1, joueur.getArme(), joueur.getSort(), this.difficulte, joueur.getVie(), joueur.getArgent());
 			case KeyEvent.VK_P:
 				messageTemporaire=joueur.faireEchangeVillageois(this.listePNJ); break;
+			case KeyEvent.VK_A:
+				messageTemporaire=joueur.attaquerPNJ(this.listePNJ); break;
+
 		}
 		
 		return this;

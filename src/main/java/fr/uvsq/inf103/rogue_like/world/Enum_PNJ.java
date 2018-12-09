@@ -59,6 +59,7 @@ public enum Enum_PNJ{
         return this.color;
     }
 
+
     /**
      * Accesseur du nombre de vies du PNJ.
      * @return nombre de vies du PNJ.
