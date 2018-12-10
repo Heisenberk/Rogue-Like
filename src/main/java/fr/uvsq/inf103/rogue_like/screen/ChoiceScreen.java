@@ -2,9 +2,7 @@ package fr.uvsq.inf103.rogue_like.screen;
 
 import java.awt.event.KeyEvent;
 import asciiPanel.AsciiPanel;
-import fr.uvsq.inf103.rogue_like.world.Difficulte;
-import fr.uvsq.inf103.rogue_like.world.Sort;
-import fr.uvsq.inf103.rogue_like.world.Arme;
+import fr.uvsq.inf103.rogue_like.world.*;
 
 /**
  * Classe StartScreen qui s'affichera quand l'utilisateur aura demarrer le jeu.
@@ -54,7 +52,6 @@ public class ChoiceScreen implements Screen {
         terminal.writeCenter("-- Choix du sort --", 16);
         terminal.writeCenter("-- [I] AUCUN SORT - [J] INVISIBILITE - [K] FORCE --", 17);
         terminal.writeCenter("-- Appuie sur [ENTREE] pour demarrer la partie --", 19);
-
     }
 
     /**

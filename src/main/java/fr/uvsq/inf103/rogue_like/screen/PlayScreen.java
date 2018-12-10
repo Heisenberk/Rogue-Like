@@ -3,10 +3,9 @@ package fr.uvsq.inf103.rogue_like.screen;
 import java.awt.event.KeyEvent;
 import asciiPanel.AsciiPanel;
 import fr.uvsq.inf103.rogue_like.world.*;
+import fr.uvsq.inf103.rogue_like.creature.*;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.ListIterator;
 
 /**
  * Classe PlayScreen qui s'affichera quand l'utilisateur sera en train de jouer.
@@ -26,7 +25,7 @@ public class PlayScreen implements Screen {
 	/**
 	 * PJ representant le joueur en train de jouer.
 	 */
-	private Player joueur;
+	private Joueur joueur;
 	
 	/**
 	 * Liste de PNJ (pacifiques ou non).
@@ -48,6 +47,9 @@ public class PlayScreen implements Screen {
 	 */
 	private int screenHeight;
 
+	/**
+	 * Message a afficher sur l'ecran de jeu de facon temporaire.
+	 */
 	private String messageTemporaire;
 	
 	/**
@@ -63,16 +65,21 @@ public class PlayScreen implements Screen {
 		this.difficulte=difficulte;
 
 		createWorld();
-		joueur=new Player(world,arme, sort, vie, argent);
+		joueur=new Joueur(world,arme, sort, vie, argent);
 
 		createPNJ(world, difficulte);
-
 	}
 
+	/**
+	 * Methode permettant de savoir si le PNJ a faire spawner est spawnable en (x,y).
+	 * @param x coordonnees en abscisse du futur PNJ.
+	 * @param y coordonnees en ordonnee du futur PNJ.
+	 * @param rang dans la liste du PNJ a faire spawner.
+	 * @return true si le PNJ peut etre en (x,y) et false sinon.
+	 */
 	private boolean testSpawnPossible(int x, int y, int rang){
 		if((this.joueur.x==x)&&(this.joueur.y==y)) return false;
 		else{
-			ListIterator i1=this.listePNJ.listIterator();
 			for(int i=0; i<rang; i++){
 				if((this.listePNJ.get(i).x==x)&&(this.listePNJ.get(i).y==y)) return false;
 			}
@@ -80,9 +87,10 @@ public class PlayScreen implements Screen {
 		return true;
 	}
 
-	//modifier cette fonction car il est possible de generer des PNJ sur d'autres
+	/**
+	 * Methode qui permet de faire spawner un certain nombre de PNJ sur la map.
+	 */
 	private void spawnPNJ(){
-		ListIterator i1=this.listePNJ.listIterator();
 		for(int i=0; i<this.listePNJ.size(); i++){
 			int x;
 			int y;
@@ -91,14 +99,19 @@ public class PlayScreen implements Screen {
 				x = (int)(Math.random() * world.getWidth());
 				y = (int)(Math.random() * world.getHeight());
 			}
-			while ((!world.tile(x,y).isGround())||(!testSpawnPossible(x,y,i)));
+			while ((!world.getElement(x,y).isGround())||(!testSpawnPossible(x,y,i)));
 
 			this.listePNJ.get(i).x = x;
 			this.listePNJ.get(i).y = y;
 		}
 	}
 
-	// enlever difficulte
+	/**
+	 * Methode qui permet de creer un certain nombre de PNJ en fonction de la difficulte du jeu.
+	 * @param world monde sur lequel il faut faire spawner les PNJ.
+	 * @param difficulte du jeu.
+	 */
+	//a mettre dans world ?
 	private void createPNJ(World world, Difficulte difficulte){
 		this.listePNJ=new ArrayList<PNJ>();
 		int nb_pnj_agressifs;
@@ -119,9 +132,9 @@ public class PlayScreen implements Screen {
 			pnj_cree=EnumPNJ.values()[type_pnj];
 			this.listePNJ.add(new PNJ(world, pnj_cree));
 		}
+		// ajout du PNJ villageois necessaire au niveau
 		this.listePNJ.add(new PNJ(world,EnumPNJ.VILLAGEOIS));
 		spawnPNJ();
-
 	}
 
 
@@ -158,7 +171,7 @@ public class PlayScreen implements Screen {
 		
 		displayTilesCreatures(terminal, left, top);
 		
-		terminal.write(joueur.getGlyph(), joueur.x - left, joueur.y - top, joueur.getColor());
+		terminal.write(joueur.getCaractere(), joueur.x - left, joueur.y - top, joueur.getColor());
 
 		terminal.write((char)3, 1, 0, AsciiPanel.brightRed);
 		terminal.write(""+joueur.getVie()+"/10", 3, 0);
@@ -178,41 +191,42 @@ public class PlayScreen implements Screen {
 	 * @param top hauteur de la fenetre.
 	 */
 	private void displayTilesCreatures(AsciiPanel terminal, int left, int top) {
-		ListIterator i=this.listePNJ.listIterator();
 		PNJ pnj; int xx; int yy;
 		for (int x = 0; x < screenWidth; x++){
 			for (int y = 0; y < screenHeight; y++){
 				int wx = x + left;
 				int wy = y + top;
 
-				terminal.write(world.glyph(wx, wy), x, y, world.color(wx, wy));
+				terminal.write(world.getCaractere(wx, wy), x, y, world.getColor(wx, wy));
 				for(int ii=0;ii<this.listePNJ.size();ii++){
 					pnj=this.listePNJ.get(ii);
 					if(((x+left)==pnj.x)&&((y+top)==pnj.y)){ //mettre x+left et y+top
 						terminal.write(pnj.getClasse().getCaractere(), x, y, pnj.getClasse().getColor());
 					}
-
 				}
-
 			}
 		}
-
-
 	}
 
-	private boolean testChangerNiveau(){
+	/**
+	 * Methode permettant de savoir si le joueur peut changer de niveau.
+	 * La condition est le fait d'avoir la clef pour ouvrir la porte.
+	 * @return true si il peut changer de niveau et false sinon.
+	 */
+	// mettre dans world?
+	private boolean testeChangerNiveau(){
 		if(joueur.getClef()){
 			boolean test=false;
-			if(world.tile(joueur.x+1,joueur.y)==Element.DOOR){
+			if(world.getElement(joueur.x+1,joueur.y)==Element.DOOR){
 				test=true;
 			}
-			else if(world.tile(joueur.x,joueur.y+1)==Element.DOOR){
+			else if(world.getElement(joueur.x,joueur.y+1)==Element.DOOR){
 				test=true;
 			}
-			else if(world.tile(joueur.x,joueur.y-1)==Element.DOOR){
+			else if(world.getElement(joueur.x,joueur.y-1)==Element.DOOR){
 				test=true;
 			}
-			else if(world.tile(joueur.x-1,joueur.y)==Element.DOOR){
+			else if(world.getElement(joueur.x-1,joueur.y)==Element.DOOR){
 				test=true;
 			}
 			if(test==true){
@@ -224,7 +238,12 @@ public class PlayScreen implements Screen {
 		return false;
 	}
 
-	public void actionPNJ(ArrayList<PNJ> listePNJ, Player joueur){
+	/**
+	 * Methode permettant
+	 * @param listePNJ liste des PNJ a faire se deplacer.
+	 * @param joueur joueur du jeu.
+	 */
+	private void actionPNJ(ArrayList<PNJ> listePNJ, Joueur joueur){
 		//deplacement PNJ
 		PNJ pnj;
 		for(int i=0; i<listePNJ.size(); i++) {
@@ -242,25 +261,21 @@ public class PlayScreen implements Screen {
 	//@Override
 	public Screen respondToUserInput(KeyEvent key) {
 		switch (key.getKeyCode()){
-			case KeyEvent.VK_ESCAPE: return new LoseScreen(); // a enlever
-			case KeyEvent.VK_ENTER: return new WinScreen(); //a enlever
 			case KeyEvent.VK_LEFT: joueur.playerMoveBy(-1, 0, listePNJ); break;
 			case KeyEvent.VK_RIGHT: joueur.playerMoveBy( 1, 0, listePNJ); break;
 			case KeyEvent.VK_UP: joueur.playerMoveBy( 0,-1, listePNJ); break;
 			case KeyEvent.VK_DOWN: joueur.playerMoveBy( 0, 1, listePNJ); break;
 			case KeyEvent.VK_R: joueur.ramasserObjet(world); break; //mettre dans la classe Player
 			case KeyEvent.VK_O:
-				if(testChangerNiveau()) return new PlayScreen(niveau+1, joueur.getArme(), joueur.getSort(), this.difficulte, joueur.getVie(), joueur.getArgent());
+				if(testeChangerNiveau()) return new PlayScreen(niveau+1, joueur.getArme(), joueur.getSort(), this.difficulte, joueur.getVie(), joueur.getArgent());
 			case KeyEvent.VK_P:
 				messageTemporaire=joueur.faireEchangeVillageois(this.listePNJ); break;
 			case KeyEvent.VK_A:
 				messageTemporaire=joueur.attaquerPNJ(this.listePNJ); break;
-
 		}
 		actionPNJ(this.listePNJ, joueur);
 		if(joueur.getVie()==0) return new LoseScreen();
 
-		
 		return this;
 	}
 }

@@ -26,8 +26,8 @@ public class WorldTest {
 	 */
 	@Test
 	public void testAffectationElement() {
-		w.affectationElement(1,1,Element.FLOOR);
-		assertEquals(w.getPosition(1,1),Element.FLOOR);
+		w.setElement(1,1,Element.FLOOR);
+		assertEquals(w.getElement(1,1),Element.FLOOR);
 	}
 
 	/**

@@ -23,6 +23,9 @@ public enum Arme{
 	 */
 	private String nom;
 
+	/**
+	 * Attribut representant le nombre de degats que provoque l'arme.
+	 */
 	private int degats;
 
 	/**
@@ -33,6 +36,10 @@ public enum Arme{
 		return nom;
 	}
 
+	/**
+	 * Accesseur du nombre de degats de l'arme.
+	 * @return nombre de degats provoques par l'arme.
+	 */
 	public int getDegats(){ return degats;}
 
 	/**

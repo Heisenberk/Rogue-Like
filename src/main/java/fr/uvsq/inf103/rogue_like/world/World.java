@@ -1,10 +1,8 @@
 package fr.uvsq.inf103.rogue_like.world;
 
-import java.awt.Color;
+import fr.uvsq.inf103.rogue_like.creature.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ListIterator;
+import java.awt.Color;
 
 /**
  * Classe World representant la map sur laquelle joue l'utilisateur.
@@ -22,15 +20,15 @@ public class World {
     private int width;
 
     /**
+     * Largeur de la map.
+     */
+    private int height;
+
+    /**
      * Accesseur de la longueur de la map.
      * @return longueur de la map.
      */
     public int getWidth() { return width; }
-
-    /**
-     * Largeur de la map.
-     */
-    private int height;
 
     /**
      * Accesseur de la largeur de la map.
@@ -54,7 +52,7 @@ public class World {
      * @param y ordonnee de la case.
      * @return Element representant la case.
      */
-    public Element tile(int x, int y){
+    public Element getElement(int x, int y){
         if (x < 0 || x >= width || y < 0 || y >= height)
             return Element.BOUNDS;
         else
@@ -67,8 +65,8 @@ public class World {
      * @param y ordonnee de la case.
      * @return char representant le caractere ASCII.
      */
-	public char glyph(int x, int y){
-        return tile(x, y).getCaractere();
+	public char getCaractere(int x, int y){
+        return getElement(x, y).getCaractere();
     }
 
 
@@ -78,8 +76,8 @@ public class World {
      * @param y ordonnee de la case.
      * @return couleur de la case.
      */
-	public Color color(int x, int y){
-        return tile(x, y).getColor();
+	public Color getColor(int x, int y){
+        return getElement(x, y).getColor();
     }
 
     /**
@@ -94,25 +92,19 @@ public class World {
             x = (int)(Math.random() * width);
             y = (int)(Math.random() * height);
         }
-        while (!tile(x,y).isGround());
+        while (!getElement(x,y).isGround());
 
         creature.x = x;
         creature.y = y;
     }
 
-    /*public void addAtEmptyLocation(Creature creature, Player player, ArrayList <PNJ> listePNJ){
-
-    }*/
-
-    public Element getPosition(int x,int y)
-    {
-    	return element[x][y];
-    }
-    /*public Element[][] getElement()
-    {
-    	return element;
-    }*/
-    public void affectationElement(int x,int y,Element e)
+    /**
+     * Methode permettant de modifier la nature d'une case de la map.
+     * @param x abscisse de la case a modifier.
+     * @param y ordonnee de la case a modifier.
+     * @param e nature de la future case a modifier.
+     */
+    public void setElement(int x,int y,Element e)
     {
     	element[x][y]=e;
     }

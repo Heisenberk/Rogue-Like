@@ -2,10 +2,7 @@ package fr.uvsq.inf103.rogue_like.screen;
 
 import java.awt.event.KeyEvent;
 import asciiPanel.AsciiPanel;
-import fr.uvsq.inf103.rogue_like.world.Difficulte;
-import fr.uvsq.inf103.rogue_like.world.Sort;
-import fr.uvsq.inf103.rogue_like.world.Arme;
-
+import fr.uvsq.inf103.rogue_like.world.*;
 
 /**
  * Classe StartScreen qui s'affichera quand l'utilisateur aura demarrer le jeu.

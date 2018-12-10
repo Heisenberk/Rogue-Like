@@ -1,4 +1,4 @@
-package fr.uvsq.inf103.rogue_like.world;
+package fr.uvsq.inf103.rogue_like.creature;
 
 import asciiPanel.AsciiPanel;
 import java.awt.Color;
@@ -21,11 +21,10 @@ public enum EnumPNJ{
      */
     private char caractere;
 
+    /**
+     * Nom utilise pour decrire le PNJ dans le jeu.
+     */
     private String nom;
-
-    public String getNom(){
-        return this.nom;
-    }
 
     /**
      * Couleur representant le PNJ.
@@ -37,6 +36,9 @@ public enum EnumPNJ{
      */
     private int vie;
 
+    /**
+     * Nombre de degats du PNJ.
+     */
     private int degats;
 
     /**
@@ -69,7 +71,6 @@ public enum EnumPNJ{
         return this.color;
     }
 
-
     /**
      * Accesseur du nombre de vies du PNJ.
      * @return nombre de vies du PNJ.
@@ -78,8 +79,20 @@ public enum EnumPNJ{
         return this.vie;
     }
 
+    /**
+     * Accesseur des degats du PNJ en question.
+     * @return degats du PNJ.
+     */
     public int getDegats() {
         return this.degats;
+    }
+
+    /**
+     * Accesseur du nom du PNJ.
+     * @return nom du PNJ.
+     */
+    public String getNom(){
+        return this.nom;
     }
 
 }
