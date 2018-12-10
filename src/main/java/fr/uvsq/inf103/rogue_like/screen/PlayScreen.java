@@ -224,6 +224,15 @@ public class PlayScreen implements Screen {
 		return false;
 	}
 
+	public void actionPNJ(ArrayList<PNJ> listePNJ, Player joueur){
+		//deplacement PNJ
+		PNJ pnj;
+		for(int i=0; i<listePNJ.size(); i++) {
+			pnj = listePNJ.get(i);
+			pnj.seDeplacer(joueur, listePNJ);
+		}
+	}
+
 	
 	/**
      * Methode qui permet a l'utilisateur d'interagir avec l'utilisateur.
@@ -248,6 +257,9 @@ public class PlayScreen implements Screen {
 				messageTemporaire=joueur.attaquerPNJ(this.listePNJ); break;
 
 		}
+		actionPNJ(this.listePNJ, joueur);
+		if(joueur.getVie()==0) return new LoseScreen();
+
 		
 		return this;
 	}

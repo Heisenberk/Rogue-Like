@@ -12,7 +12,7 @@ public class Creature {
 	/**
 	 * Monde dans lequel est le joueur ou le PNJ.
 	 */
-	private World world;
+	protected World world;
 
 	/**
 	 * Coordonnees en abscisse de la creature.
@@ -76,22 +76,33 @@ public class Creature {
 		}*/
 	}
 
-	public void playerMoveBy(int mx, int my, ArrayList<PNJ> listePNJ){
-		ListIterator i1=listePNJ.listIterator();
-		boolean test=true;
-		for(int i=0; i<listePNJ.size(); i++){
-			if((listePNJ.get(i).x==x+mx)&&(listePNJ.get(i).y==y+my)){
-				test=false;
-			}
-		}
-		if(test==true) onEnter(x+mx, y+my, world.tile(x+mx, y+my));
-	}
+
+
+    //CHANGER LE NOM ET ENLEVER PLAYER DE PLAYERMOVEBY
+    //mettre ca dans Player et pas ds Creature
+    //public void creatureMoveBy(int mx, int my, Player joueur,ArrayList<PNJ> listePNJ){
+		//if(etreAttire(joueur)==true) seDeplacerVers(joueur);
+        /*ListIterator i1=listePNJ.listIterator();
+        boolean test=true;
+        for(int i=0; i<listePNJ.size(); i++){
+            if(listePNJ.get(i)!=this){
+                if((listePNJ.get(i).x==x+mx)&&(listePNJ.get(i).y==y+my)){
+                    test=false;
+                }
+            }
+        }
+        if((joueur.x==x+mx)&&(joueur.y==y+my)){
+            test=false;
+        }
+        if(test==true) onEnter(x+mx, y+my, this.world.tile(x+mx, y+my));
+    }*/
 
 	/**
 	 * Deplacement de la creature.
 	 * @param mx deplacement en abscisse de la creature.
 	 * @param my deplacement en ordonnee de la creature.
 	 */
+	// A ENLEVER
 	public void moveBy(int mx, int my){
 		onEnter(x+mx, y+my, world.tile(x+mx, y+my));
 	}

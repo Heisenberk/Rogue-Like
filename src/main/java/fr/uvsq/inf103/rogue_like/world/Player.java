@@ -135,6 +135,18 @@ public class Player extends Creature{
 
 	}
 
+	// retourne false si il est mort et true si il n'est pas mort
+	public boolean etreAttaque(PNJ pnj){
+		if(this.vie-pnj.getClasse().getDegats()<=0){
+			this.vie=0;
+			return false;
+		}
+		else{
+			this.vie-=pnj.getClasse().getDegats();
+			return true;
+		}
+	}
+
 	public String attaquerPNJ(ArrayList <PNJ> listePNJ){
 		PNJ pnj;
 		boolean estAttaque=false;
@@ -154,9 +166,9 @@ public class Player extends Creature{
 				estAttaque=true;
 			}
 			if(estAttaque==true){
-				if(pnj.EtreAttaque(this)==false){
+				if(pnj.etreAttaque(this)==false){
 					listePNJ.remove(pnj);
-					return "PNJ mort.";
+					return pnj.getClasse().getNom()+" mort.";
 				}
 			}
 			estAttaque=false;
@@ -209,6 +221,19 @@ public class Player extends Creature{
 				}
 
 		}
+	}
+
+	//CHANGER LE NOM ET ENLEVER PLAYER DE PLAYERMOVEBY
+	//mettre ca dans Player et pas ds Creature
+	public void playerMoveBy(int mx, int my, ArrayList<PNJ> listePNJ){
+		ListIterator i1=listePNJ.listIterator();
+		boolean test=true;
+		for(int i=0; i<listePNJ.size(); i++){
+			if((listePNJ.get(i).x==x+mx)&&(listePNJ.get(i).y==y+my)){
+				test=false;
+			}
+		}
+		if(test==true) onEnter(x+mx, y+my, this.world.tile(x+mx, y+my));
 	}
 
 }
