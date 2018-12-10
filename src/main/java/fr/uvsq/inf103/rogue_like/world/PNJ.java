@@ -13,7 +13,7 @@ public class PNJ extends Creature{
     /**
      * Classe de la creature.
      */
-    private Enum_PNJ classe;
+    private EnumPNJ classe;
 
     private int vie;
 
@@ -29,7 +29,7 @@ public class PNJ extends Creature{
         this.possedeClef=cond;
     }
 
-    public Enum_PNJ getClasse(){
+    public EnumPNJ getClasse(){
         return this.classe;
     }
 
@@ -50,11 +50,11 @@ public class PNJ extends Creature{
      * @param world dans lequel se trouve le PNJ.
      * @param classe_pnj classe du PNJ.
      */
-    public PNJ(World world, Enum_PNJ classe_pnj){
+    public PNJ(World world, EnumPNJ classe_pnj){
         super(world, classe_pnj.getCaractere(), classe_pnj.getColor());
         this.classe=classe_pnj;
         this.vie=classe.getVie();
-        if(classe_pnj==Enum_PNJ.VILLAGEOIS){
+        if(classe_pnj==EnumPNJ.VILLAGEOIS){
             int argent_voulu=(int)(Math.random() * 7)+1;
             this.volonteArgent=argent_voulu;
             this.possedeClef=true;
@@ -114,7 +114,7 @@ public class PNJ extends Creature{
 
     public void seDeplacer(Player joueur, ArrayList<PNJ> listePNJ){
         int mx, my; mx=my=0;
-        if((this.etreAttire(joueur))&&(this.getClasse()!=Enum_PNJ.VILLAGEOIS)){ //le pnj le suit
+        if((this.etreAttire(joueur))&&(this.getClasse()!=EnumPNJ.VILLAGEOIS)){ //le pnj le suit
 
             if((Math.abs(joueur.y-this.y)<=6)&&(joueur.y<this.y)&&(Math.abs(joueur.x-this.x)<=1)){ //zone 4
                 mx=0; my=-1;
@@ -156,7 +156,7 @@ public class PNJ extends Creature{
             test=false;
         }
         if(test==true) onEnter(x+mx, y+my, this.world.tile(x+mx, y+my));
-        if(this.getClasse()!=Enum_PNJ.VILLAGEOIS) this.attaquerJoueur(joueur);
+        if(this.getClasse()!=EnumPNJ.VILLAGEOIS) this.attaquerJoueur(joueur);
 
     }
 

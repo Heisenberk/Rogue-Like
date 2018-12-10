@@ -92,12 +92,12 @@ public class Player extends Creature{
 		ListIterator i1 = listePNJ.listIterator();
 		for (int i = 0; i < listePNJ.size(); i++) {
 			pnj = listePNJ.get(i);
-			if ((pnj.getClasse() == Enum_PNJ.VILLAGEOIS) && (pnj.x == x + 1) && (pnj.y == y)) return pnj;
-			else if ((pnj.getClasse() == Enum_PNJ.VILLAGEOIS) && (pnj.x == x - 1) && (pnj.y == y))
+			if ((pnj.getClasse() == EnumPNJ.VILLAGEOIS) && (pnj.x == x + 1) && (pnj.y == y)) return pnj;
+			else if ((pnj.getClasse() == EnumPNJ.VILLAGEOIS) && (pnj.x == x - 1) && (pnj.y == y))
 				return pnj;
-			else if ((pnj.getClasse() == Enum_PNJ.VILLAGEOIS) && (pnj.x == x) && (pnj.y == y + 1))
+			else if ((pnj.getClasse() == EnumPNJ.VILLAGEOIS) && (pnj.x == x) && (pnj.y == y + 1))
 				return pnj;
-			else if ((pnj.getClasse() == Enum_PNJ.VILLAGEOIS) && (pnj.x == x) && (pnj.y == y - 1))
+			else if ((pnj.getClasse() == EnumPNJ.VILLAGEOIS) && (pnj.x == x) && (pnj.y == y - 1))
 				return pnj;
 		}
 		return null;
@@ -107,7 +107,7 @@ public class Player extends Creature{
 		PNJ pnj=demanderEchangeAlentour(listePNJ);
 		if(pnj==null) return null;
 
-		if(pnj.getClasse()!=Enum_PNJ.VILLAGEOIS){ //si c'est un PNJ agressif
+		if(pnj.getClasse()!=EnumPNJ.VILLAGEOIS){ //si c'est un PNJ agressif
 			// affichage qu'on ne peut pas parler avec un PNJ agressif
 			return null;
 		}

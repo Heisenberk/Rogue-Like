@@ -112,14 +112,14 @@ public class PlayScreen implements Screen {
 		}
 
 		// ajout des PNJ agressifs
-		Enum_PNJ pnj_cree; int type_pnj; PNJ pnj;
+		EnumPNJ pnj_cree; int type_pnj; PNJ pnj;
 		for(int i=0;i<nb_pnj_agressifs;i++){
-			type_pnj=(int)(Math.random() * Enum_PNJ.NB_ENUM_PNJ.ordinal()); // ordinal recupere le nombre d'enum
+			type_pnj=(int)(Math.random() * EnumPNJ.NB_ENUM_PNJ.ordinal()); // ordinal recupere le nombre d'enum
 			if(type_pnj==0) type_pnj=1;
-			pnj_cree=Enum_PNJ.values()[type_pnj];
+			pnj_cree=EnumPNJ.values()[type_pnj];
 			this.listePNJ.add(new PNJ(world, pnj_cree));
 		}
-		this.listePNJ.add(new PNJ(world,Enum_PNJ.VILLAGEOIS));
+		this.listePNJ.add(new PNJ(world,EnumPNJ.VILLAGEOIS));
 		spawnPNJ();
 
 	}

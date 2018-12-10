@@ -6,7 +6,7 @@ import java.awt.Color;
 /**
  * Enumerations des differentes classes de PNJ possible.
  */
-public enum Enum_PNJ{
+public enum EnumPNJ{
 
     /**
      * Un PNJ peut etre agressif (zombie ou sorcier) ou pacifique (villageois)
@@ -45,7 +45,7 @@ public enum Enum_PNJ{
      * @param color du PNJ.
      * @param vie du PNJ.
      */
-    Enum_PNJ(char caractere, String nom, Color color, int vie, int degats){
+    EnumPNJ(char caractere, String nom, Color color, int vie, int degats){
         this.caractere=caractere;
         this.nom=nom;
         this.color=color;
