@@ -76,8 +76,8 @@ public class Monde {
      * @param y ordonnee de la case.
      * @return couleur de la case.
      */
-	public Color getColor(int x, int y){
-        return getElement(x, y).getColor();
+	public Color getCouleur(int x, int y){
+        return getElement(x, y).getCouleur();
     }
 
     /**
@@ -92,7 +92,7 @@ public class Monde {
             x = (int)(Math.random() * width);
             y = (int)(Math.random() * height);
         }
-        while (!getElement(x,y).isGround());
+        while (!getElement(x,y).testerSol());
 
         creature.x = x;
         creature.y = y;

@@ -29,7 +29,7 @@ public enum EnumPNJ{
     /**
      * Couleur representant le PNJ.
      */
-    private Color color;
+    private Color couleur;
 
     /**
      * Nombre de vies pour le PNJ.
@@ -47,10 +47,10 @@ public enum EnumPNJ{
      * @param color du PNJ.
      * @param vie du PNJ.
      */
-    EnumPNJ(char caractere, String nom, Color color, int vie, int degats){
+    EnumPNJ(char caractere, String nom, Color couleur, int vie, int degats){
         this.caractere=caractere;
         this.nom=nom;
-        this.color=color;
+        this.couleur=couleur;
         this.vie=vie;
         this.degats=degats;
     }
@@ -67,8 +67,8 @@ public enum EnumPNJ{
      * Accesseur de la couleur de PNJ.
      * @return couleur du PNJ.
      */
-    public Color getColor(){
-        return this.color;
+    public Color getCouleur(){
+        return this.couleur;
     }
 
     /**

@@ -16,11 +16,6 @@ public class Joueur extends Creature{
 	private Arme arme;
 
 	/**
-	 * Nombre de vies du joueur.
-	 */
-	//private int vie;
-
-	/**
 	 * Argent possede par le joueur.
 	 */
 	private int argent;

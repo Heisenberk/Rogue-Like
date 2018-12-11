@@ -80,8 +80,8 @@ public class Creature {
 	 * @param y coordonnees des ordonnees de la position de la case.
 	 * @param tile nature de la case.
 	 */
-	public void testerDeplacement(int x, int y, Element tile){
-		if (tile.isGround()){
+	public void testerDeplacement(int x, int y, Element element){
+		if (element.testerSol()){
 			this.x = x;
 			this.y = y;
 		}

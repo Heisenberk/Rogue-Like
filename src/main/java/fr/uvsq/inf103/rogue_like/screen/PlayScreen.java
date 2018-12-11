@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import asciiPanel.AsciiPanel;
 import fr.uvsq.inf103.rogue_like.world.*;
 import fr.uvsq.inf103.rogue_like.creature.*;
+import fr.uvsq.inf103.rogue_like.exception.*;
 
 import java.util.ArrayList;
 
@@ -76,7 +77,7 @@ public class PlayScreen implements Screen {
 	 * @param rang dans la liste du PNJ a faire spawner.
 	 * @return true si le PNJ peut etre en (x,y) et false sinon.
 	 */
-	private boolean testSpawnPossible(int x, int y, int rang){
+	private boolean testerSpawnPossible(int x, int y, int rang){
 		if((this.joueur.x==x)&&(this.joueur.y==y)) return false;
 		else{
 			for(int i=0; i<rang; i++){
@@ -98,7 +99,7 @@ public class PlayScreen implements Screen {
 				x = (int)(Math.random() * monde.getWidth());
 				y = (int)(Math.random() * monde.getHeight());
 			}
-			while ((!monde.getElement(x,y).isGround())||(!testSpawnPossible(x,y,i)));
+			while ((!monde.getElement(x,y).testerSol())||(!testerSpawnPossible(x,y,i)));
 
 			this.listePNJ.get(i).x = x;
 			this.listePNJ.get(i).y = y;
@@ -110,7 +111,6 @@ public class PlayScreen implements Screen {
 	 * @param world monde sur lequel il faut faire spawner les PNJ.
 	 * @param difficulte du jeu.
 	 */
-	//a mettre dans world ?
 	private void createPNJ(Monde world, Difficulte difficulte){
 		this.listePNJ=new ArrayList<PNJ>();
 		int nb_pnj_agressifs;
@@ -118,10 +118,7 @@ public class PlayScreen implements Screen {
 		else if(difficulte==Difficulte.INTERMEDIAIRE) nb_pnj_agressifs=7;
 		else if(difficulte==Difficulte.DIFFICILE) nb_pnj_agressifs=10;
 		else if(difficulte==Difficulte.HARDCORE) nb_pnj_agressifs=20;
-		else { //DIFFICULTE PROBLEME
-			nb_pnj_agressifs=0;
-			System.out.println(difficulte.getNom()+"EXCEPTION A LANCER");
-		}
+		else throw new DifficulteException();
 
 		// ajout des PNJ agressifs
 		EnumPNJ pnj_cree; int type_pnj; PNJ pnj;
@@ -132,10 +129,10 @@ public class PlayScreen implements Screen {
 			this.listePNJ.add(new PNJ(world, pnj_cree));
 		}
 		// ajout du PNJ villageois necessaire au niveau
-		this.listePNJ.add(new PNJ(world,EnumPNJ.VILLAGEOIS));
+		boolean testAjoutVillageois=this.listePNJ.add(new PNJ(world,EnumPNJ.VILLAGEOIS));
+		if(testAjoutVillageois==false) throw new VillageoisException();
 		spawnPNJ();
 	}
-
 
 	/**
 	 * Methode privee permettant de generer le monde.
@@ -166,9 +163,9 @@ public class PlayScreen implements Screen {
 	public void displayOutput(AsciiPanel terminal) {
 		
 		int left = getScrollX();
-		int top = getScrollY(); 
-		
-		displayTilesCreatures(terminal, left, top);
+		int top = getScrollY();
+
+		afficherElementsCreatures(terminal, left, top);
 		
 		terminal.write(joueur.getCaractere(), joueur.x - left, joueur.y - top, joueur.getCouleur());
 
@@ -189,18 +186,18 @@ public class PlayScreen implements Screen {
 	 * @param left longueur de la fenetre.
 	 * @param top hauteur de la fenetre.
 	 */
-	private void displayTilesCreatures(AsciiPanel terminal, int left, int top) {
+	private void afficherElementsCreatures(AsciiPanel terminal, int left, int top) {
 		PNJ pnj; int xx; int yy;
 		for (int x = 0; x < screenWidth; x++){
 			for (int y = 0; y < screenHeight; y++){
 				int wx = x + left;
 				int wy = y + top;
 
-				terminal.write(monde.getCaractere(wx, wy), x, y, monde.getColor(wx, wy));
+				terminal.write(monde.getCaractere(wx, wy), x, y, monde.getCouleur(wx, wy));
 				for(int ii=0;ii<this.listePNJ.size();ii++){
 					pnj=this.listePNJ.get(ii);
 					if(((x+left)==pnj.x)&&((y+top)==pnj.y)){
-						terminal.write(pnj.getClasse().getCaractere(), x, y, pnj.getClasse().getColor());
+						terminal.write(pnj.getClasse().getCaractere(), x, y, pnj.getClasse().getCouleur());
 					}
 				}
 			}

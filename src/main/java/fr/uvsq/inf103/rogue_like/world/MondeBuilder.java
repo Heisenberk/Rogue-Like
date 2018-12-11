@@ -1,5 +1,7 @@
 package fr.uvsq.inf103.rogue_like.world;
 
+import fr.uvsq.inf103.rogue_like.exception.*;
+
 /**
  * Classe permettant de construire le monde.
  */
@@ -155,7 +157,20 @@ public class MondeBuilder {
      * @return MondeBuilder avec les elements sur la map.
      */
     public MondeBuilder fabriquerElements() {
-    return creerElementsAleatoires();
+        MondeBuilder m=creerElementsAleatoires();
+        int compteurPorte, compteurArgent, compteurArme;
+        compteurPorte=compteurArgent=compteurArme=0;
+        for (int x = 0; x < largeur; x++) {
+            for (int y = 0; y < longueur; y++) {
+                if(elements[x][y]==Element.DOOR) compteurPorte++;
+                else if(elements[x][y]==Element.MONEY) compteurArgent++;
+                else if((elements[x][y]==Element.COUTEAU)||(elements[x][y]==Element.EPEE)||(elements[x][y]==Element.BATTE_BASEBALL)) compteurArme++;
+            }
+        }
+        if(compteurPorte!=1) throw new PorteException(); //mettre CONSTANTES
+        if(compteurArgent!=10) throw new ArgentException();
+        if(compteurArme!=1) throw new ArmeException();
+        return m;
     }
 
     /**

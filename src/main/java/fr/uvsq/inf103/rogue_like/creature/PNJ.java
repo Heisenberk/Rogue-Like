@@ -18,11 +18,6 @@ public class PNJ extends Creature{
     private EnumPNJ classe;
 
     /**
-     * Nombre de vies du PNJ.
-     */
-    //private int vie; //mettre ca dans creature
-
-    /**
      * Volonte du PNJ a vouloir de l'argent contre la clef
      * (specifique pour le Villageois).
      */
@@ -40,7 +35,7 @@ public class PNJ extends Creature{
      * @param classe_pnj classe du PNJ.
      */
     public PNJ(Monde monde, EnumPNJ classe_pnj){
-        super(monde, classe_pnj.getCaractere(), classe_pnj.getColor());
+        super(monde, classe_pnj.getCaractere(), classe_pnj.getCouleur());
         this.classe=classe_pnj;
         this.vie=classe.getVie();
         if(classe_pnj==EnumPNJ.VILLAGEOIS){
@@ -49,7 +44,7 @@ public class PNJ extends Creature{
             this.possedeClef=true;
         }
         else{
-            this.volonteArgent=-1; //EXCEPTION A LANCER SI IL REUSSIT A PARLER AVEC UN PNJ AGRESSIF
+            this.volonteArgent=-1;
             this.possedeClef=false;
         }
     }
