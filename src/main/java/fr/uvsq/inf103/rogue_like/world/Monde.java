@@ -7,7 +7,7 @@ import java.awt.Color;
 /**
  * Classe World representant la map sur laquelle joue l'utilisateur.
  */
-public class World {
+public class Monde {
 
     /**
      * Matrice representant la map du jeu.
@@ -37,10 +37,10 @@ public class World {
     public int getHeight() { return height; }
 
     /**
-     * Constructeur de World.
+     * Constructeur de Monde.
      * @param elements matrice representant le mode a creer.
      */
-    public World(Element[][] elements){
+    public Monde(Element[][] elements){
         this.element = elements;
         this.width = elements.length;
         this.height = elements[0].length;

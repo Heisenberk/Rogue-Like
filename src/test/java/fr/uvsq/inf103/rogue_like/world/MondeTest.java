@@ -8,9 +8,9 @@ import org.junit.Test;
 /**
  * Tests unitaires sur la classe World.
  */
-public class WorldTest {
+public class MondeTest {
 
-	private	World w;
+	private	Monde w;
 	private Element[][] e;
 	/**
 	 * Permet d'initialiser les variables que l'on va tester. 
@@ -18,7 +18,7 @@ public class WorldTest {
 	@Before 
 	public void initialize() {
 		e = new Element[50][70];
-		w= new World(e);
+		w= new Monde(e);
 	}
 	
 	/**

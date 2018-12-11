@@ -12,7 +12,7 @@ import java.awt.Color;
  */
 public class CreatureTest {
 
-	private	World w;
+	private	Monde w;
 	private Element[][] e;
 	private Creature c;
 	/**
@@ -21,7 +21,7 @@ public class CreatureTest {
 	@Before 
 	public void initialize() {
 		e = new Element[70][70];
-		w= new World(e);
+		w= new Monde(e);
 		
 		for(int i=0;i<70;i++) {
 			for(int j=0;j<70;j++) {
@@ -38,7 +38,7 @@ public class CreatureTest {
 	 */
 	@Test
 	public void testGetColor() {		
-		assertEquals(c.getColor(),Color.BLACK);
+		assertEquals(c.getCouleur(),Color.BLACK);
 	}
 	/**
 	 * Tests accesseur Glyph.
@@ -52,7 +52,8 @@ public class CreatureTest {
 	 */
 	@Test
 	public void testDéplacement() {
-		c.moveBy(5, 6);
+		c.testerDeplacement(5, 6, c.monde.getElement(5, 6));
+		//c.moveBy(5, 6);
 		assertEquals(c.x,5);
 	}
 	/**
@@ -60,7 +61,8 @@ public class CreatureTest {
 	 */
 	@Test
 	public void testSiDeplacement() {
-	c.onEnter(1,0,e[0][1]);	
+		c.testerDeplacement(1, 0, e[0][1]);
+		//c.onEnter(1,0,e[0][1]);
 		assertEquals(c.getWorld().getElement(0,1),Element.FLOOR);
 	}	
 }

@@ -20,7 +20,7 @@ public class PNJ extends Creature{
     /**
      * Nombre de vies du PNJ.
      */
-    private int vie; //mettre ca dans creature
+    //private int vie; //mettre ca dans creature
 
     /**
      * Volonte du PNJ a vouloir de l'argent contre la clef
@@ -36,11 +36,11 @@ public class PNJ extends Creature{
 
     /**
      * Constructeur de PNJ.
-     * @param world dans lequel se trouve le PNJ.
+     * @param monde dans lequel se trouve le PNJ.
      * @param classe_pnj classe du PNJ.
      */
-    public PNJ(World world, EnumPNJ classe_pnj){
-        super(world, classe_pnj.getCaractere(), classe_pnj.getColor());
+    public PNJ(Monde monde, EnumPNJ classe_pnj){
+        super(monde, classe_pnj.getCaractere(), classe_pnj.getColor());
         this.classe=classe_pnj;
         this.vie=classe.getVie();
         if(classe_pnj==EnumPNJ.VILLAGEOIS){
@@ -195,8 +195,7 @@ public class PNJ extends Creature{
 
             test=false;
         }
-        if(test==true) onEnter(x+mx, y+my, this.world.getElement(x+mx, y+my));
+        if(test==true) testerDeplacement(x+mx, y+my, this.monde.getElement(x+mx, y+my));
         if(this.getClasse()!=EnumPNJ.VILLAGEOIS) this.attaquerJoueur(joueur);
     }
-
 }
