@@ -29,21 +29,21 @@ public enum Element {
     private char caractere;
 
     /**
+     * Couleur de l'element.
+     */
+    private Color couleur;
+
+    /**
      * Accesseur de la representation ASCII de l'element
      * @return char representant le caractere ASCII de l'element a afficher.
      */
     public char getCaractere() { return caractere; }
 
     /**
-     * Couleur de l'element.
-     */
-    private Color color;
-
-    /**
      * Accesseur de la couleur de l'element.
      * @return couleur de l'element.
      */
-    public Color getColor() { return color; }
+    public Color getColor() { return couleur; }
 
     /**
      * Constructeur de l'element
@@ -52,7 +52,7 @@ public enum Element {
      */
     Element(char caractere, Color color){
         this.caractere = caractere;
-        this.color = color;
+        this.couleur = color;
     }
 
     /**

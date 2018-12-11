@@ -1,4 +1,6 @@
-package fr.uvsq.inf103.rogue_like.world;
+package fr.uvsq.inf103.rogue_like.creature;
+
+import fr.uvsq.inf103.rogue_like.world.*;
 
 import static org.junit.Assert.*;
 
@@ -23,7 +25,7 @@ public class CreatureTest {
 		
 		for(int i=0;i<70;i++) {
 			for(int j=0;j<70;j++) {
-				w.affectationElement(i,j,Element.FLOOR);
+				w.setElement(i,j,Element.FLOOR);
 			}
 		}
 		c = new Creature(w,'J',Color.BLACK);
@@ -43,7 +45,7 @@ public class CreatureTest {
 	 */
 	@Test
 	public void testGetGlyph() {
-		assertEquals(c.getGlyph(),'J');
+		assertEquals(c.getCaractere(),'J');
 	}
 	/**
 	 * Tests fonction de déplacement de créature.
@@ -59,7 +61,7 @@ public class CreatureTest {
 	@Test
 	public void testSiDeplacement() {
 	c.onEnter(1,0,e[0][1]);	
-		assertEquals(c.getWorld().tile(0,1),Element.FLOOR);
+		assertEquals(c.getWorld().getElement(0,1),Element.FLOOR);
 	}	
 }
 

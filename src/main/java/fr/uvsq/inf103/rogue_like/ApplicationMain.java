@@ -1,6 +1,5 @@
 package fr.uvsq.inf103.rogue_like;
 
-
 import javax.swing.JFrame;
 import asciiPanel.AsciiPanel;
 import java.awt.event.KeyEvent;
@@ -63,8 +62,16 @@ public class ApplicationMain extends JFrame implements KeyListener {
         repaint();
     }
 
+    /**
+     * Methode interne a KeyListener.
+     * @param e KeyEvent.
+     */
     public void keyReleased(KeyEvent e) { }
 
+    /**
+     * Methode interne a KeyListener.
+     * @param e KeyEvent.
+     */
     public void keyTyped(KeyEvent e) { }
 
     /**

@@ -1,4 +1,6 @@
-package fr.uvsq.inf103.rogue_like.world;
+package fr.uvsq.inf103.rogue_like.creature;
+
+import fr.uvsq.inf103.rogue_like.world.*;
 
 import java.awt.Color;
 
@@ -10,13 +12,8 @@ public class Creature {
 	/**
 	 * Monde dans lequel est le joueur ou le PNJ.
 	 */
-	private World world;
+	protected World world;
 
-	/**
-	 * Coordonnees en abscisse de la creature.
-	 */
-	public World getWorld() {return world;}
-	
 	public int x;
 
 	/**
@@ -27,18 +24,23 @@ public class Creature {
 	/**
 	 * Caractere representant le joueur ou le PNJ.
 	 */
-	private char glyph;
-
-	/**
-	 * Accesseur du caractere de la creature.
-	 * @return caractere representant la creature.
-	 */
-	public char getGlyph() { return glyph; }
+	private char caractere;
 
 	/**
 	 * Couleur de la creature.
 	 */
 	private Color color;
+
+	/**
+	 * Coordonnees en abscisse de la creature.
+	 */
+	public World getWorld() {return world;}
+
+	/**
+	 * Accesseur du caractere de la creature.
+	 * @return caractere representant la creature.
+	 */
+	public char getCaractere() { return caractere; }
 
 	/**
 	 * Accesseur de la couleur de la creature.
@@ -49,12 +51,12 @@ public class Creature {
 	/**
 	 * Constructeur de Creature.
 	 * @param world monde dans lequel la creature se trouve.
-	 * @param glyph caractere de la creature.
+	 * @param caractere caractere de la creature.
 	 * @param color couleur de la creature.
 	 */
-	public Creature(World world, char glyph, Color color){
+	public Creature(World world, char caractere, Color color){
 		this.world = world;
-		this.glyph = glyph;
+		this.caractere = caractere;
 		this.color = color;
 		world.addAtEmptyLocation(this);
 	}
@@ -69,9 +71,7 @@ public class Creature {
 		if (tile.isGround()){
 			this.x = x;
 			this.y = y;
-		} /*else if (tile.isDiggable()) {
-			creature.dig(x, y);
-		}*/
+		}
 	}
 
 	/**
@@ -79,8 +79,9 @@ public class Creature {
 	 * @param mx deplacement en abscisse de la creature.
 	 * @param my deplacement en ordonnee de la creature.
 	 */
+	// A ENLEVER
 	public void moveBy(int mx, int my){
-		onEnter(x+mx, y+my, world.tile(x+mx, y+my));
+		onEnter(x+mx, y+my, world.getElement(x+mx, y+my));
 	}
 
 }

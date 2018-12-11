@@ -67,13 +67,13 @@ public class WorldBuilder {
 
         // on met une clé (a enlever car ce sera une creature PNJ qui lui donnera
         // contre de l'argent
-        x_random=(int)(Math.random() * width);
+        /*x_random=(int)(Math.random() * width);
         y_random=(int)(Math.random() * height);
         while(tiles[x_random][y_random]!=Element.FLOOR){
             x_random=(int)(Math.random() * width);
             y_random=(int)(Math.random() * height);
         }
-        tiles[x_random][y_random]=Element.KEY;
+        tiles[x_random][y_random]=Element.KEY;*/
 
         // on met une porte
         x_random=(int)(Math.random() * width);

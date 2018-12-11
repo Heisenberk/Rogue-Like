@@ -7,7 +7,7 @@
   <version>1.0</version>
   <packaging>jar</packaging>
 
-  <name>mon_projet</name>
+  <name>rogue_like</name>
   <url>http://maven.apache.org</url>
 
   <properties>

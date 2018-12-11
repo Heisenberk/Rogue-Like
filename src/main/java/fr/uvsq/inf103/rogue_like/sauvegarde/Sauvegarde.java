@@ -18,12 +18,12 @@ public class Sauvegarde {
 		ecris_fichier();
 	}
 	public void ecris_fichier() {
-		for(int i=0;i<90;i++) {		
+		/*for(int i=0;i<90;i++) {		
 			for(int j=0;j<32;j++) {
 				if(world.getPosition(i, j)==Element.KEY) System.out.println("0");
 				
 			}
-		}
+		}*/
 		try{
 			File ff=new File("resultat.txt"); // définir l'arborescence
 			ff.createNewFile();
@@ -39,7 +39,7 @@ public class Sauvegarde {
 					e.print("0 ");
 				
 			*/
-				switch(world.getPosition(i, j)) {
+				switch(world.getElement(i, j)) {
 				case FLOOR: e.print("0 "); break;
 				case WALL:e.print("1 "); break;
 				case MONEY:e.print("2 "); break;
