@@ -11,7 +11,9 @@ public class World {
      * Matrice representant la map du jeu.
      */
     private Element[][] element;
-
+public Element[][] getElement(){
+	return element;
+}
     /**
      * Longueur de la map.
      */

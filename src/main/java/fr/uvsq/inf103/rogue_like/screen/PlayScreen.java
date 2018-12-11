@@ -2,6 +2,7 @@ package fr.uvsq.inf103.rogue_like.screen;
 
 import java.awt.event.KeyEvent;
 import asciiPanel.AsciiPanel;
+import fr.uvsq.inf103.rogue_like.sauvegarde.Sauvegarde;
 import fr.uvsq.inf103.rogue_like.world.*;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.ListIterator;
  * Classe PlayScreen qui s'affichera quand l'utilisateur sera en train de jouer.
  */
 public class PlayScreen implements Screen {
+	
 	
 	/**
 	 * Map du monde Rogue Like.
@@ -170,14 +172,13 @@ public class PlayScreen implements Screen {
 		case KeyEvent.VK_D: joueur.moveBy( 1, 0); break;
 		case KeyEvent.VK_UP:
 		case KeyEvent.VK_Z: joueur.moveBy( 0,-1); break;
-		case KeyEvent.VK_DOWN:
-		case KeyEvent.VK_S: joueur.moveBy( 0, 1); break;
-		case KeyEvent.VK_Y: joueur.moveBy(-1,-1); break;
-		case KeyEvent.VK_U: joueur.moveBy( 1,-1); break;
-		case KeyEvent.VK_B: joueur.moveBy(-1, 1); break;
-		case KeyEvent.VK_N: joueur.moveBy( 1, 1); break;
+		case KeyEvent.VK_DOWN: joueur.moveBy( 0, 1); break;
+		case KeyEvent.VK_S: new Sauvegarde(world); break;
 		}
 		
 		return this;
 	}
+    public World getWorld() {
+    	return world;
+    }
 }
