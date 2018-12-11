@@ -60,7 +60,7 @@ public class PlayScreen implements Screen {
 	public PlayScreen(int niveau, Arme arme, Difficulte difficulte, int vie, int argent){
 		screenWidth = 80;
 		screenHeight = 21;
-		niveau=niveau;
+		this.niveau=niveau;
 		this.difficulte=difficulte;
 
 		createWorld();
@@ -199,7 +199,7 @@ public class PlayScreen implements Screen {
 				terminal.write(monde.getCaractere(wx, wy), x, y, monde.getColor(wx, wy));
 				for(int ii=0;ii<this.listePNJ.size();ii++){
 					pnj=this.listePNJ.get(ii);
-					if(((x+left)==pnj.x)&&((y+top)==pnj.y)){ //mettre x+left et y+top
+					if(((x+left)==pnj.x)&&((y+top)==pnj.y)){
 						terminal.write(pnj.getClasse().getCaractere(), x, y, pnj.getClasse().getColor());
 					}
 				}
@@ -264,7 +264,7 @@ public class PlayScreen implements Screen {
 			case KeyEvent.VK_RIGHT: joueur.seDeplacer( 1, 0, listePNJ); break;
 			case KeyEvent.VK_UP: joueur.seDeplacer( 0,-1, listePNJ); break;
 			case KeyEvent.VK_DOWN: joueur.seDeplacer( 0, 1, listePNJ); break;
-			case KeyEvent.VK_R: joueur.ramasserObjet(monde); break; //mettre dans la classe Player
+			case KeyEvent.VK_R: joueur.ramasserObjet(monde); break;
 			case KeyEvent.VK_O:
 				if(testeChangerNiveau()) return new PlayScreen(niveau+1, joueur.getArme(), this.difficulte, joueur.getVie(), joueur.getArgent());
 			case KeyEvent.VK_P:

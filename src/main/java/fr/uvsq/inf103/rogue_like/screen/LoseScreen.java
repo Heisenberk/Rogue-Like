@@ -1,7 +1,11 @@
 package fr.uvsq.inf103.rogue_like.screen;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+
 import asciiPanel.AsciiPanel;
+import fr.uvsq.inf103.rogue_like.creature.Joueur;
+import fr.uvsq.inf103.rogue_like.creature.PNJ;
 import fr.uvsq.inf103.rogue_like.world.*;
 
 /**
@@ -14,8 +18,8 @@ public class LoseScreen implements Screen {
      * @param terminal represente l'ecran du jeu.
      */
     public void displayOutput(AsciiPanel terminal) {
-        terminal.write("You lost.", 1, 1);
-        terminal.writeCenter("-- press [enter] to restart --", 22);
+        terminal.writeCenter("GAME OVER", 1);
+        terminal.writeCenter("-- appuie sur [ENTREE] pour jouer une nouvelle partie --", 10);
     }
 
     /**
@@ -24,6 +28,6 @@ public class LoseScreen implements Screen {
      * @return nouvel ecran a afficher apres l'interaction avec l'utilisateur.
      */
     public Screen respondToUserInput(KeyEvent key) {
-        return key.getKeyCode() == KeyEvent.VK_ENTER ? new PlayScreen(1,Arme.BATTE_BASEBALL, Difficulte.FACILE, 10,0) : this;
+        return key.getKeyCode() == KeyEvent.VK_ENTER ? new ChoiceScreen(Difficulte.FACILE, Arme.AUCUNE_ARME) : this;
     }
 }

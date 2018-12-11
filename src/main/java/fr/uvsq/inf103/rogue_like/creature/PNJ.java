@@ -174,7 +174,7 @@ public class PNJ extends Creature{
                 mx=-1; my=0;
             }
         }
-        else{ //deplacement aleatoire
+        else if(this.getClasse()!=EnumPNJ.VILLAGEOIS){ //deplacement aleatoire
             int deplacement = (int)(Math.random() * 4);
             if(deplacement==0) { mx=0; my=1;}
             else if(deplacement==1) {mx=0; my=-1;}
