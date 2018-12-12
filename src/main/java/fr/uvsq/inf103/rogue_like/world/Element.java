@@ -21,7 +21,8 @@ public enum Element {
     EPEE((char)244, AsciiPanel.brightWhite),
     BATTE_BASEBALL((char)124, AsciiPanel.brightWhite),
     LIFE((char)3, AsciiPanel.brightRed),
-    MONEY ('$', AsciiPanel.brightGreen);
+    MONEY ('$', AsciiPanel.brightGreen),
+    NB_ELEMENTS('w',AsciiPanel.black);
 
     /**
      * Representation ASCII de cet element.
@@ -55,6 +56,14 @@ public enum Element {
         this.couleur = color;
     }
 
+    public char setElement(int ascii) {
+    	Element e;
+    	for(int i=0;i<(Element.NB_ELEMENTS.ordinal()+1); i++) {
+    		e=Element.values()[i];
+    		if(ascii==e.getCaractere()) return e.getCaractere();    		
+    	}
+    		return 'X';
+    }
     /**
      * Methode qui teste si on peut marcher sur ce bloc.
      * @return TRUE si on peut marcher sur ce bloc et FALSE sinon.

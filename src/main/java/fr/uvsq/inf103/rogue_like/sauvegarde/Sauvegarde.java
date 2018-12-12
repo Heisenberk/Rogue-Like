@@ -56,6 +56,7 @@ public class Sauvegarde {
 				case DOOR:e.print("8 ");break;
 				default: e.print("9 ");break;
 				}*/
+					//e.print(playscreen.getWorld().getElement(i,j).ordinal());
 				e.print(playscreen.getWorld().getElement(i,j).getCaractere());
 			}
 				e.print("\n");	

@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import fr.uvsq.inf103.rogue_like.world.Element;
+
 public class Charge {
 	
 	public Charge()  {
@@ -18,13 +20,18 @@ public class Charge {
 
 			e.printStackTrace();
 		}
-		String[] line;
 
+		Element e1 = null;
         try {
         	for(int i=0;i<30*92;i++)
 			
-		     
-        	System.out.println(br.read());
+        	// AU LIEU D'ECRIRE LE NOM DE LA CLASSE
+        	//System.out.println(Element.values()[br.read()]);
+        	e1.setElement(br.read());
+        	if(e1==null) System.out.print("NTM");
+        	//System.out.print(e1.name()+" ");
+        	
+        	
 		} catch (IOException e) {
 
 			e.printStackTrace();
