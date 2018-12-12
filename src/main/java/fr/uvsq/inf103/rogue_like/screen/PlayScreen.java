@@ -54,6 +54,14 @@ public class PlayScreen implements Screen {
 	 */
 	private String messageTemporaire;
 	
+	public int getNiveau() {
+		return this.niveau;
+	}
+	
+	public Joueur getJoueur() {
+		return this.joueur;
+	}
+	
 	/**
 	 * Constructeur de PlayScreen qui permet de generer la map, le joueur et les PNJ.
 	 * @param arme du joueur.
@@ -274,7 +282,7 @@ public class PlayScreen implements Screen {
 				messageTemporaire=joueur.faireEchangeVillageois(this.listePNJ); break;
 			case KeyEvent.VK_A:
 				messageTemporaire=joueur.attaquerPNJ(this.listePNJ); break;
-			case KeyEvent.VK_S: new Sauvegarde(world); break;
+			case KeyEvent.VK_S: new Sauvegarde(this); break;
 		}
 		actionPNJ(this.listePNJ, joueur);
 		if(joueur.getVie()==0) return new LoseScreen();

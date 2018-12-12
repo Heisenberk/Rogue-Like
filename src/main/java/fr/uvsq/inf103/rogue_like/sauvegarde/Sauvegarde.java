@@ -6,15 +6,18 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 
 import fr.uvsq.inf103.rogue_like.screen.PlayScreen;
+import fr.uvsq.inf103.rogue_like.world.Arme;
+import fr.uvsq.inf103.rogue_like.world.Difficulte;
 import fr.uvsq.inf103.rogue_like.world.Element;
+import fr.uvsq.inf103.rogue_like.world.Sort;
 import fr.uvsq.inf103.rogue_like.world.World;
 
 public class Sauvegarde {
 	
-	private World world;
+	private PlayScreen playscreen;
 
-	public Sauvegarde(World world) {
-		this.world=world;
+	public Sauvegarde(PlayScreen playscreen) {
+		this.playscreen=playscreen;
 		ecris_fichier();
 	}
 	public void ecris_fichier() {
@@ -30,6 +33,8 @@ public class Sauvegarde {
 			//FileWriter ffw=new FileWriter(ff);
 		    PrintWriter e =  new PrintWriter(new BufferedWriter
 			   (new FileWriter(ff)));
+		    /*e.println(playscreen.getNiveau()+" "+playscreen.getJoueur().getVie()+ " "+playscreen.getJoueur().getArgent());
+		    e.println(playscreen.getJoueur().getArme());*/
 			for(int i=0;i<90;i++) {
 				for(int j=0;j<32;j++) {
 				/*if(world.getPosition(i, j)==Element.KEY) {
@@ -39,7 +44,7 @@ public class Sauvegarde {
 					e.print("0 ");
 				
 			*/
-				switch(world.getElement(i, j)) {
+				/*switch(world.getElement(i, j)) {
 				case FLOOR: e.print("0 "); break;
 				case WALL:e.print("1 "); break;
 				case MONEY:e.print("2 "); break;
@@ -50,7 +55,8 @@ public class Sauvegarde {
 				case BATTE_BASEBALL:e.print("7 ");break;
 				case DOOR:e.print("8 ");break;
 				default: e.print("9 ");break;
-				}
+				}*/
+				e.print(playscreen.getWorld().getElement(i,j).getCaractere());
 			}
 				e.print("\n");	
 		}

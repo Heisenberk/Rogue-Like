@@ -2,6 +2,7 @@ package fr.uvsq.inf103.rogue_like.screen;
 
 import java.awt.event.KeyEvent;
 import asciiPanel.AsciiPanel;
+import fr.uvsq.inf103.rogue_like.charge.Charge;
 import fr.uvsq.inf103.rogue_like.world.*;
 
 /**
@@ -27,7 +28,8 @@ public class StartScreen implements Screen {
     public Screen respondToUserInput(KeyEvent key) {
 		switch (key.getKeyCode()){
             case KeyEvent.VK_N: return new ChoiceScreen(Difficulte.FACILE, Arme.AUCUNE_ARME, Sort.AUCUN_SORT);
-            case KeyEvent.VK_G: return new PlayScreen(1,Arme.BATTE_BASEBALL, Sort.INVISIBILITE, Difficulte.FACILE,10,0);
+            case KeyEvent.VK_G: new Charge();
+            // case KeyEvent.VK_G: return new PlayScreen(1,Arme.BATTE_BASEBALL, Sort.INVISIBILITE, Difficulte.FACILE,10,0);
         }
         return this;
     }
