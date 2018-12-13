@@ -71,4 +71,22 @@ public enum Element {
     public boolean isGround() {
         return this!=DOOR && this != WALL && this != BOUNDS;
     }
+    
+    public Element getElement(int ascii) {
+    	//char asciii=(char) (ascii);
+    	switch( ascii) {
+    	case 250: return FLOOR;
+    	case 177: return WALL;
+    	case 'x': return BOUNDS;
+    	case 213: return KEY;
+    	case 219: return DOOR;
+    	case 196: return COUTEAU;
+    	case 244: return EPEE;
+    	case 124: return BATTE_BASEBALL;
+    	case 3:   return LIFE;
+    	case'$':  return MONEY;
+    	case'w': return NB_ELEMENTS; //exception ? clément
+		}
+		return null;
+    }
 }

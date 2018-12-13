@@ -7,13 +7,17 @@ import fr.uvsq.inf103.rogue_like.world.*;
 import fr.uvsq.inf103.rogue_like.creature.*;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Classe PlayScreen qui s'affichera quand l'utilisateur sera en train de jouer.
  */
 public class PlayScreen implements Screen {
 	
-	
+	Map<Integer,Element>[][] map;
+	public Map<Integer,Element>[][] getMap(){
+		return map;
+	}
 	/**
 	 * Map du monde Rogue Like.
 	 */

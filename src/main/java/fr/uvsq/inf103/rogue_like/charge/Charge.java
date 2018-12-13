@@ -27,8 +27,7 @@ public class Charge {
 			
         	// AU LIEU D'ECRIRE LE NOM DE LA CLASSE
         	//System.out.println(Element.values()[br.read()]);
-        	e1.setElement(br.read());
-        	if(e1==null) System.out.print("NTM");
+        	br.read();
         	//System.out.print(e1.name()+" ");
         	
         	
