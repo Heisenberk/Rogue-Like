@@ -4,8 +4,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import asciiPanel.AsciiPanel;
-import fr.uvsq.inf103.rogue_like.creature.Joueur;
-import fr.uvsq.inf103.rogue_like.creature.PNJ;
+import fr.uvsq.inf103.rogue_like.creature.*;
 import fr.uvsq.inf103.rogue_like.world.*;
 
 /**

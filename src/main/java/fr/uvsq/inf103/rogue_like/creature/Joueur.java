@@ -1,6 +1,7 @@
 package fr.uvsq.inf103.rogue_like.creature;
 
 import fr.uvsq.inf103.rogue_like.world.*;
+import fr.uvsq.inf103.rogue_like.exception.*;
 
 import asciiPanel.AsciiPanel;
 import java.util.ArrayList;
@@ -46,6 +47,14 @@ public class Joueur extends Creature{
 	 */
 	public Arme getArme(){
 		return this.arme;
+	}
+
+	/**
+	 * Modifieur de l'arme du joueur.
+	 * @param arme du joueur
+	 */
+	public void setArme(Arme arme){
+		this.arme=arme;
 	}
 
 	/**
@@ -127,6 +136,7 @@ public class Joueur extends Creature{
 	 * @return false si le joueur est mort et true s'il n'est pas mort.
 	 */
 	public boolean etreAttaque(PNJ pnj){
+		if(pnj.getClasse()==EnumPNJ.VILLAGEOIS) throw new VillageoisAgressifException();
 		if(this.vie-pnj.getClasse().getDegats()<=0){
 			this.vie=0;
 			return false;

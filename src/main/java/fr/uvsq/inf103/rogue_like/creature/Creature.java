@@ -14,6 +14,9 @@ public class Creature {
 	 */
 	protected Monde monde;
 
+	/**
+	 * Coordonnees en abscisse de la creature. 
+	 */
 	public int x;
 
 	/**
@@ -57,9 +60,7 @@ public class Creature {
 	 * Accesseur du nombre de vies de la creature.
 	 * @return entier representant le nombre de vies de la creature.
 	 */
-	public int getVie(){
-		return this.vie;
-	}
+	public int getVie(){ return this.vie; }
 
 	/**
 	 * Constructeur de Creature.

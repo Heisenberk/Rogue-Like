@@ -94,5 +94,4 @@ public enum EnumPNJ{
     public String getNom(){
         return this.nom;
     }
-
 }

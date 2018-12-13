@@ -3,6 +3,7 @@ package fr.uvsq.inf103.rogue_like.creature;
 import asciiPanel.AsciiPanel;
 
 import fr.uvsq.inf103.rogue_like.world.*;
+import fr.uvsq.inf103.rogue_like.exception.*;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -99,7 +100,8 @@ public class PNJ extends Creature{
      * @param joueur a frapper.
      * @return false si le joueur est mort et true sinon.
      */
-    private boolean frapperJoueur(Joueur joueur){
+    private boolean frapperJoueur(Joueur joueur) throws VillageoisAgressifException {
+        if(this.classe==EnumPNJ.VILLAGEOIS) throw new VillageoisAgressifException();
         joueur.etreAttaque(this);
         if(joueur.getVie()-this.getClasse().getDegats()==0){
             return false;

@@ -7,6 +7,7 @@ import asciiPanel.AsciiPanel;
  * Element possible dans un monde cree dans Rogue Like.
  */
 public enum Element {
+	
     /**
      * Elements representant le sol, les murs, les limites de jeu,
      * les cles, les portes, les armes (couteau, epee, batte), les fioles
@@ -21,7 +22,8 @@ public enum Element {
     EPEE((char)244, AsciiPanel.brightWhite),
     BATTE_BASEBALL((char)124, AsciiPanel.brightWhite),
     LIFE((char)3, AsciiPanel.brightRed),
-    MONEY ('$', AsciiPanel.brightGreen);
+    MONEY ('$', AsciiPanel.brightGreen),
+    NB_ELEMENTS('W', AsciiPanel.black);
 
     /**
      * Representation ASCII de cet element.
