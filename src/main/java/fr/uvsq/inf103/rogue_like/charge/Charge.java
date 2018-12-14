@@ -30,7 +30,7 @@ public class Charge {
 			try {
 				if(e.getCaractere()==br.read())
 					//element[i][j]=e.valueOf(e.name());
-					System.out.println(e.valueOf(e.name()));
+					System.out.println(e.valueOf(e.name()) +" "+i+j);
 			} catch (IOException e2) {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
