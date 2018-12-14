@@ -7,6 +7,7 @@ import asciiPanel.AsciiPanel;
  * Element possible dans un monde cree dans Rogue Like.
  */
 public enum Element {
+	
     /**
      * Elements representant le sol, les murs, les limites de jeu,
      * les cles, les portes, les armes (couteau, epee, batte), les fioles
@@ -44,7 +45,7 @@ public enum Element {
      * Accesseur de la couleur de l'element.
      * @return couleur de l'element.
      */
-    public Color getColor() { return couleur; }
+    public Color getCouleur() { return couleur; }
 
     /**
      * Constructeur de l'element
@@ -68,7 +69,7 @@ public enum Element {
      * Methode qui teste si on peut marcher sur ce bloc.
      * @return TRUE si on peut marcher sur ce bloc et FALSE sinon.
      */
-    public boolean isGround() {
+    public boolean testerSol() {
         return this!=DOOR && this != WALL && this != BOUNDS;
     }
     

@@ -5,6 +5,7 @@ import asciiPanel.AsciiPanel;
 import fr.uvsq.inf103.rogue_like.sauvegarde.*;
 import fr.uvsq.inf103.rogue_like.world.*;
 import fr.uvsq.inf103.rogue_like.creature.*;
+import fr.uvsq.inf103.rogue_like.exception.*;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -21,7 +22,7 @@ public class PlayScreen implements Screen {
 	/**
 	 * Map du monde Rogue Like.
 	 */
-	private World world;
+	private Monde monde;
 	
 	/**
 	 * Difficulte du jeu choisie par le joueur.
@@ -69,19 +70,18 @@ public class PlayScreen implements Screen {
 	/**
 	 * Constructeur de PlayScreen qui permet de generer la map, le joueur et les PNJ.
 	 * @param arme du joueur.
-	 * @param sort du joueur.
 	 * @param difficulte du joueur. 
 	 */
-	public PlayScreen(int level, Arme arme, Sort sort, Difficulte difficulte, int vie, int argent){
+	public PlayScreen(int niveau, Arme arme, Difficulte difficulte, int vie, int argent){
 		screenWidth = 80;
 		screenHeight = 21;
-		niveau=level;
+		this.niveau=niveau;
 		this.difficulte=difficulte;
 
 		createWorld();
-		joueur=new Joueur(world,arme, sort, vie, argent);
+		joueur=new Joueur(monde,arme, vie, argent);
 
-		createPNJ(world, difficulte);
+		createPNJ(monde, difficulte);
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class PlayScreen implements Screen {
 	 * @param rang dans la liste du PNJ a faire spawner.
 	 * @return true si le PNJ peut etre en (x,y) et false sinon.
 	 */
-	private boolean testSpawnPossible(int x, int y, int rang){
+	private boolean testerSpawnPossible(int x, int y, int rang){
 		if((this.joueur.x==x)&&(this.joueur.y==y)) return false;
 		else{
 			for(int i=0; i<rang; i++){
@@ -110,10 +110,10 @@ public class PlayScreen implements Screen {
 			int y;
 
 			do {
-				x = (int)(Math.random() * world.getWidth());
-				y = (int)(Math.random() * world.getHeight());
+				x = (int)(Math.random() * monde.getWidth());
+				y = (int)(Math.random() * monde.getHeight());
 			}
-			while ((!world.getElement(x,y).isGround())||(!testSpawnPossible(x,y,i)));
+			while ((!monde.getElement(x,y).testerSol())||(!testerSpawnPossible(x,y,i)));
 
 			this.listePNJ.get(i).x = x;
 			this.listePNJ.get(i).y = y;
@@ -125,18 +125,14 @@ public class PlayScreen implements Screen {
 	 * @param world monde sur lequel il faut faire spawner les PNJ.
 	 * @param difficulte du jeu.
 	 */
-	//a mettre dans world ?
-	private void createPNJ(World world, Difficulte difficulte){
+	private void createPNJ(Monde world, Difficulte difficulte){
 		this.listePNJ=new ArrayList<PNJ>();
 		int nb_pnj_agressifs;
 		if(difficulte==Difficulte.FACILE) nb_pnj_agressifs=5;
 		else if(difficulte==Difficulte.INTERMEDIAIRE) nb_pnj_agressifs=7;
 		else if(difficulte==Difficulte.DIFFICILE) nb_pnj_agressifs=10;
 		else if(difficulte==Difficulte.HARDCORE) nb_pnj_agressifs=20;
-		else { //DIFFICULTE PROBLEME
-			nb_pnj_agressifs=0;
-			System.out.println(difficulte.getNom()+"EXCEPTION A LANCER");
-		}
+		else throw new DifficulteException();
 
 		// ajout des PNJ agressifs
 		EnumPNJ pnj_cree; int type_pnj; PNJ pnj;
@@ -147,31 +143,31 @@ public class PlayScreen implements Screen {
 			this.listePNJ.add(new PNJ(world, pnj_cree));
 		}
 		// ajout du PNJ villageois necessaire au niveau
-		this.listePNJ.add(new PNJ(world,EnumPNJ.VILLAGEOIS));
+		boolean testAjoutVillageois=this.listePNJ.add(new PNJ(world,EnumPNJ.VILLAGEOIS));
+		if(testAjoutVillageois==false) throw new VillageoisException();
 		spawnPNJ();
 	}
-
 
 	/**
 	 * Methode privee permettant de generer le monde.
 	 */
 	private void createWorld(){
-		world = new WorldBuilder(90, 32)
-					.makeCaves()
-					.build();
+		monde = new MondeBuilder(90, 32)
+					.fabriquerElements()
+					.construire();
 	}
 	
 	/**
 	 * Methode de point de vue de la camera sur l'axe de la longueur.
 	 * @return position de la camera en longueur.
 	 */
-	public int getScrollX() { return Math.max(0, Math.min(joueur.x - screenWidth / 2, world.getWidth() - screenWidth)); }
+	public int getScrollX() { return Math.max(0, Math.min(joueur.x - screenWidth / 2, monde.getWidth() - screenWidth)); }
 	
 	/**
 	 * Methode de point de vue de la camera sur l'axe de la largeur.
 	 * @return position de la camera en largeur.
 	 */
-	public int getScrollY() { return Math.max(0, Math.min(joueur.y - screenHeight / 2, world.getHeight() - screenHeight)); }
+	public int getScrollY() { return Math.max(0, Math.min(joueur.y - screenHeight / 2, monde.getHeight() - screenHeight)); }
 	
 	/**
      * Methode qui affiche les interactions possibles avec l'utilisateur.
@@ -181,15 +177,15 @@ public class PlayScreen implements Screen {
 	public void displayOutput(AsciiPanel terminal) {
 		
 		int left = getScrollX();
-		int top = getScrollY(); 
+		int top = getScrollY();
+
+		afficherElementsCreatures(terminal, left, top);
 		
-		displayTilesCreatures(terminal, left, top);
-		
-		terminal.write(joueur.getCaractere(), joueur.x - left, joueur.y - top, joueur.getColor());
+		terminal.write(joueur.getCaractere(), joueur.x - left, joueur.y - top, joueur.getCouleur());
 
 		terminal.write((char)3, 1, 0, AsciiPanel.brightRed);
 		terminal.write(""+joueur.getVie()+"/10", 3, 0);
-		terminal.write(joueur.getArme().getNom()+ " - " + joueur.getSort().getNom(), 0, 21);
+		terminal.write(joueur.getArme().getNom(), 0, 21);
 		terminal.write("$" , 0, 22, AsciiPanel.brightGreen);
 		terminal.write(""+this.joueur.getArgent() , 2, 22);
 		if(joueur.getClef()==true) terminal.write((char)213, 0, 23, AsciiPanel.brightYellow);
@@ -204,18 +200,18 @@ public class PlayScreen implements Screen {
 	 * @param left longueur de la fenetre.
 	 * @param top hauteur de la fenetre.
 	 */
-	private void displayTilesCreatures(AsciiPanel terminal, int left, int top) {
+	private void afficherElementsCreatures(AsciiPanel terminal, int left, int top) {
 		PNJ pnj; int xx; int yy;
 		for (int x = 0; x < screenWidth; x++){
 			for (int y = 0; y < screenHeight; y++){
 				int wx = x + left;
 				int wy = y + top;
 
-				terminal.write(world.getCaractere(wx, wy), x, y, world.getColor(wx, wy));
+				terminal.write(monde.getCaractere(wx, wy), x, y, monde.getCouleur(wx, wy));
 				for(int ii=0;ii<this.listePNJ.size();ii++){
 					pnj=this.listePNJ.get(ii);
-					if(((x+left)==pnj.x)&&((y+top)==pnj.y)){ //mettre x+left et y+top
-						terminal.write(pnj.getClasse().getCaractere(), x, y, pnj.getClasse().getColor());
+					if(((x+left)==pnj.x)&&((y+top)==pnj.y)){
+						terminal.write(pnj.getClasse().getCaractere(), x, y, pnj.getClasse().getCouleur());
 					}
 				}
 			}
@@ -231,16 +227,16 @@ public class PlayScreen implements Screen {
 	private boolean testeChangerNiveau(){
 		if(joueur.getClef()){
 			boolean test=false;
-			if(world.getElement(joueur.x+1,joueur.y)==Element.DOOR){
+			if(monde.getElement(joueur.x+1,joueur.y)==Element.DOOR){
 				test=true;
 			}
-			else if(world.getElement(joueur.x,joueur.y+1)==Element.DOOR){
+			else if(monde.getElement(joueur.x,joueur.y+1)==Element.DOOR){
 				test=true;
 			}
-			else if(world.getElement(joueur.x,joueur.y-1)==Element.DOOR){
+			else if(monde.getElement(joueur.x,joueur.y-1)==Element.DOOR){
 				test=true;
 			}
-			else if(world.getElement(joueur.x-1,joueur.y)==Element.DOOR){
+			else if(monde.getElement(joueur.x-1,joueur.y)==Element.DOOR){
 				test=true;
 			}
 			if(test==true){
@@ -275,13 +271,13 @@ public class PlayScreen implements Screen {
 	//@Override
 	public Screen respondToUserInput(KeyEvent key) {
 		switch (key.getKeyCode()){
-			case KeyEvent.VK_LEFT: joueur.playerMoveBy(-1, 0, listePNJ); break;
-			case KeyEvent.VK_RIGHT: joueur.playerMoveBy( 1, 0, listePNJ); break;
-			case KeyEvent.VK_UP: joueur.playerMoveBy( 0,-1, listePNJ); break;
-			case KeyEvent.VK_DOWN: joueur.playerMoveBy( 0, 1, listePNJ); break;
-			case KeyEvent.VK_R: joueur.ramasserObjet(world); break; //mettre dans la classe Player
+			case KeyEvent.VK_LEFT: joueur.seDeplacer(-1, 0, listePNJ); break;
+			case KeyEvent.VK_RIGHT: joueur.seDeplacer( 1, 0, listePNJ); break;
+			case KeyEvent.VK_UP: joueur.seDeplacer( 0,-1, listePNJ); break;
+			case KeyEvent.VK_DOWN: joueur.seDeplacer( 0, 1, listePNJ); break;
+			case KeyEvent.VK_R: joueur.ramasserObjet(monde); break;
 			case KeyEvent.VK_O:
-				if(testeChangerNiveau()) return new PlayScreen(niveau+1, joueur.getArme(), joueur.getSort(), this.difficulte, joueur.getVie(), joueur.getArgent());
+				if(testeChangerNiveau()) return new PlayScreen(niveau+1, joueur.getArme(), this.difficulte, joueur.getVie(), joueur.getArgent());
 			case KeyEvent.VK_P:
 				messageTemporaire=joueur.faireEchangeVillageois(this.listePNJ); break;
 			case KeyEvent.VK_A:
@@ -293,7 +289,7 @@ public class PlayScreen implements Screen {
 
 		return this;
 	}
-    public World getWorld() {
-    	return world;
+    public Monde getMonde() {
+    	return monde;
     }
 }
