@@ -5,22 +5,22 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-public class WorldBuilderTest {
+public class MondeBuilderTest {
 
-	private WorldBuilder w;
+	private MondeBuilder w;
 	/**
 	 * Permet d'initialiser les variables que l'on va tester. 
 	 */
 	@Before
 	public void initialize() {
-		w = new WorldBuilder(50,50);
+		w = new MondeBuilder(50,50);
 	}
 	/**
 	 * Tests si l'élément est pas null.
 	 */
 	@Test
 	public void testConstructeur() {
-		assertNotNull(w.getElement());
+		assertNotNull(w.getElements());
 		
 	}
 	/**
@@ -29,10 +29,10 @@ public class WorldBuilderTest {
 	@Test
 	public void testExistMoney() {
 		int nbmoney=0;
-		w.makeCaves();
+		w.fabriquerElements();
 		for(int i=0;i<50;i++) {
 			for (int j=0;j<50;j++) {
-				if(w.getPosition(i, j)==Element.MONEY)
+				if(w.getElement(i, j)==Element.MONEY)
 				nbmoney++;
 			}
 		}
@@ -45,10 +45,10 @@ public class WorldBuilderTest {
 	@Test
 	public void testBuildWall() {
 		int porte=0;
-		w.makeCaves();
+		w.fabriquerElements();
 		for(int i=0;i<50;i++) {
 			for (int j=0;j<50;j++) {
-				if(w.getPosition(i, j)==Element.DOOR)
+				if(w.getElement(i, j)==Element.DOOR)
 				porte++;
 			}
 		}

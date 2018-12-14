@@ -12,8 +12,11 @@ public class Creature {
 	/**
 	 * Monde dans lequel est le joueur ou le PNJ.
 	 */
-	protected World world;
+	protected Monde monde;
 
+	/**
+	 * Coordonnees en abscisse de la creature. 
+	 */
 	public int x;
 
 	/**
@@ -29,12 +32,17 @@ public class Creature {
 	/**
 	 * Couleur de la creature.
 	 */
-	private Color color;
+	private Color couleur;
+
+	/**
+	 * Nombre de vies du PNJ.
+	 */
+	protected int vie;
 
 	/**
 	 * Coordonnees en abscisse de la creature.
 	 */
-	public World getWorld() {return world;}
+	public Monde getWorld() {return monde;}
 
 	/**
 	 * Accesseur du caractere de la creature.
@@ -46,19 +54,25 @@ public class Creature {
 	 * Accesseur de la couleur de la creature.
 	 * @return couleur de la creature.
 	 */
-	public Color getColor() { return color; }
+	public Color getCouleur() { return couleur; }
+
+	/**
+	 * Accesseur du nombre de vies de la creature.
+	 * @return entier representant le nombre de vies de la creature.
+	 */
+	public int getVie(){ return this.vie; }
 
 	/**
 	 * Constructeur de Creature.
-	 * @param world monde dans lequel la creature se trouve.
+	 * @param monde monde dans lequel la creature se trouve.
 	 * @param caractere caractere de la creature.
-	 * @param color couleur de la creature.
+	 * @param couleur couleur de la creature.
 	 */
-	public Creature(World world, char caractere, Color color){
-		this.world = world;
+	public Creature(Monde monde, char caractere, Color couleur){
+		this.monde = monde;
 		this.caractere = caractere;
-		this.color = color;
-		world.addAtEmptyLocation(this);
+		this.couleur = couleur;
+		monde.addAtEmptyLocation(this);
 	}
 
 	/**
@@ -67,21 +81,10 @@ public class Creature {
 	 * @param y coordonnees des ordonnees de la position de la case.
 	 * @param tile nature de la case.
 	 */
-	public void onEnter(int x, int y, Element tile){
-		if (tile.isGround()){
+	public void testerDeplacement(int x, int y, Element element){
+		if (element.testerSol()){
 			this.x = x;
 			this.y = y;
 		}
 	}
-
-	/**
-	 * Deplacement de la creature.
-	 * @param mx deplacement en abscisse de la creature.
-	 * @param my deplacement en ordonnee de la creature.
-	 */
-	// A ENLEVER
-	public void moveBy(int mx, int my){
-		onEnter(x+mx, y+my, world.getElement(x+mx, y+my));
-	}
-
 }

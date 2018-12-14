@@ -18,23 +18,16 @@ public class ChoiceScreen implements Screen {
 	 * Arme que l'utilisateur choisira.
 	 */
 	private Arme arme;
-	
-	/**
-	 * Sort que l'utilisateur choisira.
-	 */
-	private Sort sort;
-	
+
 	/**
 	 * Constructeur de ChoiceScreen qui permet a chaque interaction de l'utilisateur 
 	 * de modifier les parametres globaux du jeu. 
 	 * @param difficulte du jeu.
 	 * @param arme du joueur.
-	 * @param sort du joueur.
 	 */
-	public ChoiceScreen (Difficulte difficulte, Arme arme, Sort sort){
+	public ChoiceScreen (Difficulte difficulte, Arme arme){
 		this.difficulte=difficulte;
 		this.arme=arme;
-		this.sort=sort;
 	}
 
     /**
@@ -44,13 +37,11 @@ public class ChoiceScreen implements Screen {
     public void displayOutput(AsciiPanel terminal) {
         terminal.writeCenter("Choix de la partie Rogue Like", 1);
         terminal.writeCenter("Choix selectionnes : ", 2);
-        terminal.writeCenter(difficulte.getNom() + " - " +arme.getNom() + " - "+ sort.getNom(), 3, AsciiPanel.brightRed);
+        terminal.writeCenter(difficulte.getNom() + " - " +arme.getNom(), 3, AsciiPanel.brightRed);
         terminal.writeCenter("-- Difficulte de la partie --", 10);
         terminal.writeCenter("-- [A] FACILE - [B] INTERMEDIAIRE - [C] DIFFICILE - [D] HARDCORE --", 11);
         terminal.writeCenter("-- Choix de l'arme --", 13);
         terminal.writeCenter("-- [E] AUCUNE - [F] COUTEAU - [G] EPEE - [H] BATTE DE BASEBALL --", 14);
-        terminal.writeCenter("-- Choix du sort --", 16);
-        terminal.writeCenter("-- [I] AUCUN SORT - [J] INVISIBILITE - [K] FORCE --", 17);
         terminal.writeCenter("-- Appuie sur [ENTREE] pour demarrer la partie --", 19);
     }
 
@@ -69,10 +60,7 @@ public class ChoiceScreen implements Screen {
             case KeyEvent.VK_F: this.arme=Arme.COUTEAU; break;
             case KeyEvent.VK_G: this.arme=Arme.EPEE; break;
             case KeyEvent.VK_H: this.arme=Arme.BATTE_BASEBALL; break;
-            case KeyEvent.VK_I: this.sort=Sort.AUCUN_SORT; break;
-            case KeyEvent.VK_J: this.sort=Sort.INVISIBILITE; break;
-            case KeyEvent.VK_K: this.sort=Sort.FORCE; break;
-            case KeyEvent.VK_ENTER: return new PlayScreen(1, arme, sort, difficulte,10,0);
+            case KeyEvent.VK_ENTER: return new PlayScreen(1, arme, difficulte,10,0);
         }
         return this;
     }

@@ -4,24 +4,39 @@ import fr.uvsq.inf103.rogue_like.world.*;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
 import java.awt.Color;
+
 /**
- * Tests unitaires sur la classe Createur.
+ * Tests unitaires sur la classe Creature.
  */
 public class CreatureTest {
 
-	private	World w;
+	/**
+	 * Monde pour la classe Test.
+	 */
+	private	Monde w;
+
+	/**
+	 * Tableau d'elements contenant les cases du monde.
+	 */
 	private Element[][] e;
+
+	/**
+	 * Creature a initialiser et a tester.
+	 */
 	private Creature c;
+
 	/**
 	 * Permet d'initialiser les variables que l'on va tester. 
 	 */
 	@Before 
 	public void initialize() {
 		e = new Element[70][70];
-		w= new World(e);
+		w= new Monde(e);
 		
 		for(int i=0;i<70;i++) {
 			for(int j=0;j<70;j++) {
@@ -31,36 +46,30 @@ public class CreatureTest {
 		c = new Creature(w,'J',Color.BLACK);
 		c.x=0;
 		c.y=0;
-		
 	}
+
 	/**
-	 * Tests accesseur Couleur.
+	 * Test accesseur Couleur.
 	 */
 	@Test
-	public void testGetColor() {		
-		assertEquals(c.getColor(),Color.BLACK);
+	public void testGetCouleur() {
+		assertEquals(c.getCouleur(),Color.BLACK);
 	}
+
 	/**
-	 * Tests accesseur Glyph.
+	 * Test accesseur Caractere.
 	 */
 	@Test
-	public void testGetGlyph() {
+	public void testGetCaractere() {
 		assertEquals(c.getCaractere(),'J');
 	}
+
 	/**
-	 * Tests fonction de déplacement de créature.
+	 * Test de fonction qui cherche si un déplacement est possible
 	 */
 	@Test
-	public void testDéplacement() {
-		c.moveBy(5, 6);
-		assertEquals(c.x,5);
-	}
-	/**
-	 * Tests de fonction qui cherche si un déplacement est possible
-	 */
-	@Test
-	public void testSiDeplacement() {
-	c.onEnter(1,0,e[0][1]);	
+	public void testTesterDeplacement() {
+		c.testerDeplacement(1, 0, e[0][1]);
 		assertEquals(c.getWorld().getElement(0,1),Element.FLOOR);
 	}	
 }

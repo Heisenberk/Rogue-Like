@@ -7,7 +7,7 @@ import java.awt.Color;
 /**
  * Classe World representant la map sur laquelle joue l'utilisateur.
  */
-public class World {
+public class Monde {
 
     /**
      * Matrice representant la map du jeu.
@@ -39,10 +39,10 @@ public Element[][] getElement(){
     public int getHeight() { return height; }
 
     /**
-     * Constructeur de World.
+     * Constructeur de Monde.
      * @param elements matrice representant le mode a creer.
      */
-    public World(Element[][] elements){
+    public Monde(Element[][] elements){
         this.element = elements;
         this.width = elements.length;
         this.height = elements[0].length;
@@ -78,8 +78,8 @@ public Element[][] getElement(){
      * @param y ordonnee de la case.
      * @return couleur de la case.
      */
-	public Color getColor(int x, int y){
-        return getElement(x, y).getColor();
+	public Color getCouleur(int x, int y){
+        return getElement(x, y).getCouleur();
     }
 
     /**
@@ -94,7 +94,7 @@ public Element[][] getElement(){
             x = (int)(Math.random() * width);
             y = (int)(Math.random() * height);
         }
-        while (!getElement(x,y).isGround());
+        while (!getElement(x,y).testerSol());
 
         creature.x = x;
         creature.y = y;
