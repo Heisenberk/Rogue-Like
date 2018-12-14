@@ -1,9 +1,14 @@
 package fr.uvsq.inf103.rogue_like.charge;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 
 import fr.uvsq.inf103.rogue_like.world.Element;
 
@@ -14,29 +19,44 @@ public class Charge {
 		Lire();
 	}
 	public   void Lire()   {
-		element =new Element[92][30];
+		element =new Element[90][32];
         BufferedReader br = null;
 		try {
-			br = new BufferedReader(new FileReader("resultat.txt"));
+			  InputStream stream = new FileInputStream("resultat.txt");
+			  Reader rawReader = new InputStreamReader(stream, "utf-8");
+			  br = new BufferedReader(rawReader);
+			//br = new BufferedReader(new FileReader("resultat.txt"));
 		} catch (FileNotFoundException e) {
 
 			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		char c=250;
+		int num=0;
 		Element e1 = null;
 		for(int i=0;i<90;i++) {
 			for(int j=0;j<32;j++) {
-		for(Element e : Element.values()) {
-			try {
-				if(e.getCaractere()==br.read())
+				try {
+					num=br.read();
+				} catch (IOException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+				for(Element e : Element.values()) {
+
+					if(e.getCaractere()==num)
+						element[i][j]=e.valueOf(e.name());
+						System.out.println(element[i][j] +""+i+j);
 					//element[i][j]=e.valueOf(e.name());
-					System.out.println(e.valueOf(e.name()) +" "+i+j);
-			} catch (IOException e2) {
-				// TODO Auto-generated catch block
-				e2.printStackTrace();
+					
+
 			}
-		}	
+		}
 	}
+
+
 }			
 		//}
         /*try {
@@ -56,4 +76,4 @@ public class Charge {
 		*/
 
 	}
-}
+
