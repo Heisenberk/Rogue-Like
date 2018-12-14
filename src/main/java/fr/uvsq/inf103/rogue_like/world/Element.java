@@ -65,6 +65,16 @@ public enum Element {
     	}
     		return 'X';
     }
+
+    public Element getElement(char ascii) {
+        Element e;
+        for(int i=0;i<(Element.NB_ELEMENTS.ordinal()+1); i++) {
+            e=Element.values()[i];
+            if(ascii==e.getCaractere()) return e;
+        }
+        return Element.NB_ELEMENTS;
+    }
+
     /**
      * Methode qui teste si on peut marcher sur ce bloc.
      * @return TRUE si on peut marcher sur ce bloc et FALSE sinon.
