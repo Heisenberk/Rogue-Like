@@ -75,7 +75,7 @@ public enum Element {
     public Element getElement(int ascii) {
     	//char asciii=(char) (ascii);
     	switch( ascii) {
-    	case 250: return FLOOR;
+    	case 250: return Element.FLOOR;
     	case 177: return WALL;
     	case 'x': return BOUNDS;
     	case 213: return KEY;
@@ -87,6 +87,6 @@ public enum Element {
     	case'$':  return MONEY;
     	case'w': return NB_ELEMENTS; //exception ? clément
 		}
-		return null;
+		return NB_ELEMENTS;
     }
 }
