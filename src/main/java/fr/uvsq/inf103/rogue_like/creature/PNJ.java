@@ -45,7 +45,7 @@ public class PNJ extends Creature{
             this.possedeClef=true;
         }
         else{
-            this.volonteArgent=-1;
+            this.volonteArgent=0;
             this.possedeClef=false;
         }
     }

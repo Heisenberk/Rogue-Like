@@ -14,11 +14,7 @@ import java.util.Map;
  * Classe PlayScreen qui s'affichera quand l'utilisateur sera en train de jouer.
  */
 public class PlayScreen implements Screen {
-	
-	Map<Integer,Element>[][] map;
-	public Map<Integer,Element>[][] getMap(){
-		return map;
-	}
+
 	/**
 	 * Map du monde Rogue Like.
 	 */
@@ -65,6 +61,14 @@ public class PlayScreen implements Screen {
 	
 	public Joueur getJoueur() {
 		return this.joueur;
+	}
+
+	public ArrayList <PNJ> getListePNJ(){
+		return this.listePNJ;
+	}
+
+	public Difficulte getDifficulte(){
+		return this.difficulte;
 	}
 	
 	/**
@@ -282,7 +286,10 @@ public class PlayScreen implements Screen {
 				messageTemporaire=joueur.faireEchangeVillageois(this.listePNJ); break;
 			case KeyEvent.VK_A:
 				messageTemporaire=joueur.attaquerPNJ(this.listePNJ); break;
-			case KeyEvent.VK_S: new Sauvegarde(this); break;
+			case KeyEvent.VK_S:
+				new Sauvegarde(this);
+				messageTemporaire="Partie Sauvegardee";
+				break;
 		}
 		actionPNJ(this.listePNJ, joueur);
 		if(joueur.getVie()==0) return new LoseScreen();
