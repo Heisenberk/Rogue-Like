@@ -14,71 +14,115 @@ import java.io.BufferedInputStream;
 
 import fr.uvsq.inf103.rogue_like.world.*;
 import fr.uvsq.inf103.rogue_like.creature.*;
+import fr.uvsq.inf103.rogue_like.exception.*;
+
+import java.util.ArrayList;
 
 public class Chargement {
 
-	private Element[][] element;
-	public Chargement()  {
-		lireSauvegarde();
-	}
+	//private Element[][] element; // a enlever
 
-	public void lireSauvegarde(){
-		element=new Element[90][32];
+	private Monde monde;
+
+	private int niveau;
+
+	private Joueur joueur;
+
+	private Difficulte difficulte;
+
+	private ArrayList <PNJ> listePNJ;
+
+	public Chargement() {
 		try{
-			DataInputStream out=new DataInputStream(new BufferedInputStream(new FileInputStream("save/save.txt")));
-			int i=out.readInt();
-			int nbPNJ;
-			System.out.println("Level:"+i);
-			i=out.readInt();
-			System.out.println("Vie:"+i);
-			i=out.readInt();
-			System.out.println("Argent:"+i);
-			i=out.readInt();
-			System.out.println("Arme:"+Arme.values()[i]);
-			i=out.readInt();
-			System.out.println("Clef:"+i);
-			i=out.readInt();
-			System.out.println("Joueur X:"+i);
-			i=out.readInt();
-			System.out.println("Joueur Y:"+i);
-			i=out.readInt();
-			System.out.println("Difficulte:"+Difficulte.values()[i]);
-			nbPNJ=out.readInt();
-			System.out.println("Nb PNJ:"+nbPNJ);
-			for(int k=0;k<nbPNJ;k++){
-				i=out.readInt();
-				System.out.println("PNJ Classe:"+EnumPNJ.values()[i]);
-				i=out.readInt();
-				System.out.println("PNJ X:"+i);
-				i=out.readInt();
-				System.out.println("PNJ Y:"+i);
-				i=out.readInt();
-				System.out.println("PNJ Vie:"+i);
-				i=out.readInt();
-				System.out.println("PNJ VolonteArgent:"+i);
-				i=out.readInt();
-				System.out.println("PNJ Clef:"+i);
-			}
-			System.out.println("//////////////////////");
-			char c; Element element=null;
-			for(i=0;i<90;i++) {
-				for(int j=0;j<32;j++) {
-					c=out.readChar();
-					for(Element e : Element.values()) {
-						if(e.getCaractere()==c) element=e.valueOf(e.name());
-					}
-
-					System.out.println(element);
-				}
-			}
-
-
-
-
+			this.lireSauvegarde();
 		}
-		catch(Exception e){}
-
+		catch(Exception e){
+			throw new ChargementException();
+		}
 	}
 
+	public Difficulte getDifficulte(){
+		return this.difficulte;
+	}
+
+	public int getNiveau(){
+		return this.niveau;
+	}
+
+	public Monde getMonde(){
+		return this.monde;
+	}
+
+	public Joueur getJoueur(){
+		return this.joueur;
+	}
+
+	public ArrayList <PNJ> getListePNJ(){
+		return this.listePNJ;
+	}
+
+	// verifier les exceptions lancees
+	public void lireSauvegarde() throws IOException, NullPointerException, FileNotFoundException{
+		Element[][] element;
+		element=new Element[90][32];
+		DataInputStream out=new DataInputStream(new BufferedInputStream(new FileInputStream("save/save.txt")));
+
+		//System.out.println("//////////////////////");
+		char c;
+		int i;
+		for(i=0;i<90;i++) {
+			for(int j=0;j<32;j++) {
+				c=out.readChar();
+				for(Element e : Element.values()) {
+					if(e.getCaractere()==c) element[i][j]=e.valueOf(e.name());
+				}
+
+				//System.out.println(element[i][j]);
+			}
+		}
+		this.monde=new Monde(element);
+
+		int nbPNJ; int vieJoueur, argentJoueur, joueurX, joueurY;
+		boolean clef; Arme armeJoueur;
+		i=out.readInt(); this.niveau=i; //level initialise
+		//System.out.println("Level:"+this.niveau);
+		vieJoueur=out.readInt();
+		argentJoueur=out.readInt();
+		i=out.readInt(); armeJoueur=Arme.values()[i];
+		i=out.readInt();
+		if(i==0) clef=false; else clef=true;
+		joueurX=out.readInt();
+		joueurY=out.readInt();
+		this.joueur=new Joueur(this.monde, armeJoueur, vieJoueur, argentJoueur, clef, joueurX, joueurY);
+		/*System.out.println("Vie:"+joueur.getVie());
+		System.out.println("Argent:"+joueur.getArgent());
+		System.out.println("Arme:"+joueur.getArme());
+		System.out.println("Clef:"+ joueur.getClef());
+		System.out.println("Joueur X:"+joueur.x);
+		System.out.println("Joueur Y:"+joueur.y);*/
+		i=out.readInt(); this.difficulte=Difficulte.values()[i]; //difficulte initialise
+		//System.out.println("Difficulte:"+this.difficulte);
+		nbPNJ=out.readInt();
+		this.listePNJ=new ArrayList<PNJ>();
+		//System.out.println("Nb PNJ:"+nbPNJ);
+		int classe, pnjX, pnjY, pnjVie, pnjVolonteArgent, pnjClef;
+		for(int k=0;k<nbPNJ;k++){
+			classe=out.readInt();
+
+			pnjX=out.readInt();
+			//System.out.println("PNJ X:"+pnjX);
+			pnjY=out.readInt();
+			//System.out.println("PNJ Y:"+pnjY);
+			pnjVie=out.readInt();
+			//System.out.println("PNJ Vie:"+pnjVie);
+			pnjVolonteArgent=out.readInt();
+			//System.out.println("PNJ VolonteArgent:"+pnjVolonteArgent);
+			pnjClef=out.readInt();
+			//System.out.println("PNJ Clef:"+pnjClef);
+			this.listePNJ.add(new PNJ(this.monde, EnumPNJ.values()[classe], pnjX, pnjY, pnjVie, pnjVolonteArgent, clef));
+		}
+
+
+	}
 }
 

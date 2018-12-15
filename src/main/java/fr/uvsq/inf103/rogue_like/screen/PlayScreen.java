@@ -8,7 +8,6 @@ import fr.uvsq.inf103.rogue_like.creature.*;
 import fr.uvsq.inf103.rogue_like.exception.*;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * Classe PlayScreen qui s'affichera quand l'utilisateur sera en train de jouer.
@@ -86,6 +85,16 @@ public class PlayScreen implements Screen {
 		joueur=new Joueur(monde,arme, vie, argent);
 
 		createPNJ(monde, difficulte);
+	}
+
+	public PlayScreen(Chargement sauvegarde){
+		screenWidth = 80;
+		screenHeight = 21;
+		this.difficulte=sauvegarde.getDifficulte();
+		this.niveau=sauvegarde.getNiveau();
+		this.monde=sauvegarde.getMonde();
+		this.joueur=sauvegarde.getJoueur();
+		this.listePNJ=sauvegarde.getListePNJ();
 	}
 
 	/**

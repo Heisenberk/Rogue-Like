@@ -28,7 +28,7 @@ public class StartScreen implements Screen {
     public Screen respondToUserInput(KeyEvent key) {
 		switch (key.getKeyCode()){
             case KeyEvent.VK_N: return new ChoiceScreen(Difficulte.FACILE, Arme.AUCUNE_ARME);
-            case KeyEvent.VK_G: new Chargement();
+            case KeyEvent.VK_G: return new PlayScreen(new Chargement());
         }
         return this;
     }

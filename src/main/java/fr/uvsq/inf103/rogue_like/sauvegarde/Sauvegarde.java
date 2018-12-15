@@ -33,6 +33,15 @@ public class Sauvegarde {
 		//DataInputStream out=new DataInputStream(new BufferedInputStream(new FileInputStream("save/save.txt")));
 		DataOutputStream dataOut = new DataOutputStream(new FileOutputStream("save/save.txt"));
 
+
+		//ecriture du monde
+		int i;
+		for(i=0;i<90;i++) {
+			for(int j=0;j<32;j++) {
+				dataOut.writeChar(playscreen.getMonde().getElement(i,j).getCaractere());
+			}
+		}
+
 		/*
 			[n°niveau du jeu] [vie joueur] [argent joueur] [n°arme joueur] [0 ou 1 si joueur a la clef]
 			[joueur X] [joueur Y] [n°difficulte]
@@ -51,7 +60,7 @@ public class Sauvegarde {
 		dataOut.writeInt(playscreen.getJoueur().y);
 		dataOut.writeInt(playscreen.getDifficulte().ordinal());
 		dataOut.writeInt(playscreen.getListePNJ().size());
-		int i;
+		//int i;
 		PNJ pnj;
 		for(i=0;i<playscreen.getListePNJ().size();i++){
 			pnj=playscreen.getListePNJ().get(i);
@@ -65,40 +74,5 @@ public class Sauvegarde {
 			else dataOut.writeInt(0);
 		}
 
-		for(i=0;i<90;i++) {
-			for(int j=0;j<32;j++) {
-				dataOut.writeChar(playscreen.getMonde().getElement(i,j).getCaractere());
-			}
-		}
-
-		/*File ff=null;
-		ff=new File("save/save.txt"); // renvoie NullPointerException en cas de probleme
-		ff.createNewFile(); //renvoie IOException en cas de probleme
-		boolean testClef;
-		PrintWriter e =  new PrintWriter(new BufferedWriter(new FileWriter(ff))); //renvoie FileNotFoundException*/
-
-
-		/*e.print(playscreen.getNiveau()+" "+playscreen.getJoueur().getVie()+ " "+playscreen.getJoueur().getArgent()+ " "+playscreen.getJoueur().getArme().ordinal()+" ");
-		testClef=playscreen.getJoueur().getClef();
-		if(testClef==true) e.println("1");
-		else e.println("0");
-		e.println(playscreen.getJoueur().x+" "+playscreen.getJoueur().y+" "+playscreen.getDifficulte().ordinal());
-		e.println(playscreen.getListePNJ().size());
-		int i;
-		PNJ pnj;
-		for(i=0;i<playscreen.getListePNJ().size();i++){
-			pnj=playscreen.getListePNJ().get(i);
-			e.print(pnj.getClasse().ordinal()+" "+pnj.x+" "+pnj.y+" "+pnj.getVie()+" "+pnj.getVolonteArgent()+" ");
-			testClef=pnj.testPossedeClef();
-			if(testClef==true) e.println("1");
-			else e.println("0");
-		}
-		for(i=0;i<90;i++) {
-			for(int j=0;j<32;j++) {
-				e.print(playscreen.getMonde().getElement(i,j).getCaractere());
-			}
-			e.print("\n");
-		}
-		e.close(); // fermer le fichier à la fin des traitements*/
 	}
 }

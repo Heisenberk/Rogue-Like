@@ -50,6 +50,14 @@ public class PNJ extends Creature{
         }
     }
 
+    public PNJ(Monde monde, EnumPNJ classe_pnj, int x, int y, int vie, int volonteArgent, boolean clef){
+        super(monde, classe_pnj.getCaractere(), classe_pnj.getCouleur());
+        this.classe=classe_pnj;
+        this.vie=vie;
+        this.volonteArgent=volonteArgent;
+        this.possedeClef=clef;
+    }
+
     /**
      * Accesseur pour savoir si le pnj possede la clef
      * @return true si il possede la clef et false sinon.

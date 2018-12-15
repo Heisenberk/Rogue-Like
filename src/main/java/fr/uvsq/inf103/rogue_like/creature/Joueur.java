@@ -41,6 +41,16 @@ public class Joueur extends Creature{
 		this.clef=false;
 	}
 
+	public Joueur(Monde monde, Arme arme, int vie, int argent, boolean clef, int x, int y){
+		super(monde, '@', AsciiPanel.brightWhite);
+		this.arme=arme;
+		this.vie=vie;
+		this.argent=argent;
+		this.clef=clef;
+		this.x=x;
+		this.y=y;
+	}
+
 	/**
 	 * Accesseur de l'arme du joueur.
 	 * @return arme du joueur.
