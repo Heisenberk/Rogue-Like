@@ -289,28 +289,34 @@ public class PlayScreen implements Screen {
      */
 	//@Override
 	public Screen respondToUserInput(KeyEvent key) {
+		boolean action=false;
 		switch (key.getKeyCode()){
-			case KeyEvent.VK_LEFT: joueur.seDeplacer(-1, 0, listePNJ); break;
-			case KeyEvent.VK_RIGHT: joueur.seDeplacer( 1, 0, listePNJ); break;
-			case KeyEvent.VK_UP: joueur.seDeplacer( 0,-1, listePNJ); break;
-			case KeyEvent.VK_DOWN: joueur.seDeplacer( 0, 1, listePNJ); break;
-			case KeyEvent.VK_R: joueur.ramasserObjet(monde); break;
+			case KeyEvent.VK_LEFT: if(joueur.seDeplacer(-1, 0, listePNJ)) action=true; break;
+			case KeyEvent.VK_RIGHT: if(joueur.seDeplacer( 1, 0, listePNJ)) action=true; break;
+			case KeyEvent.VK_UP: if(joueur.seDeplacer( 0,-1, listePNJ)) action=true; break;
+			case KeyEvent.VK_DOWN: if(joueur.seDeplacer( 0, 1, listePNJ)) action=true; break;
+			case KeyEvent.VK_R: messageTemporaire=joueur.ramasserObjet(monde); break;
 			case KeyEvent.VK_O:
 				if(testeChangerNiveau()) return new PlayScreen(niveau+1, joueur.getArme(), this.difficulte, joueur.getVie(), joueur.getArgent());
 			case KeyEvent.VK_P:
-				messageTemporaire=joueur.faireEchangeVillageois(this.listePNJ); break;
+				messageTemporaire=joueur.faireEchangeVillageois(this.listePNJ);
+				if(messageTemporaire!=null) action=true;
+				break;
 			case KeyEvent.VK_A:
-				messageTemporaire=joueur.attaquerPNJ(this.listePNJ); break;
+				messageTemporaire=joueur.attaquerPNJ(this.listePNJ);
+				if(messageTemporaire!=null) action=true;
+				break;
 			case KeyEvent.VK_S:
 				new Sauvegarde(this);
 				messageTemporaire="Partie Sauvegardee";
 				break;
 		}
-		actionPNJ(this.listePNJ, joueur);
+		if(action==true) actionPNJ(this.listePNJ, joueur);
 		if(joueur.getVie()==0) return new LoseScreen();
 
 		return this;
 	}
+
     public Monde getMonde() {
     	return monde;
     }

@@ -195,7 +195,7 @@ public class JoueurTest {
     public void testRamasserObjetViePleine(){
         initialiserObjet(Element.LIFE,2,2);
         int vieAvantAttaque=joueur.getVie();
-        joueur.ramasserObjet(monde);
+        assertEquals(null,joueur.ramasserObjet(monde));
         assertEquals(joueur.getVie(), 10);
     }
 
@@ -206,7 +206,7 @@ public class JoueurTest {
     public void testRamasserObjetClef(){
         initialiserObjet(Element.KEY,2,2);
         assertEquals(joueur.getClef(),false);
-        joueur.ramasserObjet(monde);
+        assertEquals("1 clef ramasse",joueur.ramasserObjet(monde));
         assertEquals(joueur.getClef(),true);
     }
 
@@ -217,7 +217,7 @@ public class JoueurTest {
     public void testRamasserObjetCouteau(){
         assertEquals(joueur.getArme(), Arme.AUCUNE_ARME);
         initialiserObjet(Element.COUTEAU,2,2);
-        joueur.ramasserObjet(monde);
+        assertEquals("Arme ramasse",joueur.ramasserObjet(monde));
         assertEquals(joueur.getArme(), Arme.COUTEAU);
     }
 
@@ -228,7 +228,7 @@ public class JoueurTest {
     public void testRamasserObjetBatte(){
         assertEquals(joueur.getArme(), Arme.AUCUNE_ARME);
         initialiserObjet(Element.BATTE_BASEBALL,2,2);
-        joueur.ramasserObjet(monde);
+        assertEquals("Arme ramasse",joueur.ramasserObjet(monde));
         assertEquals(joueur.getArme(), Arme.BATTE_BASEBALL);
     }
 
@@ -239,7 +239,7 @@ public class JoueurTest {
     public void testRamasserObjetEpee(){
         assertEquals(joueur.getArme(), Arme.AUCUNE_ARME);
         initialiserObjet(Element.EPEE,2,2);
-        joueur.ramasserObjet(monde);
+        assertEquals("Arme ramasse",joueur.ramasserObjet(monde));
         assertEquals(joueur.getArme(), Arme.EPEE);
     }
 

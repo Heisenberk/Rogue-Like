@@ -69,7 +69,7 @@ public class CreatureTest {
 	 */
 	@Test
 	public void testTesterDeplacement() {
-		c.testerDeplacement(1, 0, e[0][1]);
+		assertEquals(c.testerDeplacement(1, 0, e[0][1]),true);
 		assertEquals(c.getWorld().getElement(0,1),Element.FLOOR);
 	}	
 }
