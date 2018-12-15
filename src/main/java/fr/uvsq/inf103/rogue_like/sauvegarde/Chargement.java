@@ -32,13 +32,25 @@ public class Chargement {
 
 	private ArrayList <PNJ> listePNJ;
 
-	public Chargement() {
+	public Chargement(String fileName){
 		try{
-			this.lireSauvegarde();
+			this.lireSauvegarde(fileName);
+		}
+		catch(SpawnException e){
+			throw new SpawnException();
+		}
+		catch(PorteException e){
+			throw new PorteException();
 		}
 		catch(Exception e){
 			throw new ChargementException();
 		}
+	}
+
+	public Chargement() {
+
+			this.lireSauvegarde();
+
 	}
 
 	public Difficulte getDifficulte(){
@@ -62,69 +74,87 @@ public class Chargement {
 	}
 
 	// verifier les exceptions lancees
-	public void lireSauvegarde() throws IOException, NullPointerException, FileNotFoundException{
-		Element[][] element;
-		element=new Element[90][32];
-		DataInputStream out=new DataInputStream(new BufferedInputStream(new FileInputStream("save/save.txt")));
+	public void lireSauvegarde(){
+		lireSauvegarde("save/save.txt");
 
-		//System.out.println("//////////////////////");
-		char c;
-		int i;
-		for(i=0;i<90;i++) {
-			for(int j=0;j<32;j++) {
-				c=out.readChar();
-				for(Element e : Element.values()) {
-					if(e.getCaractere()==c) element[i][j]=e.valueOf(e.name());
+	}
+
+	public void lireSauvegarde(String fileName){
+		try{
+			Element[][] element;
+			int nbPNJ, vieJoueur, argentJoueur, joueurX, joueurY, i;
+			int compteurPorte, compteurArgent, compteurArme;
+			compteurPorte=compteurArgent=compteurArme=0;
+			char c;
+			boolean clef; Arme armeJoueur;
+			element=new Element[90][32];
+			FileInputStream file=new FileInputStream(fileName);
+			DataInputStream out=new DataInputStream(new BufferedInputStream(file));
+
+			for(i=0;i<90;i++) {
+				for(int j=0;j<32;j++) {
+					c=out.readChar();
+					for(Element e : Element.values()) {
+						if(e.getCaractere()==c){
+							element[i][j]=e.valueOf(e.name());
+							if(element[i][j]==Element.DOOR) compteurPorte++;
+						}
+
+					}
+				}
+			}
+			if(compteurPorte!=1) throw new PorteException();
+			this.monde=new Monde(element);
+
+			i=out.readInt(); this.niveau=i; //level initialise
+			vieJoueur=out.readInt();
+			argentJoueur=out.readInt();
+			i=out.readInt(); armeJoueur=Arme.values()[i];
+			i=out.readInt();
+			if(i==0) clef=false; else clef=true;
+			joueurX=out.readInt();
+			joueurY=out.readInt();
+			if(element[joueurX][joueurY]==Element.WALL) throw new SpawnException(); // si le joueur spawn sur un mur
+			if(element[joueurX][joueurY]==Element.DOOR) throw new SpawnException(); // si le joueur spawn sur une porte
+			this.joueur=new Joueur(this.monde, armeJoueur, vieJoueur, argentJoueur, clef, joueurX, joueurY);
+			i=out.readInt(); this.difficulte=Difficulte.values()[i]; //difficulte initialise
+			nbPNJ=out.readInt();
+			this.listePNJ=new ArrayList<PNJ>();
+			int classe, pnjX, pnjY, pnjVie, pnjVolonteArgent, pnjClef;
+			for(int k=0;k<nbPNJ;k++){
+				classe=out.readInt();
+				pnjX=out.readInt();
+				pnjY=out.readInt();
+
+				if(element[pnjX][pnjY]==Element.WALL) throw new SpawnException(); // si le pnj spawn sur un mur
+				if(element[pnjX][pnjY]==Element.DOOR) throw new SpawnException(); // si le pnj spawn sur une porte
+				if((joueurX==pnjX)&&(joueurY==pnjY)) throw new SpawnException(); // si le pnj spawn sur le joueur
+				for(int l=0; l<k; l++){ // si le pnj spawn sur un autre pnj
+					if((this.listePNJ.get(l).x==pnjX)&&(this.listePNJ.get(l).y==pnjY)) throw new SpawnException();
 				}
 
-				//System.out.println(element[i][j]);
+				pnjVie=out.readInt();
+				pnjVolonteArgent=out.readInt();
+				pnjClef=out.readInt();
+				if(pnjClef==0) clef=false; else clef=true;
+
+				this.listePNJ.add(new PNJ(this.monde, EnumPNJ.values()[classe], pnjX, pnjY, pnjVie, pnjVolonteArgent, clef));
+
 			}
+			file.close();
 		}
-		this.monde=new Monde(element);
-
-		int nbPNJ; int vieJoueur, argentJoueur, joueurX, joueurY;
-		boolean clef; Arme armeJoueur;
-		i=out.readInt(); this.niveau=i; //level initialise
-		//System.out.println("Level:"+this.niveau);
-		vieJoueur=out.readInt();
-		argentJoueur=out.readInt();
-		i=out.readInt(); armeJoueur=Arme.values()[i];
-		i=out.readInt();
-		if(i==0) clef=false; else clef=true;
-		joueurX=out.readInt();
-		joueurY=out.readInt();
-		this.joueur=new Joueur(this.monde, armeJoueur, vieJoueur, argentJoueur, clef, joueurX, joueurY);
-		/*System.out.println("Vie:"+joueur.getVie());
-		System.out.println("Argent:"+joueur.getArgent());
-		System.out.println("Arme:"+joueur.getArme());
-		System.out.println("Clef:"+ joueur.getClef());
-		System.out.println("Joueur X:"+joueur.x);
-		System.out.println("Joueur Y:"+joueur.y);*/
-		i=out.readInt(); this.difficulte=Difficulte.values()[i]; //difficulte initialise
-		//System.out.println("Difficulte:"+this.difficulte);
-		nbPNJ=out.readInt();
-		this.listePNJ=new ArrayList<PNJ>();
-		//System.out.println("Nb PNJ:"+nbPNJ);
-		int classe, pnjX, pnjY, pnjVie, pnjVolonteArgent, pnjClef;
-		for(int k=0;k<nbPNJ;k++){
-			classe=out.readInt();
-
-			pnjX=out.readInt();
-			pnjY=out.readInt();
-
-			pnjVie=out.readInt();
-			//System.out.println("PNJ Vie:"+pnjVie);
-			pnjVolonteArgent=out.readInt();
-			//System.out.println("PNJ VolonteArgent:"+pnjVolonteArgent);
-			pnjClef=out.readInt();
-			if(pnjClef==0) clef=false; else clef=true;
-			//System.out.println("PNJ:"+EnumPNJ.values()[classe]+" "+pnjX+" "+pnjY);
-			//System.out.println("PNJ Clef:"+clef);
-
-			this.listePNJ.add(new PNJ(this.monde, EnumPNJ.values()[classe], pnjX, pnjY, pnjVie, pnjVolonteArgent, clef));
-
+		catch(SpawnException e){
+			throw new SpawnException();
 		}
-		
+		catch(PorteException e){
+			throw new PorteException();
+		}
+		catch(Exception e){
+			throw new ChargementException();
+		}
+
 	}
+
+
 }
 

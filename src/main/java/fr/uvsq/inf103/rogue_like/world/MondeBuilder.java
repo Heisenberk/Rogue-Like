@@ -167,7 +167,7 @@ public class MondeBuilder {
                 else if((elements[x][y]==Element.COUTEAU)||(elements[x][y]==Element.EPEE)||(elements[x][y]==Element.BATTE_BASEBALL)) compteurArme++;
             }
         }
-        if(compteurPorte!=1) throw new PorteException(); //mettre CONSTANTES
+        if(compteurPorte!=1) throw new PorteException();
         if(compteurArgent!=10) throw new ArgentException();
         if(compteurArme!=1) throw new ArmeException();
         return m;
