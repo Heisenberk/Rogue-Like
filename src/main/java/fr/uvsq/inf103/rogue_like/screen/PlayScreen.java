@@ -2,6 +2,7 @@ package fr.uvsq.inf103.rogue_like.screen;
 
 import java.awt.event.KeyEvent;
 import asciiPanel.AsciiPanel;
+import fr.uvsq.inf103.rogue_like.sauvegarde.*;
 import fr.uvsq.inf103.rogue_like.world.*;
 import fr.uvsq.inf103.rogue_like.creature.*;
 import fr.uvsq.inf103.rogue_like.exception.*;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
  * Classe PlayScreen qui s'affichera quand l'utilisateur sera en train de jouer.
  */
 public class PlayScreen implements Screen {
-	
+
 	/**
 	 * Map du monde Rogue Like.
 	 */
@@ -53,6 +54,22 @@ public class PlayScreen implements Screen {
 	 */
 	private String messageTemporaire;
 	
+	public int getNiveau() {
+		return this.niveau;
+	}
+	
+	public Joueur getJoueur() {
+		return this.joueur;
+	}
+
+	public ArrayList <PNJ> getListePNJ(){
+		return this.listePNJ;
+	}
+
+	public Difficulte getDifficulte(){
+		return this.difficulte;
+	}
+	
 	/**
 	 * Constructeur de PlayScreen qui permet de generer la map, le joueur et les PNJ.
 	 * @param arme du joueur.
@@ -68,6 +85,22 @@ public class PlayScreen implements Screen {
 		joueur=new Joueur(monde,arme, vie, argent);
 
 		createPNJ(monde, difficulte);
+	}
+
+	public PlayScreen(Chargement sauvegarde){
+		screenWidth = 80;
+		screenHeight = 21;
+		this.difficulte=sauvegarde.getDifficulte();
+		this.niveau=sauvegarde.getNiveau();
+		this.monde=sauvegarde.getMonde();
+		this.joueur=sauvegarde.getJoueur();
+		this.listePNJ=new ArrayList<PNJ>();
+
+		PNJ pnj; int i;
+		for(i=0;i<sauvegarde.getListePNJ().size();i++){
+			pnj=sauvegarde.getListePNJ().get(i);
+			this.listePNJ.add(new PNJ(this.monde, pnj.getClasse(), pnj.x, pnj.y, pnj.getVie(), pnj.getVolonteArgent(), pnj.testPossedeClef()));
+		}
 	}
 
 	/**
@@ -268,10 +301,17 @@ public class PlayScreen implements Screen {
 				messageTemporaire=joueur.faireEchangeVillageois(this.listePNJ); break;
 			case KeyEvent.VK_A:
 				messageTemporaire=joueur.attaquerPNJ(this.listePNJ); break;
+			case KeyEvent.VK_S:
+				new Sauvegarde(this);
+				messageTemporaire="Partie Sauvegardee";
+				break;
 		}
 		actionPNJ(this.listePNJ, joueur);
 		if(joueur.getVie()==0) return new LoseScreen();
 
 		return this;
 	}
+    public Monde getMonde() {
+    	return monde;
+    }
 }
