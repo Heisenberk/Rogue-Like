@@ -56,6 +56,8 @@ public class PNJ extends Creature{
         this.vie=vie;
         this.volonteArgent=volonteArgent;
         this.possedeClef=clef;
+        this.x=x;
+        this.y=y;
     }
 
     /**

@@ -110,19 +110,21 @@ public class Chargement {
 			classe=out.readInt();
 
 			pnjX=out.readInt();
-			//System.out.println("PNJ X:"+pnjX);
 			pnjY=out.readInt();
-			//System.out.println("PNJ Y:"+pnjY);
+
 			pnjVie=out.readInt();
 			//System.out.println("PNJ Vie:"+pnjVie);
 			pnjVolonteArgent=out.readInt();
 			//System.out.println("PNJ VolonteArgent:"+pnjVolonteArgent);
 			pnjClef=out.readInt();
-			//System.out.println("PNJ Clef:"+pnjClef);
+			if(pnjClef==0) clef=false; else clef=true;
+			//System.out.println("PNJ:"+EnumPNJ.values()[classe]+" "+pnjX+" "+pnjY);
+			//System.out.println("PNJ Clef:"+clef);
+
 			this.listePNJ.add(new PNJ(this.monde, EnumPNJ.values()[classe], pnjX, pnjY, pnjVie, pnjVolonteArgent, clef));
+
 		}
-
-
+		
 	}
 }
 

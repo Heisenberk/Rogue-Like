@@ -94,7 +94,13 @@ public class PlayScreen implements Screen {
 		this.niveau=sauvegarde.getNiveau();
 		this.monde=sauvegarde.getMonde();
 		this.joueur=sauvegarde.getJoueur();
-		this.listePNJ=sauvegarde.getListePNJ();
+		this.listePNJ=new ArrayList<PNJ>();
+
+		PNJ pnj; int i;
+		for(i=0;i<sauvegarde.getListePNJ().size();i++){
+			pnj=sauvegarde.getListePNJ().get(i);
+			this.listePNJ.add(new PNJ(this.monde, pnj.getClasse(), pnj.x, pnj.y, pnj.getVie(), pnj.getVolonteArgent(), pnj.testPossedeClef()));
+		}
 	}
 
 	/**
