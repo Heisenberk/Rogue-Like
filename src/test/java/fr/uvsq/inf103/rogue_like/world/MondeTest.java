@@ -6,12 +6,20 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests unitaires sur la classe World.
+ * Tests unitaires sur la classe Monde.
  */
 public class MondeTest {
 
+	/**
+	 * Monde a tester.
+	 */
 	private	Monde w;
+
+	/**
+	 * Tableau d'elements representant le monde.
+	 */
 	private Element[][] e;
+
 	/**
 	 * Permet d'initialiser les variables que l'on va tester. 
 	 */
@@ -22,7 +30,7 @@ public class MondeTest {
 	}
 	
 	/**
-	 * Tests l'affectation de l'enumeration FLOOR à un element.
+	 * Test de l'affectation de l'enumeration FLOOR à un element.
 	 */
 	@Test
 	public void testAffectationElement() {
@@ -31,18 +39,18 @@ public class MondeTest {
 	}
 
 	/**
-	 * Tests accesseur Width.
+	 * Tests accesseur de longueur.
 	 */
 	@Test
-	public void testWidth() {
-		assertEquals(w.getWidth(),50);
+	public void testLongueur() {
+		assertEquals(w.getLongueur(),50);
 	}
 	
 	/**
-	 * Tests acceseur Height.
+	 * Test accesseur de largeur.
 	 */
 	@Test
-	public void testHeigth() {
-		assertEquals(w.getHeight(),70);
+	public void testLargeur() {
+		assertEquals(w.getLargeur(),70);
 	}
 }

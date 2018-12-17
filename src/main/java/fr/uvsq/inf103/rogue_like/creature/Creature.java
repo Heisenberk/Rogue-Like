@@ -7,13 +7,16 @@ import java.awt.Color;
 /**
  * Classe Creature representant le joueur et le PNJ.
  */
-public class Creature {
+public abstract class Creature {
 
 	/**
 	 * Monde dans lequel est le joueur ou le PNJ.
 	 */
 	protected Monde monde;
 
+	/**
+	 * Coordonnees en abscisse de la creature. 
+	 */
 	public int x;
 
 	/**
@@ -38,6 +41,7 @@ public class Creature {
 
 	/**
 	 * Coordonnees en abscisse de la creature.
+	 * @return Monde de la creature.
 	 */
 	public Monde getWorld() {return monde;}
 
@@ -57,9 +61,7 @@ public class Creature {
 	 * Accesseur du nombre de vies de la creature.
 	 * @return entier representant le nombre de vies de la creature.
 	 */
-	public int getVie(){
-		return this.vie;
-	}
+	public int getVie(){ return this.vie; }
 
 	/**
 	 * Constructeur de Creature.
@@ -78,12 +80,15 @@ public class Creature {
 	 * Methode de test pour le deplacement de la creature.
 	 * @param x coordonnees des abscisses de la position de la case.
 	 * @param y coordonnees des ordonnees de la position de la case.
-	 * @param tile nature de la case.
+	 * @param element nature de la case.
+	 * @return boolean true si il peut se deplacer et false sinon.
 	 */
-	public void testerDeplacement(int x, int y, Element tile){
-		if (tile.isGround()){
+	public boolean testerDeplacement(int x, int y, Element element){
+		if (element.testerSol()){
 			this.x = x;
 			this.y = y;
+			return true;
 		}
+		return false;
 	}
 }

@@ -2,10 +2,12 @@ package fr.uvsq.inf103.rogue_like.screen;
 
 import java.awt.event.KeyEvent;
 import asciiPanel.AsciiPanel;
+
 import fr.uvsq.inf103.rogue_like.world.*;
 
 /**
- * Classe StartScreen qui s'affichera quand l'utilisateur aura demarrer le jeu.
+ * Classe ChoiceScreen qui s'affichera quand l'utilisateur aura choisi
+ * une nouvelle partie. 
  */
 public class ChoiceScreen implements Screen {
 	

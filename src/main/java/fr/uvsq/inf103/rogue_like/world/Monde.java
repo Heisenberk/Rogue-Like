@@ -17,24 +17,32 @@ public class Monde {
     /**
      * Longueur de la map.
      */
-    private int width;
+    private int longueur;
 
     /**
      * Largeur de la map.
      */
-    private int height;
+    private int largeur;
 
     /**
      * Accesseur de la longueur de la map.
      * @return longueur de la map.
      */
-    public int getWidth() { return width; }
+    public int getLongueur() { return longueur; }
 
     /**
      * Accesseur de la largeur de la map.
      * @return largeur de la map.
      */
-    public int getHeight() { return height; }
+    public int getLargeur() { return largeur; }
+
+    /**
+     * Accesseur du tableau representant les elements de la map.
+     * @return tableau d'elements representant le monde.
+     */
+    public Element[][] getElement(){
+		return element;
+	}
 
     /**
      * Constructeur de Monde.
@@ -42,8 +50,8 @@ public class Monde {
      */
     public Monde(Element[][] elements){
         this.element = elements;
-        this.width = elements.length;
-        this.height = elements[0].length;
+        this.longueur = elements.length;
+        this.largeur = elements[0].length;
     }
 
     /**
@@ -53,7 +61,7 @@ public class Monde {
      * @return Element representant la case.
      */
     public Element getElement(int x, int y){
-        if (x < 0 || x >= width || y < 0 || y >= height)
+        if (x < 0 || x >= longueur || y < 0 || y >= largeur)
             return Element.BOUNDS;
         else
             return element[x][y];
@@ -76,8 +84,8 @@ public class Monde {
      * @param y ordonnee de la case.
      * @return couleur de la case.
      */
-	public Color getColor(int x, int y){
-        return getElement(x, y).getColor();
+	public Color getCouleur(int x, int y){
+        return getElement(x, y).getCouleur();
     }
 
     /**
@@ -85,15 +93,12 @@ public class Monde {
      * @param creature a rajouter sur la map.
      */
     public void addAtEmptyLocation(Creature creature){
-        int x;
-        int y;
-
+        int x; int y;
         do {
-            x = (int)(Math.random() * width);
-            y = (int)(Math.random() * height);
+            x = (int)(Math.random() * longueur);
+            y = (int)(Math.random() * largeur);
         }
-        while (!getElement(x,y).isGround());
-
+        while (!getElement(x,y).testerSol());
         creature.x = x;
         creature.y = y;
     }

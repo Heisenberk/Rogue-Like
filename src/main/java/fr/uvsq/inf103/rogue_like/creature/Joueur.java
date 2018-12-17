@@ -1,6 +1,7 @@
 package fr.uvsq.inf103.rogue_like.creature;
 
 import fr.uvsq.inf103.rogue_like.world.*;
+import fr.uvsq.inf103.rogue_like.exception.*;
 
 import asciiPanel.AsciiPanel;
 import java.util.ArrayList;
@@ -16,11 +17,6 @@ public class Joueur extends Creature{
 	private Arme arme;
 
 	/**
-	 * Nombre de vies du joueur.
-	 */
-	//private int vie;
-
-	/**
 	 * Argent possede par le joueur.
 	 */
 	private int argent;
@@ -31,7 +27,7 @@ public class Joueur extends Creature{
 	private boolean clef;
 
 	/**
-	 * Constructeur de Player.
+	 * Constructeur de Joueur.
 	 * @param monde monde dans lequel joue l'utilisateur.
 	 * @param arme du joueur.
 	 * @param vie du joueur.
@@ -46,11 +42,39 @@ public class Joueur extends Creature{
 	}
 
 	/**
+	 * Constructeur de Joueur.
+	 * @param monde monde dans lequel joue l'utilisateur.
+	 * @param arme du joueur.
+	 * @param vie du joueur.
+	 * @param argent du joueur.
+	 * @param clef du joueur (true ou false). 
+	 * @param x abscisse du joueur. 
+	 * @param y ordonnee du joueur. 
+	 */
+	public Joueur(Monde monde, Arme arme, int vie, int argent, boolean clef, int x, int y){
+		super(monde, '@', AsciiPanel.brightWhite);
+		this.arme=arme;
+		this.vie=vie;
+		this.argent=argent;
+		this.clef=clef;
+		this.x=x;
+		this.y=y;
+	}
+
+	/**
 	 * Accesseur de l'arme du joueur.
 	 * @return arme du joueur.
 	 */
 	public Arme getArme(){
 		return this.arme;
+	}
+
+	/**
+	 * Modifieur de l'arme du joueur.
+	 * @param arme du joueur
+	 */
+	public void setArme(Arme arme){
+		this.arme=arme;
 	}
 
 	/**
@@ -132,6 +156,7 @@ public class Joueur extends Creature{
 	 * @return false si le joueur est mort et true s'il n'est pas mort.
 	 */
 	public boolean etreAttaque(PNJ pnj){
+		if(pnj.getClasse()==EnumPNJ.VILLAGEOIS) throw new VillageoisAgressifException();
 		if(this.vie-pnj.getClasse().getDegats()<=0){
 			this.vie=0;
 			return false;
@@ -169,6 +194,7 @@ public class Joueur extends Creature{
 					listePNJ.remove(pnj);
 					return pnj.getClasse().getNom()+" mort.";
 				}
+				else return "Degats de "+this.getArme().getDegats()+".";
 			}
 			estAttaque=false;
 		}
@@ -178,23 +204,27 @@ public class Joueur extends Creature{
 	/**
 	 * Methode permettant au joueur de ramasser ce qu'il y a sur le sol.
 	 * @param world sur lequel le joueur se trouve.
+	 * @return String representant l'affichage de ce qu'il ramasse.
 	 */
-	public void ramasserObjet(Monde world){
+	public String ramasserObjet(Monde world){
 		Element element=world.getElement(this.x, this.y);
 		// si il y a de l'argent on augmente son porte monnaie et on enleve l'argent sur le sol.
 		if(element==Element.MONEY){
 			world.setElement(this.x, this.y, Element.FLOOR);
 			this.argent++;
+			return "1$ ramasse.";
 		}
 		// si il a de la vie, on augmente sa vie si elle est inferieure a 10 et on enleve la vie sur le sol.
 		else if((element==Element.LIFE)&&(this.vie<10)){
 			world.setElement(this.x, this.y, Element.FLOOR);
 			this.vie++;
+			return "1 fiole de vie ramassee.";
 		}
 		// si il y a la clef, on recupere la clef.
 		else if((element==Element.KEY&&(this.clef==false))){
 			world.setElement(this.x, this.y, Element.FLOOR);
 			this.clef=true;
+			return "1 clef ramassee";
 		}
 		// si il s'agit d'une arme, on l'echange avec son arme courante (si il n'en a pas on prend juste l'arme).
 		else if((element==Element.BATTE_BASEBALL)||(element==Element.COUTEAU)||(element==Element.EPEE)){
@@ -226,7 +256,9 @@ public class Joueur extends Creature{
 			else if(arme_deja_possede==Arme.EPEE){
 				world.setElement(this.x, this.y, Element.EPEE);
 			}
+			return "1 arme ramassee";
 		}
+		return null;
 	}
 
 	/**
@@ -234,15 +266,18 @@ public class Joueur extends Creature{
 	 * @param mx coordonnees en deplacement en abscisse.
 	 * @param my coordonnees en deplacement en ordonnee.
 	 * @param listePNJ liste des PNJ sur la map.
+	 * @return boolean true si il peut se deplacer et false sinon.
 	 */
-	public void seDeplacer(int mx, int my, ArrayList<PNJ> listePNJ){
+	public boolean seDeplacer(int mx, int my, ArrayList<PNJ> listePNJ){
 		boolean test=true;
 		// si il a un PNJ sur le chemin le joueur ne bouge pas
 		for(int i=0; i<listePNJ.size(); i++){
 			if((listePNJ.get(i).x==x+mx)&&(listePNJ.get(i).y==y+my)){
 				test=false;
+				return false;
 			}
 		}
-		if(test==true) testerDeplacement(x+mx, y+my, this.monde.getElement(x+mx, y+my));
+		if(test==true) return testerDeplacement(x+mx, y+my, this.monde.getElement(x+mx, y+my));
+		else return false;
 	}
 }

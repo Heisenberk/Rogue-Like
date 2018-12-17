@@ -1,5 +1,7 @@
 package fr.uvsq.inf103.rogue_like.world;
 
+import fr.uvsq.inf103.rogue_like.exception.*;
+
 /**
  * Classe permettant de construire le monde.
  */
@@ -22,7 +24,7 @@ public class MondeBuilder {
 
     /**
      * Accesseur du tableau d'elements du monde.
-     * @return
+     * @return tableau d'elements du monde. 
      */
     public Element[][] getElements() {
     	return elements;
@@ -36,6 +38,17 @@ public class MondeBuilder {
      */
     public Element getElement(int x,int y) {
         return elements[x][y];
+    }
+
+    /**
+     * Methode permettant de modifier la nature d'une case de la map.
+     * @param x abscisse de la case a modifier.
+     * @param y ordonnee de la case a modifier.
+     * @param e nature de la future case a modifier.
+     */
+    public void setElement(int x,int y,Element e)
+    {
+        elements[x][y]=e;
     }
 
     /**
@@ -151,11 +164,35 @@ public class MondeBuilder {
     }
 
     /**
+     * Methode permettant de savoir si la configuration de la map est correcte.
+     * Elle jete differentes exceptions en fonction des differents problemes rencontres.
+     * @throws PorteException s'il n'y a pas de porte sur la map.
+     * @throws ArgentException s'il n'y a pas assez d'argent sur la map.
+     * @throws ArmeException s'il n'y a pas d'arme sur la map.
+     */
+    public void testerConfigurationValide() throws PorteException, ArgentException, ArmeException{
+        int compteurPorte, compteurArgent, compteurArme;
+        compteurPorte=compteurArgent=compteurArme=0;
+        for (int x = 0; x < largeur; x++) {
+            for (int y = 0; y < longueur; y++) {
+                if(elements[x][y]==Element.DOOR) compteurPorte++;
+                else if(elements[x][y]==Element.MONEY) compteurArgent++;
+                else if((elements[x][y]==Element.COUTEAU)||(elements[x][y]==Element.EPEE)||(elements[x][y]==Element.BATTE_BASEBALL)) compteurArme++;
+            }
+        }
+        if(compteurPorte!=1) throw new PorteException();
+        if(compteurArgent!=10) throw new ArgentException();
+        if(compteurArme!=1) throw new ArmeException();
+    }
+
+    /**
      * Methode de fabrication des elements sur la map.
      * @return MondeBuilder avec les elements sur la map.
      */
     public MondeBuilder fabriquerElements() {
-    return creerElementsAleatoires();
+        MondeBuilder m=creerElementsAleatoires();
+        testerConfigurationValide();
+        return m;
     }
 
     /**
