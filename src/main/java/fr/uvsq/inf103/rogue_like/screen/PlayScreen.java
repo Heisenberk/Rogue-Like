@@ -129,8 +129,8 @@ public class PlayScreen implements Screen {
 			int y;
 
 			do {
-				x = (int)(Math.random() * monde.getWidth());
-				y = (int)(Math.random() * monde.getHeight());
+				x = (int)(Math.random() * monde.getLongueur());
+				y = (int)(Math.random() * monde.getLargeur());
 			}
 			while ((!monde.getElement(x,y).testerSol())||(!testerSpawnPossible(x,y,i)));
 
@@ -180,13 +180,13 @@ public class PlayScreen implements Screen {
 	 * Methode de point de vue de la camera sur l'axe de la longueur.
 	 * @return position de la camera en longueur.
 	 */
-	public int getScrollX() { return Math.max(0, Math.min(joueur.x - screenWidth / 2, monde.getWidth() - screenWidth)); }
+	public int getScrollX() { return Math.max(0, Math.min(joueur.x - screenWidth / 2, monde.getLongueur() - screenWidth)); }
 	
 	/**
 	 * Methode de point de vue de la camera sur l'axe de la largeur.
 	 * @return position de la camera en largeur.
 	 */
-	public int getScrollY() { return Math.max(0, Math.min(joueur.y - screenHeight / 2, monde.getHeight() - screenHeight)); }
+	public int getScrollY() { return Math.max(0, Math.min(joueur.y - screenHeight / 2, monde.getLargeur() - screenHeight)); }
 	
 	/**
      * Methode qui affiche les interactions possibles avec l'utilisateur.

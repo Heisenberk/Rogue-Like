@@ -34,15 +34,16 @@ public class MondeTest {
 	 * Tests accesseur Width.
 	 */
 	@Test
-	public void testWidth() {
-		assertEquals(w.getWidth(),50);
+	public void testLongueur() {
+		assertEquals(w.getLongueur(),50);
 	}
 	
 	/**
 	 * Tests acceseur Height.
 	 */
 	@Test
-	public void testHeigth() {
-		assertEquals(w.getHeight(),70);
+	public void testLargeur() {
+		assertEquals(w.getLargeur(),70);
 	}
+
 }

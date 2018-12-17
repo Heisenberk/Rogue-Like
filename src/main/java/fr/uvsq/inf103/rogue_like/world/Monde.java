@@ -13,30 +13,31 @@ public class Monde {
      * Matrice representant la map du jeu.
      */
     private Element[][] element;
-public Element[][] getElement(){
+
+    public Element[][] getElement(){
 	return element;
 }
     /**
      * Longueur de la map.
      */
-    private int width;
+    private int longueur;
 
     /**
      * Largeur de la map.
      */
-    private int height;
+    private int largeur;
 
     /**
      * Accesseur de la longueur de la map.
      * @return longueur de la map.
      */
-    public int getWidth() { return width; }
+    public int getLongueur() { return longueur; }
 
     /**
      * Accesseur de la largeur de la map.
      * @return largeur de la map.
      */
-    public int getHeight() { return height; }
+    public int getLargeur() { return largeur; }
 
     /**
      * Constructeur de Monde.
@@ -44,8 +45,8 @@ public Element[][] getElement(){
      */
     public Monde(Element[][] elements){
         this.element = elements;
-        this.width = elements.length;
-        this.height = elements[0].length;
+        this.longueur = elements.length;
+        this.largeur = elements[0].length;
     }
 
     /**
@@ -55,7 +56,7 @@ public Element[][] getElement(){
      * @return Element representant la case.
      */
     public Element getElement(int x, int y){
-        if (x < 0 || x >= width || y < 0 || y >= height)
+        if (x < 0 || x >= longueur || y < 0 || y >= largeur)
             return Element.BOUNDS;
         else
             return element[x][y];
@@ -91,8 +92,8 @@ public Element[][] getElement(){
         int y;
 
         do {
-            x = (int)(Math.random() * width);
-            y = (int)(Math.random() * height);
+            x = (int)(Math.random() * longueur);
+            y = (int)(Math.random() * largeur);
         }
         while (!getElement(x,y).testerSol());
 

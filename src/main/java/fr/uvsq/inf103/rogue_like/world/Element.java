@@ -83,7 +83,7 @@ public enum Element {
         return this!=DOOR && this != WALL && this != BOUNDS;
     }
     
-    public Element getElement(int ascii) {
+    /*public Element getElement(int ascii) {
     	//char asciii=(char) (ascii);
     	switch( ascii) {
     	case 250: return Element.FLOOR;
@@ -96,8 +96,8 @@ public enum Element {
     	case 124: return BATTE_BASEBALL;
     	case 3:   return LIFE;
     	case'$':  return MONEY;
-    	case'w': return NB_ELEMENTS; //exception ? clément
+    	case'w': return NB_ELEMENTS;
 		}
 		return NB_ELEMENTS;
-    }
+    }*/
 }
