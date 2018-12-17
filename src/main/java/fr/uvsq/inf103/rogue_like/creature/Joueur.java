@@ -204,6 +204,7 @@ public class Joueur extends Creature{
 	/**
 	 * Methode permettant au joueur de ramasser ce qu'il y a sur le sol.
 	 * @param world sur lequel le joueur se trouve.
+	 * @return String representant l'affichage de ce qu'il ramasse.
 	 */
 	public String ramasserObjet(Monde world){
 		Element element=world.getElement(this.x, this.y);
@@ -265,6 +266,7 @@ public class Joueur extends Creature{
 	 * @param mx coordonnees en deplacement en abscisse.
 	 * @param my coordonnees en deplacement en ordonnee.
 	 * @param listePNJ liste des PNJ sur la map.
+	 * @return boolean true si il peut se deplacer et false sinon.
 	 */
 	public boolean seDeplacer(int mx, int my, ArrayList<PNJ> listePNJ){
 		boolean test=true;

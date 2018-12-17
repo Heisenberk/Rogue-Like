@@ -24,7 +24,7 @@ public class MondeBuilder {
 
     /**
      * Accesseur du tableau d'elements du monde.
-     * @return
+     * @return tableau d'elements du monde. 
      */
     public Element[][] getElements() {
     	return elements;

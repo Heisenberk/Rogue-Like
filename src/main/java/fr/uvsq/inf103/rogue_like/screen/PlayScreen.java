@@ -96,8 +96,11 @@ public class PlayScreen implements Screen {
 	
 	/**
 	 * Constructeur de PlayScreen qui permet de generer la map, le joueur et les PNJ.
+	 * @param niveau du jeu.
 	 * @param arme du joueur.
-	 * @param difficulte du joueur. 
+	 * @param difficulte de la partie.
+	 * @param vie du joueur.
+	 * @param argent du joueur.
 	 */
 	public PlayScreen(int niveau, Arme arme, Difficulte difficulte, int vie, int argent){
 		screenWidth = 80;
@@ -175,8 +178,7 @@ public class PlayScreen implements Screen {
 		if(difficulte==Difficulte.FACILE) nb_pnj_agressifs=5;
 		else if(difficulte==Difficulte.INTERMEDIAIRE) nb_pnj_agressifs=7;
 		else if(difficulte==Difficulte.DIFFICILE) nb_pnj_agressifs=10;
-		else if(difficulte==Difficulte.HARDCORE) nb_pnj_agressifs=20;
-		else throw new DifficulteException();
+		else nb_pnj_agressifs=20;
 
 		// ajout des PNJ agressifs
 		EnumPNJ pnj_cree; int type_pnj; PNJ pnj;
