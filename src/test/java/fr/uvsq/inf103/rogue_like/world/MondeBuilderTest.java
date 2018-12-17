@@ -6,9 +6,16 @@ import fr.uvsq.inf103.rogue_like.exception.*;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * Tests unitaires sur MondeBuilder.
+ */
 public class MondeBuilderTest {
 
+	/**
+	 * MondeBuilder qui sera teste.
+	 */
 	private MondeBuilder w;
+
 	/**
 	 * Permet d'initialiser les variables que l'on va tester. 
 	 */
@@ -16,16 +23,17 @@ public class MondeBuilderTest {
 	public void initialize() {
 		w = new MondeBuilder(50,50);
 	}
+
 	/**
-	 * Tests si l'élément est pas null.
+	 * Test si l'élément est pas null.
 	 */
 	@Test
 	public void testConstructeur() {
 		assertNotNull(w.getElements());
-		
 	}
+
 	/**
-	 * Tests si il existe de l'argent dans la map.
+	 * Test si il existe de l'argent dans la map.
 	 */
 	@Test
 	public void testExistMoney() {
@@ -41,7 +49,7 @@ public class MondeBuilderTest {
 	}
 	
 	/**
-	 * Tests si il existe une porte dans la map.
+	 * Test si il existe une porte dans la map.
 	 */
 	@Test
 	public void testBuildWall() {
@@ -56,6 +64,9 @@ public class MondeBuilderTest {
 		assertNotEquals(porte,0);
 	}
 
+	/**
+	 * Test si une exception PorteException est bien jetee si il manque une porte lors de la creation.
+	 */
 	@Test (expected=PorteException.class)
 	public void testPorteException(){
 		MondeBuilder monde= new MondeBuilder(80,21);
@@ -73,6 +84,9 @@ public class MondeBuilderTest {
 
 	}
 
+	/**
+	 * Test si une exception ArmeException est bien jetee si il manque une arme sur la map.
+	 */
 	@Test (expected=ArmeException.class)
 	public void testArmeException(){
 		MondeBuilder monde= new MondeBuilder(80,21);
@@ -90,6 +104,9 @@ public class MondeBuilderTest {
 
 	}
 
+	/**
+	 * Test si une exception ArgentException est bien lancee si il n'y a pas assez d'argent sur la map.
+	 */
 	@Test (expected=ArgentException.class)
 	public void testArgentException(){
 		MondeBuilder monde= new MondeBuilder(80,21);
@@ -105,8 +122,5 @@ public class MondeBuilderTest {
 		monde.setElement(10,0,Element.DOOR);
 		monde.setElement(11,0,Element.BATTE_BASEBALL);
 		monde.testerConfigurationValide();
-
 	}
-
-
 }

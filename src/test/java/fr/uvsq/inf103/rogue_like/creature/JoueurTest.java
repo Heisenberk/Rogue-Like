@@ -4,16 +4,14 @@ import fr.uvsq.inf103.rogue_like.world.*;
 import fr.uvsq.inf103.rogue_like.exception.*;
 
 import static org.junit.Assert.*;
-
 import java.util.ArrayList;
-
 import org.junit.Before;
 import org.junit.Test;
 import java.awt.Color;
 import asciiPanel.AsciiPanel;
 
 /**
- * Tests unitaires sur la classe Createur.
+ * Tests unitaires sur la classe Joueur.
  */
 public class JoueurTest {
 
@@ -79,30 +77,6 @@ public class JoueurTest {
         this.listePNJ.get(1).x = 1;
         this.listePNJ.get(1).y = 2;
 
-    }
-
-    /**
-     * Test de la methode getCouleur().
-     */
-    @Test
-    public void testGetCouleur() {
-        assertEquals(joueur.getCouleur(),AsciiPanel.brightWhite);
-    }
-
-    /**
-     * Test de la methode getArme().
-     */
-    @Test
-    public void testGetArme() {
-        assertEquals(joueur.getArme(), Arme.AUCUNE_ARME);
-    }
-
-    /**
-     * Test de la methode getClef().
-     */
-    @Test
-    public void testGetClefFalse(){
-        assertEquals(joueur.getClef(), false);
     }
 
     /**
@@ -206,7 +180,8 @@ public class JoueurTest {
     public void testRamasserObjetClef(){
         initialiserObjet(Element.KEY,2,2);
         assertEquals(joueur.getClef(),false);
-        assertEquals("1 clef ramasse",joueur.ramasserObjet(monde));
+        String s=joueur.ramasserObjet(monde);
+        assertNotNull(s);
         assertEquals(joueur.getClef(),true);
     }
 
@@ -217,7 +192,8 @@ public class JoueurTest {
     public void testRamasserObjetCouteau(){
         assertEquals(joueur.getArme(), Arme.AUCUNE_ARME);
         initialiserObjet(Element.COUTEAU,2,2);
-        assertEquals("Arme ramasse",joueur.ramasserObjet(monde));
+        String s=joueur.ramasserObjet(monde);
+        assertNotNull(s);
         assertEquals(joueur.getArme(), Arme.COUTEAU);
     }
 
@@ -228,7 +204,8 @@ public class JoueurTest {
     public void testRamasserObjetBatte(){
         assertEquals(joueur.getArme(), Arme.AUCUNE_ARME);
         initialiserObjet(Element.BATTE_BASEBALL,2,2);
-        assertEquals("Arme ramasse",joueur.ramasserObjet(monde));
+        String s=joueur.ramasserObjet(monde);
+        assertNotNull(s);
         assertEquals(joueur.getArme(), Arme.BATTE_BASEBALL);
     }
 
@@ -239,7 +216,8 @@ public class JoueurTest {
     public void testRamasserObjetEpee(){
         assertEquals(joueur.getArme(), Arme.AUCUNE_ARME);
         initialiserObjet(Element.EPEE,2,2);
-        assertEquals("Arme ramasse",joueur.ramasserObjet(monde));
+        String s=joueur.ramasserObjet(monde);
+        assertNotNull(s);
         assertEquals(joueur.getArme(), Arme.EPEE);
     }
 

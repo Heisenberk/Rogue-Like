@@ -2,12 +2,12 @@ package fr.uvsq.inf103.rogue_like.screen;
 
 import java.awt.event.KeyEvent;
 import asciiPanel.AsciiPanel;
+import java.util.ArrayList;
+
 import fr.uvsq.inf103.rogue_like.sauvegarde.*;
 import fr.uvsq.inf103.rogue_like.world.*;
 import fr.uvsq.inf103.rogue_like.creature.*;
 import fr.uvsq.inf103.rogue_like.exception.*;
-
-import java.util.ArrayList;
 
 /**
  * Classe PlayScreen qui s'affichera quand l'utilisateur sera en train de jouer.
@@ -53,21 +53,45 @@ public class PlayScreen implements Screen {
 	 * Message a afficher sur l'ecran de jeu de facon temporaire.
 	 */
 	private String messageTemporaire;
-	
+
+	/**
+	 * Accesseur du niveau de la partie.
+	 * @return niveau de la partie.
+	 */
 	public int getNiveau() {
 		return this.niveau;
 	}
-	
+
+	/**
+	 * Accesseur du joueur de la partie.
+	 * @return joueur de la partie.
+	 */
 	public Joueur getJoueur() {
 		return this.joueur;
 	}
 
+	/**
+	 * Accesseur de la liste de PNJ de la partie.
+	 * @return liste de PNJ de la partie.
+	 */
 	public ArrayList <PNJ> getListePNJ(){
 		return this.listePNJ;
 	}
 
+	/**
+	 * Accesseur de la difficulte de la partie.
+	 * @return difficulte de la partie.
+	 */
 	public Difficulte getDifficulte(){
 		return this.difficulte;
+	}
+
+	/**
+	 * Acesseur de la map de la partie.
+	 * @return monde de la partie.
+	 */
+	public Monde getMonde() {
+		return monde;
 	}
 	
 	/**
@@ -81,12 +105,16 @@ public class PlayScreen implements Screen {
 		this.niveau=niveau;
 		this.difficulte=difficulte;
 
-		createWorld();
+		creerMonde();
 		joueur=new Joueur(monde,arme, vie, argent);
 
-		createPNJ(monde, difficulte);
+		creerPNJ(monde, difficulte);
 	}
 
+	/**
+	 * Constructeur de Playscreen a l'aide de la lecture du fichier de sauvegarde.
+	 * @param sauvegarde de la partie precedemment enregistree.
+	 */
 	public PlayScreen(Chargement sauvegarde){
 		screenWidth = 80;
 		screenHeight = 21;
@@ -125,15 +153,12 @@ public class PlayScreen implements Screen {
 	 */
 	private void spawnPNJ(){
 		for(int i=0; i<this.listePNJ.size(); i++){
-			int x;
-			int y;
-
+			int x; int y;
 			do {
 				x = (int)(Math.random() * monde.getLongueur());
 				y = (int)(Math.random() * monde.getLargeur());
 			}
 			while ((!monde.getElement(x,y).testerSol())||(!testerSpawnPossible(x,y,i)));
-
 			this.listePNJ.get(i).x = x;
 			this.listePNJ.get(i).y = y;
 		}
@@ -144,7 +169,7 @@ public class PlayScreen implements Screen {
 	 * @param world monde sur lequel il faut faire spawner les PNJ.
 	 * @param difficulte du jeu.
 	 */
-	private void createPNJ(Monde world, Difficulte difficulte){
+	private void creerPNJ(Monde world, Difficulte difficulte){
 		this.listePNJ=new ArrayList<PNJ>();
 		int nb_pnj_agressifs;
 		if(difficulte==Difficulte.FACILE) nb_pnj_agressifs=5;
@@ -170,7 +195,7 @@ public class PlayScreen implements Screen {
 	/**
 	 * Methode privee permettant de generer le monde.
 	 */
-	private void createWorld(){
+	private void creerMonde(){
 		monde = new MondeBuilder(90, 32)
 					.fabriquerElements()
 					.construire();
@@ -242,7 +267,6 @@ public class PlayScreen implements Screen {
 	 * La condition est le fait d'avoir la clef pour ouvrir la porte.
 	 * @return true si il peut changer de niveau et false sinon.
 	 */
-	// mettre dans world?
 	private boolean testeChangerNiveau(){
 		if(joueur.getClef()){
 			boolean test=false;
@@ -316,8 +340,4 @@ public class PlayScreen implements Screen {
 
 		return this;
 	}
-
-    public Monde getMonde() {
-    	return monde;
-    }
 }

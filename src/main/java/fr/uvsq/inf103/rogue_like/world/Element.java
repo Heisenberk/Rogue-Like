@@ -57,24 +57,6 @@ public enum Element {
         this.couleur = color;
     }
 
-    public char setElement(int ascii) {
-    	Element e;
-    	for(int i=0;i<(Element.NB_ELEMENTS.ordinal()+1); i++) {
-    		e=Element.values()[i];
-    		if(ascii==e.getCaractere()) return e.getCaractere();    		
-    	}
-    		return 'X';
-    }
-
-    public Element getElement(char ascii) {
-        Element e;
-        for(int i=0;i<(Element.NB_ELEMENTS.ordinal()+1); i++) {
-            e=Element.values()[i];
-            if(ascii==e.getCaractere()) return e;
-        }
-        return Element.NB_ELEMENTS;
-    }
-
     /**
      * Methode qui teste si on peut marcher sur ce bloc.
      * @return TRUE si on peut marcher sur ce bloc et FALSE sinon.
@@ -82,22 +64,4 @@ public enum Element {
     public boolean testerSol() {
         return this!=DOOR && this != WALL && this != BOUNDS;
     }
-    
-    /*public Element getElement(int ascii) {
-    	//char asciii=(char) (ascii);
-    	switch( ascii) {
-    	case 250: return Element.FLOOR;
-    	case 177: return WALL;
-    	case 'x': return BOUNDS;
-    	case 213: return KEY;
-    	case 219: return DOOR;
-    	case 196: return COUTEAU;
-    	case 244: return EPEE;
-    	case 124: return BATTE_BASEBALL;
-    	case 3:   return LIFE;
-    	case'$':  return MONEY;
-    	case'w': return NB_ELEMENTS;
-		}
-		return NB_ELEMENTS;
-    }*/
 }

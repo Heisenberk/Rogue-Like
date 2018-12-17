@@ -2,8 +2,8 @@ package fr.uvsq.inf103.rogue_like.screen;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-
 import asciiPanel.AsciiPanel;
+
 import fr.uvsq.inf103.rogue_like.creature.*;
 import fr.uvsq.inf103.rogue_like.world.*;
 

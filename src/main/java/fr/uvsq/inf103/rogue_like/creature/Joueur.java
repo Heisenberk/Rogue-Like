@@ -27,7 +27,7 @@ public class Joueur extends Creature{
 	private boolean clef;
 
 	/**
-	 * Constructeur de Player.
+	 * Constructeur de Joueur.
 	 * @param monde monde dans lequel joue l'utilisateur.
 	 * @param arme du joueur.
 	 * @param vie du joueur.
@@ -41,6 +41,16 @@ public class Joueur extends Creature{
 		this.clef=false;
 	}
 
+	/**
+	 * Constructeur de Joueur.
+	 * @param monde monde dans lequel joue l'utilisateur.
+	 * @param arme du joueur.
+	 * @param vie du joueur.
+	 * @param argent du joueur.
+	 * @param clef du joueur (true ou false). 
+	 * @param x abscisse du joueur. 
+	 * @param y ordonnee du joueur. 
+	 */
 	public Joueur(Monde monde, Arme arme, int vie, int argent, boolean clef, int x, int y){
 		super(monde, '@', AsciiPanel.brightWhite);
 		this.arme=arme;
@@ -207,13 +217,13 @@ public class Joueur extends Creature{
 		else if((element==Element.LIFE)&&(this.vie<10)){
 			world.setElement(this.x, this.y, Element.FLOOR);
 			this.vie++;
-			return "1 fiole de vie ramasse.";
+			return "1 fiole de vie ramassee.";
 		}
 		// si il y a la clef, on recupere la clef.
 		else if((element==Element.KEY&&(this.clef==false))){
 			world.setElement(this.x, this.y, Element.FLOOR);
 			this.clef=true;
-			return "1 clef ramasse";
+			return "1 clef ramassee";
 		}
 		// si il s'agit d'une arme, on l'echange avec son arme courante (si il n'en a pas on prend juste l'arme).
 		else if((element==Element.BATTE_BASEBALL)||(element==Element.COUTEAU)||(element==Element.EPEE)){
@@ -245,7 +255,7 @@ public class Joueur extends Creature{
 			else if(arme_deja_possede==Arme.EPEE){
 				world.setElement(this.x, this.y, Element.EPEE);
 			}
-			return "Arme ramasse";
+			return "1 arme ramassee";
 		}
 		return null;
 	}

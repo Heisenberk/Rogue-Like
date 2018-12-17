@@ -14,9 +14,6 @@ public class Monde {
      */
     private Element[][] element;
 
-    public Element[][] getElement(){
-	return element;
-}
     /**
      * Longueur de la map.
      */
@@ -38,6 +35,14 @@ public class Monde {
      * @return largeur de la map.
      */
     public int getLargeur() { return largeur; }
+
+    /**
+     * Accesseur du tableau representant les elements de la map.
+     * @return tableau d'elements representant le monde.
+     */
+    public Element[][] getElement(){
+		return element;
+	}
 
     /**
      * Constructeur de Monde.
@@ -88,15 +93,12 @@ public class Monde {
      * @param creature a rajouter sur la map.
      */
     public void addAtEmptyLocation(Creature creature){
-        int x;
-        int y;
-
+        int x; int y;
         do {
             x = (int)(Math.random() * longueur);
             y = (int)(Math.random() * largeur);
         }
         while (!getElement(x,y).testerSol());
-
         creature.x = x;
         creature.y = y;
     }

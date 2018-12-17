@@ -163,6 +163,13 @@ public class MondeBuilder {
         return this;
     }
 
+    /**
+     * Methode permettant de savoir si la configuration de la map est correcte.
+     * Elle jete differentes exceptions en fonction des differents problemes rencontres.
+     * @throws PorteException s'il n'y a pas de porte sur la map.
+     * @throws ArgentException s'il n'y a pas assez d'argent sur la map.
+     * @throws ArmeException s'il n'y a pas d'arme sur la map.
+     */
     public void testerConfigurationValide() throws PorteException, ArgentException, ArmeException{
         int compteurPorte, compteurArgent, compteurArme;
         compteurPorte=compteurArgent=compteurArme=0;

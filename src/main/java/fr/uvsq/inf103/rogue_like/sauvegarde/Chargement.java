@@ -1,37 +1,49 @@
 package fr.uvsq.inf103.rogue_like.sauvegarde;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-import java.io.DataInputStream;
-import java.io.BufferedInputStream;
+import java.io.FileInputStream; 
+import java.io.DataInputStream; 
+import java.io.BufferedInputStream; 
+import java.util.ArrayList;
 
 import fr.uvsq.inf103.rogue_like.world.*;
 import fr.uvsq.inf103.rogue_like.creature.*;
 import fr.uvsq.inf103.rogue_like.exception.*;
 
-import java.util.ArrayList;
-
+/**
+ * Classe Chargement permettant de charger une partie sauvegardee.
+ */
 public class Chargement {
 
-	//private Element[][] element; // a enlever
-
+	/**
+	 * Map de la partie sauvegardee.
+	 */
 	private Monde monde;
 
+	/**
+	 * Niveau de la partie sauvegardee.
+	 */
 	private int niveau;
 
+	/**
+	 * Joueur de la partie sauvegardee.
+	 */
 	private Joueur joueur;
 
+	/**
+	 * Difficulte de la partie sauvegardee.
+	 */
 	private Difficulte difficulte;
 
+	/**
+	 * Liste des PNJ de la partie sauvegardee.
+	 */
 	private ArrayList <PNJ> listePNJ;
 
+	/**
+	 * Constructeur de Chargement qui va lire fileName
+	 * @param fileName nom du fichier a lire qui contient les donnees
+	 * de la partie sauvegardee.
+	 */
 	public Chargement(String fileName){
 		try{
 			this.lireSauvegarde(fileName);
@@ -47,38 +59,66 @@ public class Chargement {
 		}
 	}
 
+	/**
+	 * Constructeur de Chargement.
+	 */
 	public Chargement() {
-
-			this.lireSauvegarde();
-
+		this.lireSauvegarde();
 	}
 
+	/**
+	 * Accesseur de la difficulte de la partie sauvegardee.
+	 * @return Difficulte de la partie.
+	 */
 	public Difficulte getDifficulte(){
 		return this.difficulte;
 	}
 
+	/**
+	 * Accesseur du niveau de la partie sauvegardee.
+	 * @return Niveau de la partie.
+	 */
 	public int getNiveau(){
 		return this.niveau;
 	}
 
+	/**
+	 * Accesseur de la map de la partie sauvegardee.
+	 * @return Monde de la partie.
+	 */
 	public Monde getMonde(){
 		return this.monde;
 	}
 
+	/**
+	 * Accesseur du joueur de la partie sauvegardee.
+	 * @return Joueur de la partie.
+	 */
 	public Joueur getJoueur(){
 		return this.joueur;
 	}
 
+	/**
+	 * Accesseur de la liste de PNJ de la partie sauvegardee.
+	 * @return Liste de PNJ de la partie.
+	 */
 	public ArrayList <PNJ> getListePNJ(){
 		return this.listePNJ;
 	}
 
-	// verifier les exceptions lancees
+	/**
+	 * Methode qui permet de lire la derniere partie sauvegardee qui se
+	 * trouve dans "save/save.txt".
+	 */
 	public void lireSauvegarde(){
 		lireSauvegarde("save/save.txt");
 
 	}
 
+	/**
+	 * Methode qui permet de lire la partie sauvegardee dans fileName.
+	 * @param fileName nom du fichier contenant la partie sauvegardee.
+	 */
 	public void lireSauvegarde(String fileName){
 		try{
 			Element[][] element;
@@ -152,9 +192,6 @@ public class Chargement {
 		catch(Exception e){
 			throw new ChargementException();
 		}
-
 	}
-
-
 }
 

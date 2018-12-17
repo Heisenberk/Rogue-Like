@@ -4,16 +4,14 @@ import fr.uvsq.inf103.rogue_like.world.*;
 import fr.uvsq.inf103.rogue_like.exception.*;
 
 import static org.junit.Assert.*;
-
 import java.util.ArrayList;
-
 import org.junit.Before;
 import org.junit.Test;
 import java.awt.Color;
 import asciiPanel.AsciiPanel;
 
 /**
- * Tests unitaires sur la classe Createur.
+ * Tests unitaires sur la classe PNJ.
  */
 public class PNJTest {
 
@@ -73,22 +71,6 @@ public class PNJTest {
         this.listePNJ.add(new PNJ(monde,EnumPNJ.ZOMBIE));
         this.listePNJ.get(2).x = 1;
         this.listePNJ.get(2).y = 4;
-    }
-
-    /**
-     * Test de la methode getCouleur().
-     */
-    @Test
-    public void testGetCouleur() {
-        assertEquals(listePNJ.get(0).getCouleur(),AsciiPanel.green);
-    }
-
-    /**
-     * Test de la methode getClasse().
-     */
-    @Test
-    public void testGetClasse() {
-        assertEquals(listePNJ.get(0).getClasse(),EnumPNJ.VILLAGEOIS);
     }
 
     /**

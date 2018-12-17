@@ -1,24 +1,18 @@
 package fr.uvsq.inf103.rogue_like.sauvegarde;
 
-import static org.junit.Assert.*;
-
 import fr.uvsq.inf103.rogue_like.world.*;
 import fr.uvsq.inf103.rogue_like.exception.*;
 import fr.uvsq.inf103.rogue_like.creature.*;
 
+import static org.junit.Assert.*;
 import java.util.ArrayList;
-
-import java.io.DataInputStream;
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
 import java.io.File;
-
 import org.junit.Before;
 import org.junit.After;
 import org.junit.Test;
 
 /**
- * Tests unitaires sur la classe World.
+ * Tests unitaires sur la classe Sauvegarde.
  */
 public class SauvegardeTest {
 
@@ -87,51 +81,50 @@ public class SauvegardeTest {
 
     }
 
+    /**
+     * Methode pour supprimer le fichier cree lors de ces tests.
+     */
     @After
     public void finaliser(){
         File f=new File("save/testSauvegardeTest.txt");
         f.delete();
     }
 
+    /**
+     * Test si les parametres de Joueur ont bien ete sauvegardes.
+     */
     @Test
     public void testSauvegarderJoueur(){
-       // try{
-            Sauvegarde s=new Sauvegarde();
-            s.sauvegarderPartie("save/testSauvegardeTest.txt", Difficulte.FACILE, monde, 2, joueur, listePNJ);
-            Chargement c=new Chargement();
-            c.lireSauvegarde("save/testSauvegardeTest.txt");
-            assertEquals(c.getJoueur().x,2);
-            assertEquals(c.getJoueur().y,2);
-            assertSame(c.getJoueur().getArme(),joueur.getArme());
-
-       /* }
-        catch(Exception e){}*/
-
+        Sauvegarde s=new Sauvegarde();
+        s.sauvegarderPartie("save/testSauvegardeTest.txt", Difficulte.FACILE, monde, 2, joueur, listePNJ);
+        Chargement c=new Chargement("save/testSauvegardeTest.txt");
+        c.lireSauvegarde("save/testSauvegardeTest.txt");
+        assertEquals(c.getJoueur().x,2);
+        assertEquals(c.getJoueur().y,2);
+        assertSame(c.getJoueur().getArme(),joueur.getArme());
     }
 
+    /**
+     * Test si la difficulte a bien ete sauvegardee.
+     */
     @Test
     public void testSauvegarderDifficulte(){
-        //try{
-            Sauvegarde s=new Sauvegarde();
-            s.sauvegarderPartie("save/testSauvegardeTest.txt", Difficulte.FACILE, monde, 2, joueur, listePNJ);
-            Chargement c=new Chargement();
-            c.lireSauvegarde("save/testSauvegardeTest.txt");
-            assertEquals(c.getDifficulte(),Difficulte.FACILE);
-        /*}
-        catch(Exception e){}*/
+        Sauvegarde s=new Sauvegarde();
+        s.sauvegarderPartie("save/testSauvegardeTest.txt", Difficulte.FACILE, monde, 2, joueur, listePNJ);
+        Chargement c=new Chargement("save/testSauvegardeTest.txt");
+        c.lireSauvegarde("save/testSauvegardeTest.txt");
+        assertEquals(c.getDifficulte(),Difficulte.FACILE);
     }
 
+    /**
+     * Test si le niveau a bien ete sauvegardee.
+     */
     @Test
     public void testSauvegardeNiveau(){
-        //try{
-            Sauvegarde s=new Sauvegarde();
-            s.sauvegarderPartie("save/testSauvegardeTest.txt", Difficulte.FACILE, monde, 2, joueur, listePNJ);
-            Chargement c=new Chargement();
-            c.lireSauvegarde("save/testSauvegardeTest.txt");
-            assertEquals(c.getNiveau(),2);
-       /* }
-        catch(Exception e){}*/
-
+        Sauvegarde s=new Sauvegarde();
+        s.sauvegarderPartie("save/testSauvegardeTest.txt", Difficulte.FACILE, monde, 2, joueur, listePNJ);
+        Chargement c=new Chargement("save/testSauvegardeTest.txt");
+        c.lireSauvegarde("save/testSauvegardeTest.txt");
+        assertEquals(c.getNiveau(),2);
     }
-
 }

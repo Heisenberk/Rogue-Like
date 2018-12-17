@@ -3,9 +3,7 @@ package fr.uvsq.inf103.rogue_like.creature;
 import fr.uvsq.inf103.rogue_like.world.*;
 
 import static org.junit.Assert.*;
-
 import java.util.ArrayList;
-
 import org.junit.Before;
 import org.junit.Test;
 import java.awt.Color;
@@ -49,7 +47,7 @@ public class CreatureTest {
 	}
 
 	/**
-	 * Test accesseur Couleur.
+	 * Test d'affectation de Couleur.
 	 */
 	@Test
 	public void testGetCouleur() {
@@ -57,7 +55,7 @@ public class CreatureTest {
 	}
 
 	/**
-	 * Test accesseur Caractere.
+	 * Test d'affectation de Caractere.
 	 */
 	@Test
 	public void testGetCaractere() {
@@ -65,7 +63,7 @@ public class CreatureTest {
 	}
 
 	/**
-	 * Test de fonction qui cherche si un déplacement est possible
+	 * Test de fonction qui cherche si un déplacement est possible.
 	 */
 	@Test
 	public void testTesterDeplacement() {

@@ -1,24 +1,18 @@
 package fr.uvsq.inf103.rogue_like.sauvegarde;
 
-import static org.junit.Assert.*;
-
 import fr.uvsq.inf103.rogue_like.world.*;
 import fr.uvsq.inf103.rogue_like.exception.*;
 import fr.uvsq.inf103.rogue_like.creature.*;
 
+import static org.junit.Assert.*;
 import java.util.ArrayList;
-
-import java.io.DataInputStream;
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.File;
-
 import org.junit.Before;
 import org.junit.After;
 import org.junit.Test;
+import java.io.File;
 
 /**
- * Tests unitaires sur la classe World.
+ * Tests unitaires sur la classe Chargement.
  */
 public class ChargementTest {
 
@@ -86,68 +80,61 @@ public class ChargementTest {
 
     }
 
+    /**
+     * Methode pour supprimer le fichier lors de ces tests unitaires.
+     */
     @After
     public void finaliser(){
         File f=new File("save/testSauvegardeTest.txt");
         f.delete();
     }
 
+    /**
+     * Test si une exception SpawnException est bien jetee si un joueur est au meme endroit qu'un mur.
+     */
     @Test (expected=SpawnException.class)
     public void testSpawnExceptionJoueurMur(){
-        //try {
-            initialiserObjet(Element.DOOR, 11,11);
-            initialiserObjet(Element.WALL, joueur.x, joueur.y);
-            Sauvegarde s = new Sauvegarde();
-            s.sauvegarderPartie("save/testSauvegardeTest.txt", Difficulte.FACILE, monde, 2, joueur, listePNJ);
-            Chargement c = new Chargement();
-            c.lireSauvegarde("save/testSauvegardeTest.txt");
-        /*}
-        catch(Exception e){
-
-        }*/
-
+        initialiserObjet(Element.DOOR, 11,11);
+        initialiserObjet(Element.WALL, joueur.x, joueur.y);
+        Sauvegarde s = new Sauvegarde();
+        s.sauvegarderPartie("save/testSauvegardeTest.txt", Difficulte.FACILE, monde, 2, joueur, listePNJ);
+        Chargement c = new Chargement("save/testSauvegardeTest.txt");
+        c.lireSauvegarde("save/testSauvegardeTest.txt");
     }
 
+    /**
+     * Test si une exception SpawnException est bien jetee si un joueur est au meme endroit qu'une porte.
+     */
     @Test (expected=SpawnException.class)
     public void testSpawnExceptionJoueurPorte(){
-        //try {
         initialiserObjet(Element.DOOR, joueur.x, joueur.y);
         Sauvegarde s = new Sauvegarde();
         s.sauvegarderPartie("save/testSauvegardeTest.txt", Difficulte.FACILE, monde, 2, joueur, listePNJ);
-        Chargement c = new Chargement();
+        Chargement c = new Chargement("save/testSauvegardeTest.txt");
         c.lireSauvegarde("save/testSauvegardeTest.txt");
-        /*}
-        catch(Exception e){
-
-        }*/
     }
 
+    /**
+     * Test si une exception SpawnException est bien jetee si un joueur est au meme endroit qu'un PNJ.
+     */
     @Test (expected=SpawnException.class)
     public void testSpawnExceptionJoueurPNJ(){
-        //try {
         initialiserObjet(Element.DOOR, 11, 11);
         listePNJ.get(0).x=joueur.x; listePNJ.get(0).y=joueur.y;
         Sauvegarde s = new Sauvegarde();
         s.sauvegarderPartie("save/testSauvegardeTest.txt", Difficulte.FACILE, monde, 2, joueur, listePNJ);
-        Chargement c = new Chargement();
+        Chargement c = new Chargement("save/testSauvegardeTest.txt");
         c.lireSauvegarde("save/testSauvegardeTest.txt");
-        /*}
-        catch(Exception e){
-
-        }*/
     }
 
+    /**
+     * Test si une exception PorteException est bien jetee si il manque une porte.
+     */
     @Test (expected=PorteException.class)
     public void testManquePorte(){
-        //try {
         Sauvegarde s = new Sauvegarde();
         s.sauvegarderPartie("save/testSauvegardeTest.txt", Difficulte.FACILE, monde, 2, joueur, listePNJ);
-        Chargement c = new Chargement();
+        Chargement c = new Chargement("save/testSauvegardeTest.txt");
         c.lireSauvegarde("save/testSauvegardeTest.txt");
-        /*}
-        catch(Exception e){
-
-        }*/
     }
-
 }

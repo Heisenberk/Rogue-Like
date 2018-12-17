@@ -1,12 +1,11 @@
 package fr.uvsq.inf103.rogue_like.creature;
 
 import asciiPanel.AsciiPanel;
+import java.util.ArrayList;
 
 import fr.uvsq.inf103.rogue_like.world.*;
 import fr.uvsq.inf103.rogue_like.exception.*;
 
-import java.util.ArrayList;
-import java.util.ListIterator;
 
 /**
  * Classe PNJ representant les creatures pacifiques et agressives.
@@ -50,6 +49,16 @@ public class PNJ extends Creature{
         }
     }
 
+/**
+     * Constructeur de PNJ.
+     * @param monde dans lequel se trouve le PNJ.
+     * @param classe_pnj classe du PNJ.
+     * @param x abscisse du PNJ. 
+     * @param y ordonnee du PNJ.
+     * @param vie du PNJ. 
+     * @param volonteArgent du PNJ.
+     * @param clef du PNJ (true ou false). 
+     */
     public PNJ(Monde monde, EnumPNJ classe_pnj, int x, int y, int vie, int volonteArgent, boolean clef){
         super(monde, classe_pnj.getCaractere(), classe_pnj.getCouleur());
         this.classe=classe_pnj;
